@@ -75,6 +75,15 @@ const isInPeriod = (dateLike, start, end) => {
   return date >= startDate && date <= endDate;
 };
 
+// Função para determinar cor baseada no jobPosition
+const getJobPositionColor = (jobPosition) => {
+  const position = jobPosition?.toLowerCase() || '';
+  if (position.includes('prestador') && position.includes('serviço')) return '#9e9e9e'; // Cinza prateado
+  if (position === 'oficial') return '#2196f3'; // Azul
+  if (position === 'equipe') return '#ff9800'; // Laranja para membros da equipe
+  return '#757575'; // Cor padrão (cinza escuro)
+};
+
 const isMensalTask = (task) => {
   return MENSAL_TASK_IDS.includes(task.taskTypeId) || 
          MENSAL_KEYWORDS.some(keyword => 
@@ -113,6 +122,7 @@ export default function MensalGeral() {
   const [dailyStats, setDailyStats] = useState({});
   const [tasksByDay, setTasksByDay] = useState({});
   const [popoverState, setPopoverState] = useState({ open: false, anchorEl: null, tasks: [] });
+  const [contractManagers, setContractManagers] = useState({});
 
   // Buscar contratos de Santos
   useEffect(() => {
@@ -154,6 +164,7 @@ export default function MensalGeral() {
       const dailyStatsTemp = {};
       const tasksByDayTemp = {};
       const dailyEquipmentsTemp = {}; // Para contar equipamentos únicos por dia
+      const contractManagersTemp = {}; // Para armazenar managers por contrato
 
       for (const contract of contractsToFetch) {
         const params = {
@@ -163,6 +174,10 @@ export default function MensalGeral() {
 
         const response = await axios.get(`${API_BASE_URL}/dashboard/${contract.id}`, { params });
         const schools = response.data.schools || [];
+        
+        // Capturar managers do contrato
+        const managers = response.data.managers || [];
+        contractManagersTemp[contract.id] = managers;
 
         // Processar tarefas mensais
         const mensalTasks = [];
@@ -194,20 +209,20 @@ export default function MensalGeral() {
                   dailyEquipmentsTemp[contract.id] = {};
                 }
                 if (!dailyEquipmentsTemp[contract.id][day]) {
-                  dailyEquipmentsTemp[contract.id][day] = new Set();
+                  dailyEquipmentsTemp[contract.id][day] = 0; // Mudança: usar contador ao invés de Set
                 }
                 
-                // Extrair IDs dos equipamentos da tarefa
-                try {
-                  const equipmentsIdStr = task.equipmentsId || '[]';
-                  const equipmentIds = JSON.parse(equipmentsIdStr);
-                  if (Array.isArray(equipmentIds)) {
-                    equipmentIds.forEach(equipId => {
-                      dailyEquipmentsTemp[contract.id][day].add(equipId);
-                    });
+                // Extrair IDs dos equipamentos apenas de tarefas CONCLUÍDAS
+                if ([5, 6].includes(task.taskStatus)) { // Apenas tarefas concluídas
+                  try {
+                    const equipmentsIdStr = task.equipmentsId || '[]';
+                    const equipmentIds = JSON.parse(equipmentsIdStr);
+                    if (Array.isArray(equipmentIds)) {
+                      dailyEquipmentsTemp[contract.id][day] += equipmentIds.length; // Somar apenas equipamentos de tarefas concluídas
+                    }
+                  } catch (error) {
+                    console.warn('Erro ao processar equipmentsId:', task.equipmentsId, error);
                   }
-                } catch (error) {
-                  console.warn('Erro ao processar equipmentsId:', task.equipmentsId, error);
                 }
                 
                 // Armazenar tarefas por dia para o popover
@@ -221,17 +236,19 @@ export default function MensalGeral() {
           }
         });
 
-        // Calcular total de equipamentos únicos para este contrato
-        const allEquipmentIds = new Set();
+        // Calcular total de equipamentos apenas de tarefas CONCLUÍDAS
+        let totalEquipmentsCompleted = 0;
         mensalTasks.forEach(task => {
-          try {
-            const equipmentsIdStr = task.equipmentsId || '[]';
-            const equipmentIds = JSON.parse(equipmentsIdStr);
-            if (Array.isArray(equipmentIds)) {
-              equipmentIds.forEach(equipId => allEquipmentIds.add(equipId));
+          if ([5, 6].includes(task.taskStatus)) { // Apenas tarefas concluídas
+            try {
+              const equipmentsIdStr = task.equipmentsId || '[]';
+              const equipmentIds = JSON.parse(equipmentsIdStr);
+              if (Array.isArray(equipmentIds)) {
+                totalEquipmentsCompleted += equipmentIds.length; // Somar total real de concluídas
+              }
+            } catch (error) {
+              // Ignorar erros de parse
             }
-          } catch (error) {
-            // Ignorar erros de parse
           }
         });
 
@@ -240,24 +257,25 @@ export default function MensalGeral() {
           contractName: contract.description || contract.name,
           tasks: mensalTasks,
           totalTasks: mensalTasks.length,
-          totalEquipments: allEquipmentIds.size, // Total de equipamentos únicos
+          totalEquipments: totalEquipmentsCompleted, // Total de equipamentos de tarefas concluídas
           completedTasks: mensalTasks.filter(t => [5, 6].includes(t.taskStatus)).length
         });
       }
 
-      // Converter Sets de equipamentos para números
+      // Usar contadores diretos de equipamentos (já são números)
       Object.keys(dailyEquipmentsTemp).forEach(contractId => {
         if (!dailyStatsTemp[contractId]) {
           dailyStatsTemp[contractId] = {};
         }
         Object.keys(dailyEquipmentsTemp[contractId]).forEach(day => {
-          dailyStatsTemp[contractId][day] = dailyEquipmentsTemp[contractId][day].size;
+          dailyStatsTemp[contractId][day] = dailyEquipmentsTemp[contractId][day]; // Já é número
         });
       });
 
       setMensalData(allData);
       setDailyStats(dailyStatsTemp);
       setTasksByDay(tasksByDayTemp);
+      setContractManagers(contractManagersTemp);
       
     } catch (err) {
       setError('Erro ao buscar dados mensais.');
@@ -629,9 +647,30 @@ export default function MensalGeral() {
                             flexShrink: 0
                           }} 
                         />
-                        <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
-                          {contract.contractName}
-                        </Typography>
+                        <Box>
+                          <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
+                            {contract.contractName}
+                          </Typography>
+                          {/* Mostrar managers do contrato */}
+                          {contractManagers[contract.contractId] && contractManagers[contract.contractId].length > 0 && (
+                            <Box sx={{ mt: 0.5 }}>
+                              {contractManagers[contract.contractId].map((manager, index) => (
+                                <Typography 
+                                  key={manager.userId || manager.name} 
+                                  variant="caption" 
+                                  sx={{ 
+                                    display: 'block',
+                                    color: getJobPositionColor(manager.jobPosition),
+                                    fontSize: '0.7rem',
+                                    lineHeight: 1.2
+                                  }}
+                                >
+                                  {manager.jobPosition === 'Equipe' ? manager.name : `${manager.name} (${manager.jobPosition})`}
+                                </Typography>
+                              ))}
+                            </Box>
+                          )}
+                        </Box>
                       </Box>
                     </TableCell>
                     {sortedDays.map(day => {
@@ -705,6 +744,179 @@ export default function MensalGeral() {
             </Table>
           </TableContainer>
         </Paper>
+      )}
+
+      {/* Lista Detalhada de Tarefas Organizadas */}
+      {!loading && mensalData.length > 0 && (
+        <Paper>
+          <Typography variant="h6" sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
+            Detalhamento das Tarefas Mensais (Organizadas por Setor e Data)
+          </Typography>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Setor</TableCell>
+                  <TableCell>Data</TableCell>
+                  <TableCell>Dia</TableCell>
+                  <TableCell>Qtd Tarefas</TableCell>
+                  <TableCell>Qtd Equipamentos</TableCell>
+                  <TableCell>Escolas/Tarefas</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell>Links</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {Object.keys(organizedTasks)
+                  .sort((a, b) => {
+                    // Ordenar por nome do contrato
+                    const nameA = organizedTasks[a].contractName;
+                    const nameB = organizedTasks[b].contractName;
+                    return nameA.localeCompare(nameB);
+                  })
+                  .map(contractId => {
+                    const contract = organizedTasks[contractId];
+                    let isFirstValidRow = true; // Rastrear primeira linha válida do setor
+                    
+                    return Object.keys(contract.tasksByDate).map((dateFormatted, index) => {
+                       const dateData = contract.tasksByDate[dateFormatted];
+                       const allTasks = dateData.tasks;
+                       const tasks = allTasks.filter(task => [5, 6].includes(task.taskStatus)); // Apenas tarefas concluídas
+                       
+                       // Se não há tarefas concluídas, pular esta linha
+                       if (tasks.length === 0) return null;
+                       
+                       const showSectorName = isFirstValidRow;
+                       isFirstValidRow = false; // Próximas linhas não mostrarão o nome
+                       
+                       // Calcular equipamentos únicos para este grupo de tarefas
+                       const uniqueEquipments = new Set();
+                       tasks.forEach(task => {
+                         try {
+                           const equipmentsIdStr = task.equipmentsId || '[]';
+                           const equipmentIds = JSON.parse(equipmentsIdStr);
+                           if (Array.isArray(equipmentIds)) {
+                             equipmentIds.forEach(equipId => uniqueEquipments.add(equipId));
+                           }
+                         } catch (error) {
+                           // Ignorar erros de parse
+                         }
+                       });
+                       const equipmentCount = uniqueEquipments.size;
+                      
+                      return (
+                        <TableRow 
+                          key={`${contractId}-${dateFormatted}`}
+                          sx={{ 
+                            backgroundColor: getSectorBackgroundColor(contract.contractName),
+                            '&:hover': {
+                              backgroundColor: getSectorBackgroundColor(contract.contractName).replace('0.15', '0.25')
+                            }
+                          }}
+                        >
+                          <TableCell>
+                            {showSectorName ? (
+                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                <Box 
+                                  sx={{ 
+                                    width: 12, 
+                                    height: 12, 
+                                    borderRadius: '50%', 
+                                    backgroundColor: getSectorColor(contract.contractName),
+                                    flexShrink: 0
+                                  }} 
+                                />
+                                <Box>
+                                  <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
+                                    {contract.contractName}
+                                  </Typography>
+                                  {/* Mostrar managers do contrato */}
+                                  {contractManagers[contractId] && contractManagers[contractId].length > 0 && (
+                                    <Box sx={{ mt: 0.5 }}>
+                                      {contractManagers[contractId].map((manager, index) => (
+                                        <Typography 
+                                          key={manager.userId || manager.name} 
+                                          variant="caption" 
+                                          sx={{ 
+                                            display: 'block',
+                                            color: getJobPositionColor(manager.jobPosition),
+                                            fontSize: '0.7rem',
+                                            lineHeight: 1.2
+                                          }}
+                                        >
+                                          {manager.jobPosition === 'Equipe' ? manager.name : `${manager.name} (${manager.jobPosition})`}
+                                        </Typography>
+                                      ))}
+                                    </Box>
+                                  )}
+                                </Box>
+                              </Box>
+                            ) : ''}
+                          </TableCell>
+                          <TableCell>{dateFormatted}</TableCell>
+                          <TableCell align="center">{dateData.day}</TableCell>
+                          <TableCell align="center">{tasks.length}</TableCell>
+                          <TableCell align="center">{equipmentCount}</TableCell>
+                          <TableCell>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                              {tasks.map((task, taskIndex) => (
+                                <Typography key={taskIndex} variant="body2">
+                                  <strong>{task.schoolName}</strong>: {task.orientation || 'N/A'}
+                                </Typography>
+                              ))}
+                            </Box>
+                          </TableCell>
+                          <TableCell>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                              {tasks.map((task, taskIndex) => (
+                                <Chip 
+                                  key={taskIndex}
+                                  label={task.taskStatus === 5 || task.taskStatus === 6 ? 'Concluída' : 'Pendente'}
+                                  color={task.taskStatus === 5 || task.taskStatus === 6 ? 'success' : 'default'}
+                                  size="small"
+                                />
+                              ))}
+                            </Box>
+                          </TableCell>
+                          <TableCell>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                              {tasks.map((task, taskIndex) => (
+                                <Box key={taskIndex}>
+                                  {task.taskUrl ? (
+                                    <Tooltip title={`Abrir tarefa ${taskIndex + 1} no Auvo`}>
+                                      <IconButton 
+                                        size="small" 
+                                        onClick={() => window.open(task.taskUrl, '_blank')}
+                                        color="primary"
+                                      >
+                                        <LinkIcon />
+                                      </IconButton>
+                                    </Tooltip>
+                                  ) : (
+                                    <Typography variant="body2" color="text.disabled">
+                                      N/A
+                                    </Typography>
+                                  )}
+                                </Box>
+                              ))}
+                            </Box>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    });
+                  })
+                  .filter(Boolean) // Remover valores null quando não há tarefas concluídas
+                }
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
+      )}
+
+      {!loading && mensalData.length === 0 && (
+        <Alert severity="info">
+          Nenhuma tarefa mensal encontrada no período selecionado.
+        </Alert>
       )}
 
       {/* Popover para detalhes das tarefas */}

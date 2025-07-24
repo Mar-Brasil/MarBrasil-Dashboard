@@ -3,7 +3,7 @@ import {
   Box, Grid, Paper, Typography, MenuItem, FormControl, Select, InputLabel, 
   CircularProgress, Alert, Table, TableBody, TableCell, TableContainer, 
   TableHead, TableRow, Card, TextField, Button, IconButton, Tooltip, Chip,
-  Popover, List, ListItem, ListItemText
+  Popover, List, ListItem
 } from '@mui/material';
 import CalendarViewWeekIcon from '@mui/icons-material/CalendarViewWeek';
 import LinkIcon from '@mui/icons-material/Link';
@@ -90,6 +90,41 @@ const getDayOfMonth = (dateString) => {
   return date.getDate();
 };
 
+// Função para determinar cor baseada no jobPosition (case-insensitive)
+const getJobPositionColor = (jobPosition) => {
+  const position = jobPosition?.toLowerCase() || '';
+  if (position.includes('prestador') && position.includes('serviço')) return '#9e9e9e'; // Cinza prateado
+  if (position === 'oficial') return '#2196f3'; // Azul
+  if (position === 'equipe') return '#ff9800'; // Laranja para membros da equipe
+  return '#757575'; // Cor padrão (cinza escuro)
+};
+
+// Função para determinar se é Prestador de Serviços (case-insensitive)
+const isPrestadorServicos = (jobPosition) => {
+  const position = jobPosition?.toLowerCase() || '';
+  return position.includes('prestador') && position.includes('serviço');
+};
+
+// Função para determinar cor do setor (círculos)
+const getSectorColor = (contractName) => {
+  if (contractName.includes('SETOR 01')) return '#8884d8'; // Roxo
+  if (contractName.includes('SETOR 02')) return '#82ca9d'; // Verde
+  if (contractName.includes('SETOR 03')) return '#ffc658'; // Amarelo/Laranja
+  if (contractName.includes('SETOR 04')) return '#ff7c7c'; // Vermelho/Rosa
+  if (contractName.includes('SETOR 05')) return '#8dd1e1'; // Azul claro
+  return '#666666'; // Cor padrão para outros casos
+};
+
+// Função para determinar cor de fundo do setor
+const getSectorBackgroundColor = (contractName) => {
+  if (contractName.includes('SETOR 01')) return 'rgba(136, 132, 216, 0.15)'; // Roxo suave
+  if (contractName.includes('SETOR 02')) return 'rgba(130, 202, 157, 0.15)'; // Verde suave
+  if (contractName.includes('SETOR 03')) return 'rgba(255, 198, 88, 0.15)'; // Amarelo/Laranja suave
+  if (contractName.includes('SETOR 04')) return 'rgba(255, 124, 124, 0.15)'; // Vermelho/Rosa suave
+  if (contractName.includes('SETOR 05')) return 'rgba(141, 209, 225, 0.15)'; // Azul claro suave
+  return 'rgba(102, 102, 102, 0.15)'; // Cor padrão suave
+};
+
 const SemestralGeral = () => {
   // Configurar datas para o mês atual (primeiro e último dia)
   const today = new Date();
@@ -109,6 +144,7 @@ const SemestralGeral = () => {
   const [dailyStats, setDailyStats] = useState({});
   const [tasksByDay, setTasksByDay] = useState({}); // Para armazenar tarefas por dia
   const [popoverState, setPopoverState] = useState({ open: false, anchorEl: null, tasks: [] });
+  const [contractManagers, setContractManagers] = useState({}); // Para armazenar managers por contrato
 
   // Buscar contratos de Santos
   useEffect(() => {
@@ -150,6 +186,7 @@ const SemestralGeral = () => {
       const dailyStatsTemp = {};
       const tasksByDayTemp = {};
       const dailyEquipmentsTemp = {}; // Para contar equipamentos únicos por dia
+      const managersTemp = {}; // Para armazenar managers por contrato
 
       for (const contract of contractsToFetch) {
         const params = {
@@ -159,6 +196,10 @@ const SemestralGeral = () => {
 
         const response = await axios.get(`${API_BASE_URL}/dashboard/${contract.id}`, { params });
         const schools = response.data.schools || [];
+        const managers = response.data.managers || [];
+        
+        // Armazenar managers do contrato
+        managersTemp[contract.id] = managers;
 
         // Processar tarefas semestrais
         const semestralTasks = [];
@@ -190,20 +231,20 @@ const SemestralGeral = () => {
                   dailyEquipmentsTemp[contract.id] = {};
                 }
                 if (!dailyEquipmentsTemp[contract.id][day]) {
-                  dailyEquipmentsTemp[contract.id][day] = new Set();
+                  dailyEquipmentsTemp[contract.id][day] = 0; // Mudança: usar contador ao invés de Set
                 }
                 
-                // Extrair IDs dos equipamentos da tarefa
-                try {
-                  const equipmentsIdStr = task.equipmentsId || '[]';
-                  const equipmentIds = JSON.parse(equipmentsIdStr);
-                  if (Array.isArray(equipmentIds)) {
-                    equipmentIds.forEach(equipId => {
-                      dailyEquipmentsTemp[contract.id][day].add(equipId);
-                    });
+                // Extrair IDs dos equipamentos apenas de tarefas CONCLUÍDAS
+                if ([5, 6].includes(task.taskStatus)) { // Apenas tarefas concluídas
+                  try {
+                    const equipmentsIdStr = task.equipmentsId || '[]';
+                    const equipmentIds = JSON.parse(equipmentsIdStr);
+                    if (Array.isArray(equipmentIds)) {
+                      dailyEquipmentsTemp[contract.id][day] += equipmentIds.length; // Somar apenas equipamentos de tarefas concluídas
+                    }
+                  } catch (error) {
+                    console.warn('Erro ao processar equipmentsId:', task.equipmentsId, error);
                   }
-                } catch (error) {
-                  console.warn('Erro ao processar equipmentsId:', task.equipmentsId, error);
                 }
                 
                 // Armazenar tarefas por dia para o popover
@@ -217,17 +258,19 @@ const SemestralGeral = () => {
           }
         });
 
-        // Calcular total de equipamentos únicos para este contrato
-        const allEquipmentIds = new Set();
+        // Calcular total de equipamentos apenas de tarefas CONCLUÍDAS
+        let totalEquipmentsCompleted = 0;
         semestralTasks.forEach(task => {
-          try {
-            const equipmentsIdStr = task.equipmentsId || '[]';
-            const equipmentIds = JSON.parse(equipmentsIdStr);
-            if (Array.isArray(equipmentIds)) {
-              equipmentIds.forEach(equipId => allEquipmentIds.add(equipId));
+          if ([5, 6].includes(task.taskStatus)) { // Apenas tarefas concluídas
+            try {
+              const equipmentsIdStr = task.equipmentsId || '[]';
+              const equipmentIds = JSON.parse(equipmentsIdStr);
+              if (Array.isArray(equipmentIds)) {
+                totalEquipmentsCompleted += equipmentIds.length; // Somar total real de concluídas
+              }
+            } catch (error) {
+              // Ignorar erros de parse
             }
-          } catch (error) {
-            // Ignorar erros de parse
           }
         });
 
@@ -236,24 +279,25 @@ const SemestralGeral = () => {
           contractName: contract.description || contract.name,
           tasks: semestralTasks,
           totalTasks: semestralTasks.length,
-          totalEquipments: allEquipmentIds.size, // Total de equipamentos únicos
+          totalEquipments: totalEquipmentsCompleted, // Total de equipamentos de tarefas concluídas
           completedTasks: semestralTasks.filter(t => [5, 6].includes(t.taskStatus)).length
         });
       }
 
-      // Converter Sets de equipamentos para números
+      // Usar contadores diretos de equipamentos (já são números)
       Object.keys(dailyEquipmentsTemp).forEach(contractId => {
         if (!dailyStatsTemp[contractId]) {
           dailyStatsTemp[contractId] = {};
         }
         Object.keys(dailyEquipmentsTemp[contractId]).forEach(day => {
-          dailyStatsTemp[contractId][day] = dailyEquipmentsTemp[contractId][day].size;
+          dailyStatsTemp[contractId][day] = dailyEquipmentsTemp[contractId][day]; // Já é número
         });
       });
 
       setSemestralData(allData);
       setDailyStats(dailyStatsTemp);
       setTasksByDay(tasksByDayTemp);
+      setContractManagers(managersTemp);
       
     } catch (err) {
       setError('Erro ao buscar dados semestrais.');
@@ -355,6 +399,15 @@ const SemestralGeral = () => {
     if (contractName.includes('SETOR 04')) return 'rgba(255, 124, 124, 0.15)'; // Vermelho/Rosa suave
     if (contractName.includes('SETOR 05')) return 'rgba(141, 209, 225, 0.15)'; // Azul claro suave
     return 'rgba(102, 102, 102, 0.15)'; // Cor padrão suave
+  };
+
+  // Função para determinar cor baseada no jobPosition
+  const getJobPositionColor = (jobPosition) => {
+    const position = jobPosition?.toLowerCase() || '';
+    if (position.includes('prestador') && position.includes('serviço')) return '#9e9e9e'; // Cinza prateado
+    if (position === 'oficial') return '#2196f3'; // Azul
+    if (position === 'equipe') return '#ff9800'; // Laranja para membros da equipe
+    return '#757575'; // Cor padrão (cinza escuro)
   };
 
   // Preparar dados para o gráfico Chart.js
@@ -632,9 +685,31 @@ const SemestralGeral = () => {
                             flexShrink: 0
                           }} 
                         />
-                        <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
-                          {contract.contractName}
-                        </Typography>
+                        <Box>
+                          <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
+                            {contract.contractName}
+                          </Typography>
+                          {/* Mostrar managers do contrato */}
+                          {contractManagers[contract.contractId] && contractManagers[contract.contractId].length > 0 && (
+                            <Box sx={{ mt: 0.5 }}>
+                              {contractManagers[contract.contractId].map((manager, index) => (
+                                <Typography 
+                                  key={manager.userId || manager.name} 
+                                  variant="caption" 
+                                  sx={{ 
+                                    display: 'block',
+                                    color: getJobPositionColor(manager.jobPosition),
+                                    fontSize: '0.7rem',
+                                    lineHeight: 1.2,
+                                    fontWeight: isPrestadorServicos(manager.jobPosition) ? 'bold' : 'normal'
+                                  }}
+                                >
+                                  {manager.jobPosition === 'Equipe' ? manager.name : `${manager.name} (${manager.jobPosition})`}
+                                </Typography>
+                              ))}
+                            </Box>
+                          )}
+                        </Box>
                       </Box>
                     </TableCell>
                     {sortedDays.map(day => {
@@ -740,10 +815,18 @@ const SemestralGeral = () => {
                   })
                   .map(contractId => {
                     const contract = organizedTasks[contractId];
+                    let isFirstValidRow = true; // Rastrear primeira linha válida do setor
+                    
                     return Object.keys(contract.tasksByDate).map((dateFormatted, index) => {
                        const dateData = contract.tasksByDate[dateFormatted];
-                       const tasks = dateData.tasks;
-                       // const completedTasks = tasks.filter(t => [5, 6].includes(t.taskStatus)).length;
+                       const allTasks = dateData.tasks;
+                       const tasks = allTasks.filter(task => [5, 6].includes(task.taskStatus)); // Apenas tarefas concluídas
+                       
+                       // Se não há tarefas concluídas, pular esta linha
+                       if (tasks.length === 0) return null;
+                       
+                       const showSectorName = isFirstValidRow;
+                       isFirstValidRow = false; // Próximas linhas não mostrarão o nome
                        
                        // Calcular equipamentos únicos para este grupo de tarefas
                        const uniqueEquipments = new Set();
@@ -771,7 +854,7 @@ const SemestralGeral = () => {
                           }}
                         >
                           <TableCell>
-                            {index === 0 ? (
+                            {showSectorName ? (
                               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                 <Box 
                                   sx={{ 
@@ -782,9 +865,31 @@ const SemestralGeral = () => {
                                     flexShrink: 0
                                   }} 
                                 />
-                                <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
-                                  {contract.contractName}
-                                </Typography>
+                                <Box>
+                                  <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
+                                    {contract.contractName}
+                                  </Typography>
+                                  {/* Mostrar managers do contrato */}
+                                  {contractManagers[contractId] && contractManagers[contractId].length > 0 && (
+                                    <Box sx={{ mt: 0.5 }}>
+                                       {contractManagers[contractId].map((manager, index) => (
+                                         <Typography 
+                                           key={manager.userId || manager.name} 
+                                           variant="caption" 
+                                           sx={{ 
+                                             display: 'block',
+                                             color: getJobPositionColor(manager.jobPosition),
+                                             fontSize: '0.7rem',
+                                             lineHeight: 1.2,
+                                             fontWeight: isPrestadorServicos(manager.jobPosition) ? 'bold' : 'normal'
+                                           }}
+                                         >
+                                           {manager.jobPosition === 'Equipe' ? manager.name : `${manager.name} (${manager.jobPosition})`}
+                                         </Typography>
+                                       ))}
+                                    </Box>
+                                  )}
+                                </Box>
                               </Box>
                             ) : ''}
                           </TableCell>
@@ -840,6 +945,7 @@ const SemestralGeral = () => {
                       );
                     });
                   })
+                  .filter(Boolean) // Remover valores null quando não há tarefas concluídas
                 }
               </TableBody>
             </Table>
@@ -867,39 +973,85 @@ const SemestralGeral = () => {
           horizontal: 'center',
         }}
       >
-        <Box sx={{ p: 2, maxWidth: 400 }}>
+        <Box sx={{ p: 2, maxWidth: 500 }}>
           <Typography variant="h6" gutterBottom>
-            Tarefas do Dia ({popoverState.tasks.length})
+            Detalhes do Dia - {popoverState.tasks.length} Tarefa(s)
           </Typography>
+          
+          {/* Calcular total de equipamentos */}
+          {(() => {
+            const totalEquipments = popoverState.tasks.reduce((total, task) => {
+              try {
+                const equipmentsIdStr = task.equipmentsId || '[]';
+                const equipmentIds = JSON.parse(equipmentsIdStr);
+                return total + (Array.isArray(equipmentIds) ? equipmentIds.length : 0);
+              } catch (error) {
+                return total;
+              }
+            }, 0);
+            
+            return (
+              <Typography variant="body2" color="primary" sx={{ mb: 2, fontWeight: 'bold' }}>
+                Total de Equipamentos: {totalEquipments}
+              </Typography>
+            );
+          })()}
+          
           <List dense>
-            {popoverState.tasks.map((task, index) => (
-              <ListItem key={index} sx={{ px: 0 }}>
-                <Box sx={{ width: '100%' }}>
-                  <ListItemText
-                    primary={`${task.schoolName}`}
-                    secondary={task.orientation || 'N/A'}
-                  />
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
-                    <Chip 
-                      label={task.taskStatus === 5 || task.taskStatus === 6 ? 'Concluída' : 'Pendente'}
-                      color={task.taskStatus === 5 || task.taskStatus === 6 ? 'success' : 'default'}
-                      size="small"
-                    />
-                    {task.taskUrl && (
-                      <Tooltip title="Abrir tarefa no Auvo">
-                        <IconButton 
-                          size="small" 
-                          onClick={() => window.open(task.taskUrl, '_blank')}
-                          color="primary"
-                        >
-                          <LinkIcon />
-                        </IconButton>
-                      </Tooltip>
-                    )}
+            {popoverState.tasks.map((task, index) => {
+              // Calcular equipamentos desta tarefa específica
+              let taskEquipmentCount = 0;
+              try {
+                const equipmentsIdStr = task.equipmentsId || '[]';
+                const equipmentIds = JSON.parse(equipmentsIdStr);
+                taskEquipmentCount = Array.isArray(equipmentIds) ? equipmentIds.length : 0;
+              } catch (error) {
+                taskEquipmentCount = 0;
+              }
+              
+              return (
+                <ListItem key={index} sx={{ px: 0, mb: 1 }}>
+                  <Box sx={{ width: '100%' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
+                      <Box sx={{ flex: 1 }}>
+                        <Typography variant="body1" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
+                          {task.schoolName}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {task.orientation || 'N/A'}
+                        </Typography>
+                      </Box>
+                      <Chip 
+                        label={`${taskEquipmentCount} equip.`}
+                        color="info"
+                        size="small"
+                        variant="outlined"
+                        sx={{ ml: 1 }}
+                      />
+                    </Box>
+                    
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Chip 
+                        label={task.taskStatus === 5 || task.taskStatus === 6 ? 'Concluída' : 'Pendente'}
+                        color={task.taskStatus === 5 || task.taskStatus === 6 ? 'success' : 'default'}
+                        size="small"
+                      />
+                      {task.taskUrl && (
+                        <Tooltip title="Abrir tarefa no Auvo">
+                          <IconButton 
+                            size="small" 
+                            onClick={() => window.open(task.taskUrl, '_blank')}
+                            color="primary"
+                          >
+                            <LinkIcon />
+                          </IconButton>
+                        </Tooltip>
+                      )}
+                    </Box>
                   </Box>
-                </Box>
-              </ListItem>
-            ))}
+                </ListItem>
+              );
+            })}
           </List>
         </Box>
       </Popover>

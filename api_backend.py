@@ -481,6 +481,102 @@ def _get_dashboard_by_contract_data(group_id: int, start_date: str = None, end_d
             cur.execute("SELECT id, description FROM task_types")
             task_type_map = {tt['id']: tt['description'] for tt in cur.fetchall()}
 
+            # Buscar informações dos managers do contrato usando tabela teams e customers
+            contract_managers = []
+            
+            # Mapeamento de contract_id para setor na tabela teams
+            sector_mapping = {
+                156750: "Setor 01",  # SETOR 01
+                156751: "Setor 02",  # SETOR 02
+                156752: "Setor 03",  # SETOR 03
+                156753: "Setor 04",  # SETOR 04
+                156754: "Setor 05"   # SETOR 05
+            }
+            
+            sector_name = sector_mapping.get(group_id)
+            print(f"\n=== DEBUG MANAGERS - Contract ID: {group_id}, Sector: {sector_name} ===")
+            
+            if sector_name:
+                # Buscar equipe específica do setor na tabela teams (apenas STS)
+                cur.execute("SELECT teamUsers FROM teams WHERE description LIKE ? AND description LIKE 'STS%'", (f'%{sector_name}%',))
+                team_data = cur.fetchone()
+                print(f"Team data found: {team_data}")
+                
+                team_users = []
+                if team_data and team_data['teamUsers']:
+                    try:
+                        team_users = json.loads(team_data['teamUsers'])
+                        if not isinstance(team_users, list):
+                            team_users = []
+                    except (json.JSONDecodeError, TypeError):
+                        team_users = []
+                
+                print(f"Team users extracted: {team_users}")
+                
+                # Buscar managers das escolas do contrato (customers.managersId)
+                all_manager_ids = set()
+                for school in schools_raw:
+                    managers_id_str = school.get('managersId', '[]')
+                    try:
+                        manager_ids = json.loads(managers_id_str if managers_id_str else '[]')
+                        if isinstance(manager_ids, list):
+                            for mid in manager_ids:
+                                if str(mid).isdigit():
+                                    all_manager_ids.add(int(mid))
+                    except (json.JSONDecodeError, TypeError):
+                        if isinstance(managers_id_str, str):
+                            for mid in managers_id_str.split(','):
+                                if mid.strip().isdigit():
+                                    all_manager_ids.add(int(mid.strip()))
+                
+                # Buscar informações dos managers na tabela users
+                managers_from_customers = {}
+                if all_manager_ids:
+                    manager_ids_list = list(all_manager_ids)
+                    placeholders = ','.join('?' for _ in manager_ids_list)
+                    cur.execute(f"SELECT userId, name, jobPosition FROM users WHERE userId IN ({placeholders})", manager_ids_list)
+                    managers_data = cur.fetchall()
+                    
+                    for manager in managers_data:
+                        managers_from_customers[manager['name']] = {
+                            'userId': manager['userId'],
+                            'name': manager['name'],
+                            'jobPosition': manager['jobPosition']
+                        }
+                
+                print(f"Managers from customers: {list(managers_from_customers.keys())}")
+                
+                # Fazer depara: mostrar usuários da equipe, priorizando dados de customers quando disponível
+                for team_user_name in team_users:
+                    if team_user_name in managers_from_customers:
+                        print(f"MATCH found: {team_user_name} -> {managers_from_customers[team_user_name]}")
+                        contract_managers.append(managers_from_customers[team_user_name])
+                    else:
+                        print(f"NO MATCH: {team_user_name} not found in customers, adding from teams")
+                        # Se não está em customers, adicionar apenas com nome da equipe
+                        contract_managers.append({
+                            'userId': None,
+                            'name': team_user_name,
+                            'jobPosition': 'Equipe'  # Identificar como membro da equipe
+                        })
+                
+                # Ordenar managers: Prestador de Serviços primeiro, depois outros
+                def sort_managers(manager):
+                    job_position = manager.get('jobPosition', '').lower()
+                    if 'prestador' in job_position and 'serviço' in job_position:
+                        return 0  # Primeiro
+                    elif job_position == 'oficial':
+                        return 1  # Segundo
+                    elif job_position == 'equipe':
+                        return 2  # Terceiro
+                    else:
+                        return 3  # Outros por último
+                
+                contract_managers.sort(key=sort_managers)
+                
+                print(f"Final contract_managers (sorted): {contract_managers}")
+                print("=== END DEBUG MANAGERS ===")
+
             # 2. Obter todos os dados relacionados
             school_id_placeholders = ','.join('?' for _ in school_ids)
             allowed_task_type_ids = [175644, 175648, 175652, 175656, 175164, 175641, 175642, 175646, 175649, 175650, 175653, 175654, 177626, 184713, 184714, 184715, 184717]
@@ -682,7 +778,8 @@ def _get_dashboard_by_contract_data(group_id: int, start_date: str = None, end_d
                 "indicators": indicators,
                 "schools": sanitized_schools,
                 "collaborators": [dict(c) for c in final_collaborators],
-                "tasks": [dict(t) for t in all_tasks]
+                "tasks": [dict(t) for t in all_tasks],
+                "managers": contract_managers  # Adicionar informações dos managers
             }
             
             print("\n==== VERIFICAÇÃO FINAL DE RESPOSTA PARA O FRONTEND =====\n")
