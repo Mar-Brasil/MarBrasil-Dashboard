@@ -2,28 +2,44 @@ version: '3.8'
 
 services:
   api:
-    image: auvo-api:latest
-    ports:
-      - target: 8000
-        published: 3333  # Alterado de 8000 para 3333
-        protocol: tcp
-        mode: host
-    volumes:
-      - auvo_data:/app/auvo.db
-      - download_data:/app/downloads
+    build: .
+    container_name: auvo-api
     environment:
       - PYTHONUNBUFFERED=1
-    deploy:
-      restart_policy:
-        condition: any
-        delay: 5s
-        max_attempts: 3
-        window: 120s
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 512M
+      - PORT=80
+    volumes:
+      - ./auvo.db:/app/auvo.db
+      - ./downloads:/app/downloads
+    restart: unless-stopped
+    networks:
+      - marbrnet
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.auvo-api.rule=Host(`api.painel.com.br`)"
+      - "traefik.http.routers.auvo-api.entrypoints=websecure"
+      - "traefik.http.services.auvo-api.loadbalancer.server.port=80"
+      - "traefik.docker.network=marbrnet"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
-volumes:
-  auvo_data:
-  download_data:
+  frontend:
+    build: ./painel-admin
+    container_name: auvo-frontend
+    environment:
+      - REACT_APP_API_URL=https://api.painel.com.br/api
+    restart: unless-stopped
+    networks:
+      - marbrnet
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.auvo-frontend.rule=Host(`painel.marbr.com.br`)"
+      - "traefik.http.routers.auvo-frontend.entrypoints=websecure"
+      - "traefik.http.services.auvo-frontend.loadbalancer.server.port=80"
+      - "traefik.docker.network=marbrnet"
+
+networks:
+  marbrnet:
+    external: true

@@ -31,7 +31,7 @@ ChartJS.register(
   ChartDataLabels
 );
 
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3333/api';
 
 // IDs dos contratos de Santos (SETOR 01 a SETOR 05)
 const SANTOS_CONTRACT_IDS = [156750, 156751, 156752, 156753, 156754];

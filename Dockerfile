@@ -24,7 +24,7 @@ COPY . .
 RUN mkdir -p /app/downloads
 
 # Expõe a porta que a aplicação vai rodar
-EXPOSE 8000
+EXPOSE 3333
 
 # Comando para rodar a aplicação
-CMD ["uvicorn", "api_backend:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "api_backend:app", "--host", "0.0.0.0", "--port", "3333"]
