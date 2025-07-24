@@ -1,0 +1,74 @@
+# Projeto Dashboard Auvo - Visão Profissional
+
+## Backend (API e Integração)
+- **Tecnologia:** Node.js/Express
+- **Função:** Atua como núcleo de integração, processamento e distribuição de dados do ecossistema Auvo.
+- **Principais responsabilidades:**
+  - Receber eventos em tempo real via webhook do Auvo (abertura de tarefas, check-in, check-out, etc).
+  - Realizar enriquecimento dos dados recebidos, consultando o banco SQLite local (`auvo.db`) para obter nomes de usuários, detalhes de clientes, equipamentos e tarefas.
+  - Calcular indicadores-chave (KPIs) e tempo de execução das tarefas.
+  - Expor endpoints RESTful que fornecem dados estruturados em JSON, seguindo o padrão abaixo:
+
+```json
+{
+  "contract": { ... },       // Detalhes do contrato selecionado
+  "indicators": {           // KPIs do painel
+    "total_schools": 10,
+    "total_collaborators": 25,
+    "total_equipments": 378,
+    "total_tasks": 151,
+    "completion_rate": 0.86,
+    "task_type_kpis": [ ... ]
+  },
+  "schools": [ ... ],        // Escolas, seus equipamentos e tarefas
+  "collaborators": [ ... ]   // Colaboradores
+}
+```
+  - Enviar eventos em tempo real para o frontend via WebSocket (Socket.IO), garantindo atualização instantânea do painel.
+
+## Frontend (Dashboard.js e Menu)
+- **Tecnologia:** React
+- **Função:** Interface moderna e responsiva para visualização, análise e acompanhamento operacional dos dados Auvo.
+- **Principais funcionalidades:**
+  - **Dashboard.js:**
+    - Exibe KPIs estratégicos: total de escolas, colaboradores, equipamentos, tarefas, taxa de conclusão e tarefas por tipo.
+    - Permite navegação detalhada por escolas, listando equipamentos e tarefas associadas, com filtros dinâmicos.
+    - Apresenta gráficos, tabelas e cards de resumo para rápida tomada de decisão.
+  - **Aba Tempo Real:**
+    - Mostra no mapa (Leaflet/OpenStreetMap) todas as tarefas abertas em tempo real, com localização precisa.
+    - Cada tarefa é representada por um círculo verde. Ao clicar, exibe popup com nome do responsável, status, tempo de execução e endereço.
+    - Atualização automática via WebSocket, sem necessidade de refresh manual.
+  - **Menu lateral:**
+    - Navegação intuitiva entre módulos: Dashboard principal, Relatórios de Faturamento, Visão Consolidada, Tempo Real, entre outros.
+    - Ícones e organização que facilitam o acesso rápido às principais funcionalidades.
+
+## Diferenciais e Benefícios
+- Atualização de dados em tempo real, sem polling.
+- Estrutura de dados padronizada e expansível, facilitando integrações futuras.
+- Visualização centralizada e detalhada de toda a operação, com foco em usabilidade e performance.
+- Backend e frontend desacoplados, garantindo escalabilidade e manutenção simplificada.
+
+---
+
+**Resumo Executivo:**
+O Dashboard Auvo entrega uma solução robusta para monitoramento, análise e gestão operacional, integrando dados de múltiplas fontes em tempo real e proporcionando uma experiência visual rica e eficiente para gestores e equipes técnicas.
+
+### Frontend
+- Desenvolvido em React.
+- Consome o JSON do backend para montar o painel de indicadores, relatórios e o mapa em tempo real.
+- Página "Tempo Real":
+  - Recebe dados via WebSocket e exibe tarefas em tempo real no mapa (Leaflet/OpenStreetMap).
+  - Cada tarefa aparece como um círculo verde. Ao clicar, mostra popup com nome do responsável, status, tempo de execução, endereço etc.
+- Dashboard principal:
+  - Exibe KPIs (total de escolas, colaboradores, equipamentos, tarefas, taxa de conclusão, tarefas por tipo).
+  - Lista escolas, equipamentos e tarefas detalhadas conforme estrutura acima.
+
+## Observações Gerais
+- O painel é atualizado em tempo real, sem polling, graças ao uso de webhooks e WebSocket.
+- A estrutura dos dados é padronizada para facilitar consumo, filtragem e geração de relatórios no frontend.
+- O backend pode ser expandido para fornecer mais detalhes, históricos ou filtros conforme necessidade.
+
+---
+
+**Resumo:**
+O projeto entrega um painel moderno e em tempo real para acompanhamento de tarefas, KPIs e dados operacionais, com integração total entre backend e frontend e estrutura de dados robusta e padronizada.

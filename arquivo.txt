@@ -1,0 +1,40 @@
+python fetch_users.py
+python fetch_user_tasks.py
+python fetch_tasks_by_period.py
+
+
+ uvicorn api_backend:app --reload
+ ou para o app Android
+
+ uvicorn api_backend_android:app --reload --host 0.0.0.0 --port 8001
+
+ cd painel-admin
+ npm run server 
+ cd painel-admin  
+ npm start  
+
+android 
+
+
+uvicorn api_backend_mobile:app --reload --host 0.0.0.0 --port 8001
+
+ & "$($env:LOCALAPPDATA)\Android\Sdk\emulator\emulator.exe" -avd Pixel -gpu swiftshader_indirect -verbose
+
+ --------------------
+
+ fluxo 
+
+ vou te enviar uns print e voce somente verifica se ja esta correto a forma de buscar .
+vamos analisar juntos , ok 
+print 1 vou usar de exemplo o "id" 156750 
+customer_groups , id , 156750  <-- Aqui e o Contrato 
+customers , groupsId ,156750 <-- Retorna o numero de id que sao varios e o nome da escola que esta no "description" 
+id que retornou , segue no segundo print a relação dos id
+vou usar de exemplo um dos id que retornou "id" 11827707 
+
+equipments segue o terceiro print com os equipamentos da escola 11827707
+
+entao o fluxo pra mim e 
+seleciono o contrato em customer_groups , apos a selecao vai em customers , encontra o nome da escola e a quatidade de escolas associada ao id do customers_groups, 
+apos encontrar o nome da escola encontra os equipamentos da escola dentro de equipments  . esta correto esse fluxo 
+ja e assim que o arquivo Dashboard.js funciona ?

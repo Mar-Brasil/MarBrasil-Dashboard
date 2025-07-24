@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Painel Auvo</string>
+    
+    <!-- Login -->
+    <string name="login_title">Painel Auvo</string>
+    <string name="login_subtitle">Faça login para continuar</string>
+    <string name="username">Usuário</string>
+    <string name="password">Senha</string>
+    <string name="login">Entrar</string>
+    <string name="login_error">Erro ao fazer login</string>
+    <string name="login_invalid_credentials">Usuário ou senha inválidos</string>
+    <string name="login_network_error">Erro de conexão. Verifique sua internet.</string>
+    
+    <!-- Dashboard -->
+    <string name="dashboard_title">Dashboard</string>
+    <string name="welcome_user">Bem-vindo, %s!</string>
+    <string name="loading">Carregando...</string>
+    <string name="error_loading_data">Erro ao carregar dados</string>
+    <string name="retry">Tentar novamente</string>
+    <string name="refresh">Atualizar</string>
+    
+    <!-- Navigation -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_prev_mensal">Prev. Mensal</string>
+    <string name="nav_prev_semestral">Prev. Semestral</string>
+    <string name="nav_corretiva">Corretiva</string>
+    <string name="nav_pmoc">PMOC</string>
+    <string name="nav_settings">Configurações</string>
+    
+    <!-- KPIs -->
+    <string name="kpi_schools">Escolas</string>
+    <string name="kpi_collaborators">Colaboradores</string>
+    <string name="kpi_equipments">Equipamentos</string>
+    <string name="kpi_tasks_completed">Tarefas Concluídas</string>
+    <string name="kpi_tasks_pending">Tarefas Pendentes</string>
+    <string name="kpi_progress">Progresso</string>
+    
+    <!-- Tasks -->
+    <string name="task_status_completed">Concluída</string>
+    <string name="task_status_pending">Pendente</string>
+    <string name="task_status_in_progress">Em Andamento</string>
+    <string name="task_date">Data</string>
+    <string name="task_school">Escola</string>
+    <string name="task_collaborator">Colaborador</string>
+    <string name="task_equipment">Equipamento</string>
+    
+    <!-- Settings -->
+    <string name="settings_title">Configurações</string>
+    <string name="settings_notifications">Notificações</string>
+    <string name="settings_enable_notifications">Habilitar notificações</string>
+    <string name="settings_notification_frequency">Frequência de verificação</string>
+    <string name="settings_logout">Sair</string>
+    <string name="settings_about">Sobre</string>
+    <string name="settings_version">Versão</string>
+    
+    <!-- Notifications -->
+    <string name="notification_channel_name">Tarefas Auvo</string>
+    <string name="notification_channel_description">Notificações sobre tarefas pendentes e próximas do prazo</string>
+    <string name="notification_pending_tasks_title">Tarefas Pendentes</string>
+    <string name="notification_due_tasks_title">Tarefas Próximas do Prazo</string>
+    
+    <!-- Common -->
+    <string name="ok">OK</string>
+    <string name="cancel">Cancelar</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="save">Salvar</string>
+    <string name="delete">Excluir</string>
+    <string name="edit">Editar</string>
+    <string name="view">Visualizar</string>
+    <string name="close">Fechar</string>
+    <string name="search">Pesquisar</string>
+    <string name="filter">Filtrar</string>
+    <string name="all">Todos</string>
+    <string name="none">Nenhum</string>
+    <string name="total">Total</string>
+    <string name="percentage">Porcentagem</string>
+</resources>

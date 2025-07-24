@@ -1,0 +1,59 @@
+# CHECKPOINT DE ATUALIZAÇÕES – 02/07/2025
+
+Este arquivo registra todas as alterações importantes realizadas no painel (frontend, backend e banco de dados), para referência futura e suporte em caso de erros ou dúvidas. Use este documento para restaurar o funcionamento do painel caso surjam problemas.
+
+---
+
+## 1. Banco de Dados
+- **Arquivo:** `auvo.db`
+- **Tabelas principais:**
+  - `equipments`: contém todos os equipamentos cadastrados.
+    - Campos importantes: `id`, `name`, `associatedCustomerId` (vincula com a escola), `active` (1 = ativo, 0 = inativo), `identifier`.
+  - `customers`: contém todas as escolas.
+    - Campos: `id`, `description`, `groupsId` (vínculo com contrato).
+  - `customer_groups`: contratos.
+  - `tasks`, `task_types`: tarefas e tipos de tarefa.
+- **Relacionamento:**
+  - Cada equipamento é associado a uma escola pelo campo `associatedCustomerId` (deve ser igual ao `id` da escola em `customers`).
+  - Cada escola pertence a um contrato pelo campo `groupsId` (string contendo o id do grupo/contrato).
+- **Sincronização:**
+  - O endpoint `/equipments/` deve estar incluído no processo de sincronização no arquivo `sync_auvo.py` para garantir que os equipamentos estejam atualizados no banco.
+  - O campo `active` dos equipamentos deve ser corretamente preenchido (1 = ativo).
+
+---
+
+## 2. Backend (api_backend.py)
+- O endpoint `/api/dashboard/{group_id}` retorna as escolas e equipamentos filtrando corretamente por contrato e por equipamentos ativos:
+  - Busca equipamentos usando `associatedCustomerId` (não `customer_id`).
+  - Soma apenas os equipamentos com `active = 1` para os KPIs.
+- O endpoint `/api/escola/{school_id}/equipamentos-debug` pode ser usado para depuração de equipamentos por escola.
+- Logs de depuração foram adicionados para validar a estrutura e quantidade de equipamentos retornados por escola.
+
+---
+
+## 3. Frontend (Dashboard.js)
+- O KPI "Total de Equipamentos" agora soma diretamente todos os equipamentos ativos das escolas exibidas (`dashboardData.schools`).
+- O KPI "Escolas na Visualização" mostra exatamente o número de escolas em `dashboardData.schools`.
+- Os ícones especiais (PMOC, Mensal, Corretiva etc) aparecem no canto direito do resumo da escola.
+- O botão de debug (ícone de bug) foi removido do canto direito do AccordionSummary.
+- O frontend utiliza React + Material-UI e consome dados do backend via Axios.
+
+---
+
+## 4. Passos de Depuração Sugeridos
+1. **Banco:**
+   - Verifique se os equipamentos estão associados corretamente (`associatedCustomerId` igual ao `id` da escola) e se o campo `active` está correto.
+   - Certifique-se de que a tabela `equipments` está sendo atualizada via sincronização.
+2. **Backend:**
+   - Confirme que o endpoint `/api/dashboard/{group_id}` retorna as escolas e os equipamentos ativos corretamente.
+   - Use o endpoint de debug para checar equipamentos de uma escola específica.
+3. **Frontend:**
+   - Confira se os KPIs de equipamentos e escolas estão batendo com os dados reais exibidos.
+   - Verifique a presença dos ícones especiais e a ausência do botão de debug.
+
+---
+
+**Este documento serve como referência para restaurar ou depurar o painel caso surjam problemas após atualizações.**
+
+Data do checkpoint: 02/07/2025
+Responsável: Cascade I.A.

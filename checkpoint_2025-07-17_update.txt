@@ -1,0 +1,43 @@
+# CHECKPOINT DE ATUALIZAÇÕES – 17/07/2025 (ATUALIZAÇÃO)
+
+## Implementações Realizadas:
+
+### 1. Funcionalidade de Filtro na Barra de Navegação Inferior
+- Implementação completa da funcionalidade de filtro na `BottomNavigationView`
+- Adição de estado visual para indicar o filtro ativo
+- Configuração do item Home como selecionado por padrão ao iniciar o aplicativo
+- Feedback visual (Snackbar) quando o usuário muda de filtro
+- Cabeçalho indicativo do filtro ativo na tela
+
+### 2. Interatividade nos Itens do Dashboard
+- Adição de interatividade aos itens da lista de tarefas (clique para ver detalhes)
+- Criação da `TaskDetailsActivity` para exibir detalhes completos de uma tarefa
+- Interface de detalhes com informações completas sobre a tarefa selecionada
+- Botão para visualizar lista completa de tarefas (preparado para implementação futura)
+
+### 3. Melhorias Visuais
+- Barras de progresso com cores diferentes baseadas no percentual de conclusão:
+  - Verde para progresso bom (≥ 75%)
+  - Amarelo para progresso médio (≥ 50%)
+  - Vermelho para progresso baixo (< 50%)
+- Mensagens informativas quando não há tarefas para o filtro selecionado
+- Adição de cores do Material Design para consistência visual
+
+### 4. Refatoração de Código
+- Refatoração do método `createTaskListItem` para receber diretamente o objeto `TaskTypeKPI`
+- Melhoria na organização do código para facilitar manutenção
+- Tratamento para casos em que não há tarefas para o filtro selecionado
+
+## Arquivos Modificados/Criados:
+1. `MainActivity.kt` - Implementação do filtro e interatividade
+2. `colors.xml` - Adição de cores para barras de progresso
+3. `TaskDetailsActivity.kt` (novo) - Activity para exibir detalhes de tarefas
+4. `activity_task_details.xml` (novo) - Layout para a tela de detalhes
+5. `AndroidManifest.xml` - Registro da nova Activity
+
+## Próximos Passos:
+1. Implementar a funcionalidade de listar todas as tarefas de um determinado tipo
+2. Adicionar mais estatísticas e gráficos na tela de detalhes
+3. Implementar cache de dados para funcionamento offline
+4. Adicionar animações de transição entre telas
+5. Implementar notificações para tarefas pendentes

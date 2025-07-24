@@ -1,0 +1,46 @@
+# CHECKPOINT DE ATUALIZAÇÕES – 17/07/2025
+
+## Objetivo da Sessão:
+Refinar o dashboard do aplicativo Android para exibir dados de progresso de tarefas em tempo real, com base nos contratos do usuário logado, e realizar ajustes finos na interface do usuário para garantir consistência visual.
+
+---
+
+## 1. Backend (api_backend_android.py)
+
+- **Cálculo Detalhado de Progresso de Tarefas:**
+  - A função `_get_dashboard_by_contract_data` foi significativamente aprimorada.
+  - Em vez de apenas contar o total de tarefas por tipo, a lógica agora calcula e retorna, para cada tipo de tarefa (PMOC, Corretiva, etc.), uma estrutura completa contendo:
+    - `total`: Número total de tarefas.
+    - `completed`: Número de tarefas concluídas (status 5 ou 6).
+    - `percentage`: O percentual de conclusão calculado.
+
+- **Correção de Erro Crítico (KeyError):**
+  - Foi corrigido um erro `KeyError: 'count'` que causava a falha do endpoint `/api/dashboard/batch`.
+  - O erro ocorreu porque, após a refatoração da estrutura de dados, o código ainda tentava ordenar a lista de tarefas por uma chave (`count`) que não existia mais.
+  - A ordenação foi ajustada para usar a chave `total`, resolvendo o problema.
+
+---
+
+## 2. Aplicativo Android (Kotlin & XML)
+
+- **Exibição de Dados Reais de Progresso:**
+  - O aplicativo agora exibe o progresso real das tarefas, em vez de dados estáticos (0/0).
+  - **Modelo de Dados (`Dashboard.kt`):** A classe `TaskTypeKPI` foi atualizada para incluir os novos campos (`id`, `total`, `completed`, `percentage`) enviados pelo backend.
+  - **Lógica da UI (`MainActivity.kt`):** A função `updateUi` foi ajustada para passar os valores dinâmicos `kpi.completed` e `kpi.total` para a função que cria os itens da lista.
+
+- **Adição de Barra de Progresso Visual:**
+  - **Layout (`list_item_task_progress.xml`):** O layout de cada item na lista de "Progresso de Tarefas" foi modificado para incluir uma `ProgressBar` horizontal.
+  - **Lógica da UI (`MainActivity.kt`):** A função `createTaskListItem` foi atualizada para encontrar a nova `ProgressBar` por seu ID e definir seu progresso com base no percentual recebido do backend.
+
+- **Ajuste Fino de Alinhamento da UI:**
+  - **Layout (`indicator_card_item.xml`):** Foi corrigido um desalinhamento visual nos cartões de indicadores principais ("Total de Tarefas", "Total de Equipamentos", etc.).
+  - A correção foi feita adicionando a propriedade `android:lines="2"` ao `TextView` do título, forçando todos os cartões a terem a mesma altura e alinhando seu conteúdo verticalmente.
+
+---
+
+## Estado Atual:
+O fluxo completo, desde o login do usuário no Android até a exibição de um dashboard funcional, visualmente polido e com dados em tempo real, está implementado e funcionando corretamente. O backend serve os dados corretos e o aplicativo os exibe de forma precisa e esteticamente agradável.
+
+**Próximos Passos (Sugestão):**
+- Implementar a funcionalidade de filtro da barra de navegação inferior (`BottomNavigationView`) que já está na UI.
+- Adicionar mais interatividade ou detalhes ao clicar nos itens do dashboard.

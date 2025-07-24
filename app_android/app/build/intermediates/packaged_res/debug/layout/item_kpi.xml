@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/CardView.Auvo"
+    android:layout_margin="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center">
+
+        <!-- Icon -->
+        <ImageView
+            android:id="@+id/ivKpiIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginBottom="8dp"
+            android:contentDescription="KPI Icon"
+            app:tint="@color/auvo_primary"
+            tools:src="@android:drawable/ic_dialog_info" />
+
+        <!-- Value -->
+        <TextView
+            android:id="@+id/tvKpiValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Auvo.Headline"
+            android:textSize="24sp"
+            android:textColor="@color/auvo_primary"
+            android:layout_marginBottom="4dp"
+            tools:text="125" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvKpiTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Auvo.Caption"
+            android:textAlignment="center"
+            android:maxLines="2"
+            android:ellipsize="end"
+            tools:text="Escolas" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

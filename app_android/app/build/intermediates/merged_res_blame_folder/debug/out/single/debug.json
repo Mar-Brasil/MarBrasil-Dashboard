@@ -1,0 +1,142 @@
+[
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/layout_activity_main.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/layout_item_kpi.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/layout/item_kpi.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/mipmap-mdpi_ic_launcher_round.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/mipmap-mdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/drawable_ic_task_default.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/drawable/ic_task_default.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/mipmap-xhdpi_ic_launcher_round.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/mipmap-xhdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/drawable_ic_people.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/drawable/ic_people.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/xml_backup_rules.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/drawable_ic_semestral.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/drawable/ic_semestral.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/drawable_ic_pending.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/drawable/ic_pending.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/drawable_ic_build.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/drawable/ic_build.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/menu_bottom_navigation.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/menu/bottom_navigation.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/layout_activity_login.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/layout/activity_login.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/drawable_ic_mensal.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/drawable/ic_mensal.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/xml_data_extraction_rules.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/mipmap-hdpi_ic_launcher.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/mipmap-hdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/mipmap-xxxhdpi_ic_launcher_round.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/mipmap-xxxhdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/mipmap-xhdpi_ic_launcher.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/mipmap-xhdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/mipmap-mdpi_ic_launcher.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/mipmap-mdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/drawable_bg_equipment_count.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/drawable/bg_equipment_count.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/layout_item_progress.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/layout/item_progress.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/drawable_ic_check.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/drawable/ic_check.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/drawable_ic_school.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/drawable/ic_school.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/mipmap-hdpi_ic_launcher_round.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/mipmap-hdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/layout_activity_settings.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/layout/activity_settings.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/layout_item_task.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/layout/item_task.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/drawable_ic_progress.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/drawable/ic_progress.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/mipmap-xxxhdpi_ic_launcher.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/mipmap-xxxhdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/drawable_ic_pmoc.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/drawable/ic_pmoc.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/mipmap-xxhdpi_ic_launcher.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/mipmap-xxhdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/mipmap-xxhdpi_ic_launcher_round.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/mipmap-xxhdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-merged_res-4:/drawable_ic_corretiva.xml.flat",
+        "source": "com.auvo.painel.app-main-6:/drawable/ic_corretiva.xml"
+    }
+]

@@ -1,0 +1,48 @@
+python .\download_equipments.py
+
+python .\download_users.py     
+
+python update_data_incremental.py
+
+python download_all_user_tasks.py
+
+# Sequência de scripts para download de dados da API Auvo
+
+# Dados básicos
+ 
+python downloads/download_equipments_new.py  ---> corrigido 
+python .\download_users.py      ----> corrigido 
+python .\download_teams.py    -----> corrigido 
+python .\download_segments.py 
+
+# Dados de categorização
+python .\download_keywords.py
+python .\download_task_types.py   ----> corrigido 
+python .\download_questionnaires.py
+
+# Dados de negócio
+python .\download_customers.py
+python .\download_services.py
+python .\download_products.py
+python .\download_all_user_tasks.py
+
+# Atualização incremental
+python update_data_incremental.py
+
+python validate_task_links.py  --> verifcar link do banco de dados 
+
+
+vamos para a seguinte atualização .sobre as metricas .
+a metrica do PMOC e so verificar se tem tarefa de PMOC em aberto e qual status da tarefa se tiver 3 tarefas em aberto e as 3 finalizadas entao esta 100% .
+agora vamos para a metrica do Preventiva Mensal , essa metrica voce vai pegar todos os equipamentos e as escolas e verificar se em todos equipamentos foram feitos a preventiva mensal, as maquinas que nao tiver a preventiva mensal voce disponibilzar um botao ao lado com 
+
+
+cd "c:\App Painel Auvo\painel-admin"
+npm run server 
+npm start
+
+pasta raiz =  python -m uvicorn api_backend:app --reload
+
+
+python contagem_equipamentos.py
+

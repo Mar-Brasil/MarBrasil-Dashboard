@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "com.auvo.painel.app-mergeDebugResources-3:/layout/activity_settings.xml",
+        "source": "com.auvo.painel.app-main-6:/layout/activity_settings.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-mergeDebugResources-3:/layout/activity_main.xml",
+        "source": "com.auvo.painel.app-main-6:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-mergeDebugResources-3:/layout/item_task.xml",
+        "source": "com.auvo.painel.app-main-6:/layout/item_task.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-mergeDebugResources-3:/layout/item_kpi.xml",
+        "source": "com.auvo.painel.app-main-6:/layout/item_kpi.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-mergeDebugResources-3:/layout/activity_login.xml",
+        "source": "com.auvo.painel.app-main-6:/layout/activity_login.xml"
+    },
+    {
+        "merged": "com.auvo.painel.app-mergeDebugResources-3:/layout/item_progress.xml",
+        "source": "com.auvo.painel.app-main-6:/layout/item_progress.xml"
+    }
+]

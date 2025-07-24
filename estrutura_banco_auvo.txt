@@ -1,0 +1,142 @@
+# Estrutura do Banco de Dados - Projeto Auvo
+
+## Tabela: customers (escolas)
+- id (PK)
+- externalId
+- description (nome da escola)
+- cpfCnpj
+- phoneNumber (JSON string)
+- email (JSON string)
+- manager
+- managerJobPosition
+- note
+- address
+- latitude
+- longitude
+- maximumVisitTime
+- unitMaximumTime
+- groupsId (JSON string)
+- managerTeamsId (JSON string)
+- managersId (JSON string)
+- segmentId
+- active (0/1)
+- adressComplement
+- creationDate
+- contacts (JSON string)
+- dateLastUpdate
+- uriAnexos (JSON string)
+- uriAttachments
+
+**Relacionamentos:**
+- Cada equipamento pode ter um campo `associated_customer_id` ligando ao `id` de customers.
+- Cada tarefa pode ter um campo `customerId` ligando ao `id` de customers.
+
+---
+
+## Tabela: equipments
+- id (PK)
+- name
+- tipo
+- setor_id
+- associated_customer_id (chave estrangeira para customers.id)
+- ativo
+- identificador
+
+**Relacionamentos:**
+- Equipamento pertence a uma escola (`associated_customer_id`).
+
+---
+
+## Tabela: tasks
+- taskID (PK)
+- externalId
+- idUserFrom (quem criou)
+- idUserTo (quem executa)
+- userToName
+- userFromName
+- customerId (escola)
+- customerExternalId
+- customerDescription
+- taskType
+- taskTypeDescription
+- creationDate
+- taskDate
+- latitude
+- longitude
+- address
+- orientation
+- priority
+- deliveredOnSmarthPhone (0/1)
+- dateLastUpdate
+
+**Relacionamentos:**
+- Tarefa pertence a uma escola (`customerId`).
+- Tarefa atribuída a um usuário (`idUserTo`), criada por outro (`idUserFrom`).
+- Tarefa tem tipo e status.
+
+---
+
+## Tabela: users
+- userId (PK)
+- externalId
+- name
+- smartphoneNumber
+- login
+- email
+- culture
+- jobPosition
+- userTypeId
+- userTypeDescription
+- workDaysOfWeek (JSON string)
+- startWorkHour
+- endWorkHour
+- startLunchHour
+- endLunchHour
+- hourValue
+- pictureUrl
+- basePointAddress
+- basePointLatitude
+- basePointLongitude
+- openTaskInPlace (0/1)
+- grabGalleryPhotos (0/1)
+- gpsFrequency
+- checkInManual (0/1)
+- unavailableForTasks (0/1)
+- editTaskAfterCheckout (0/1)
+- informStartTravel (0/1)
+- changeBasePoint (0/1)
+- associated_customer_id
+- ativo
+- identificador
+
+---
+
+## Tabela: customer_groups
+- id (PK)
+- description
+
+---
+
+## Outras tabelas relevantes
+- product_categories, products, equipment_categories, questionnaires, teams, quotations, tickets, expense_types, satisfaction_surveys, expenses, segments, webhooks, gps, service_orders, keywords, services, task_types
+
+---
+
+## Relações principais para o Dashboard
+- Cliente (escola) → Equipamentos: via `equipments.associated_customer_id = customers.id`
+- Cliente (escola) → Tarefas: via `tasks.customerId = customers.id`
+- Tarefa → Usuário: via `tasks.idUserTo = users.userId`
+- Tarefa → Tipo/Status: via `tasks.taskTypeDescription` e campos de data/status
+
+---
+
+## Exemplos de perguntas para o dashboard
+- Quantas escolas foram atendidas no período X?
+- Quais tarefas foram concluídas, pendentes, canceladas, por escola?
+- Quem executou cada tarefa?
+- Quais equipamentos estão em cada escola?
+- Quais tipos de tarefa foram realizados em cada escola?
+
+---
+
+**Este documento serve como referência para o mapeamento e entendimento das relações do banco de dados do projeto Auvo.**

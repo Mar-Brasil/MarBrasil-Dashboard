@@ -1,0 +1,2 @@
+timestamp,excel_total,database_total,difference,matched_identifiers,excel_only_count,database_only_count,status_discrepancies,match_percentage
+2025-07-23 14:59:50,7742,7775,33,7725,0,3,0,99.9611801242236

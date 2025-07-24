@@ -1,0 +1,748 @@
+### Documentação Completa API Auvo - Base para IA Anthropic
+
+## Auvo API V2.0
+Auvo API provides a representation of the data found in your account at [Auvo](https://auvo.com.br).
+We follow **REST** principles, so the API is stateless and http methods and response codes are used whenever possible.
+
+## Media Types
+This API use JSON format to represent resources. When sending content on `PUT`/`PATCH`/`POST` requests, you **must** specify the follow header:
+
+## Response Codes
+The common [HTTP Response Status Codes](https://github.com/for-GET/know-your-http-well/blob/master/status-codes.md) are used.
+
+## Error States
+When something goes wrong, the response status code can be `4xx` if the error is related to your request structure or `5xx` if it's our server's fault.
+
+## Authentication
+Before having access to the API, the user **must** request the authorization token by making a POST to /login, containing the `API key` and `API Token` within the body, or a GET 
+containing the `API key` and `API Token` within the query parameter.
+The authorization token lasts 30 minutes and must be renewed by making a new login request. Every request must have the authorization token in the header with the key `Authorization` followed by the valeu Bearer + ` authorization token`.
+`API key` and `API Token` can be found by accesing [Menu > Integração](https://app.auvo.com.br/integracao) in your Auvo's account
+
+## Group Login
+## Login [/login/?apiKey={apiKey}&apiToken={apiToken}]
+
+## Retrieve a authentication - GET [GET/login/?apiKey={apiKey}&apiToken={apiToken}]
+The query param example describes the minimum required attributes to successfully retrieve a authentication. 
+The property `authenticated` will indicate whether the authentication was a success or not.
+
+## Retrieve a authentication - POST [POST /login/]
+The body example describes the minimum required attributes to successfully retrieve a authentication. 
+The property `authenticated` will indicate whether the authentication was a success or not.
+See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+
+## Group Users
+## User [/users/{id}]
+
+## Retrieve a User [GET/users/{id}]
++ Request (application/json)
+
+## Add a new User [POST /users/]
+The body example describes the minimum required attributes to successfully add an user. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+
+## Upsert - Add a new User or update an existing one [PUT /users/]
+The body example describes the minimum required attributes to successfully add/update an user. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes. Update or register a new user
+according to one of its identifier, `id` OR `externalId`. If there is no user with the provided identifier, create a new user, if it exists, update it. Returns HTTP status code 200 if the user was updated and 201 if it was created.
+
+## Edit a User [PATCH /users/{id}]
+To update a `User`, send a JSONPatchDocument with updated value for one or more of the `UserPatch` attributes. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+JsonPatch example: { "op": "replace", "path": "login", "value": "login.user" }
+For more information on JsonPatch, visit: `http://jsonpatch.com/`.
+
+## Delete a User [DELETE  /users/{id}]
++ Request (application/json)
+
+## Retrieve a list of Users [GET/users/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}&selectfields={selectfields}]
++ Parameters
+    + paramFilter (optional, string) ... Must be a json encoded string.
+        + userId (number) - The user id
+        + name (string) - name of the user
+        + smartPhoneNumber (string) - user phone number. Only numbers
+        + userType (string) - Usuario:1, Manager:2, Administrator:3 
+        + externalId (string) - User external ids. Allow multiples, separated by comma
+    + page (required, int) ... Page of the selection. Default 1.
+    + pageSize (required, int) ... Amount of records of the selection. Default 10.
+    + order (required, string) ... "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+    + selectfields (optional, string) ... For all fields, use empty string. To select fields, use the properties of the returned object separated by commas.
+    
++ Request (application/json)
+
+## Group Tasks
+## Task [/tasks/{id}]
+
+## Retrieve a Task [GET/tasks/{id}]
+The "taskStatus" task return attribute has the following return values:
+
+## Add a new Task [POST /tasks/]
+The body example describes the minimum required attributes to successfully add a task. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+
+## Upsert - Add a new Task or update an existing one [PUT /tasks/]
+The body example describes the minimum required attributes to successfully add/update a task. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes. Update or register a new task
+according to its identifier `id` . If there is no task with the provided identifier, create a new task, if it exists, update it. Returns HTTP status code 200 if the task was updated and 201
+if it was created.
+
+## Edit a Task [PATCH /tasks/{id}]
+To update a `Task`, send a JSONPatchDocument with updated value for one or more of the `TaskPatch` attributes. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+JsonPatch example: { "op": "replace", "path": "orientation", "value": "orientatio value" }
+For more information on JsonPatch, visit: `http://jsonpatch.com/`.
+
+## Task's Products Upsert - Add new products or update existing ones.  [PUT /tasks/{id}/products]
+The body example describes the minimum required attributes to successfully add/update items in the task's list of products. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes. Update or register a new list of products for the task according to product's identifier, the `ProductId` attribute. If there is no product in the task's list of products with the provided identifier,the product is added to the list, if it exists, it's updated.
+
+## Task's Services Upsert - Add new services or update existing ones.  [PUT /tasks/{id}/services]
+The body example describes the minimum required attributes to successfully add/update items in the task's list of services. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes. Update or register a new list of services for the task according to services's identifier, the `ServiceId` attribute. If there is no service in the task's list of services with the provided identifier,the service is added to the list, if it exists, it's updated.
+
+## Task's Additional Costs Upsert - Add new additional costs or update existing ones.  [PUT /tasks/{id}/additional-costs]
+The body example describes the minimum required attributes to successfully add/update items in the task's list of additional costs. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes. Update or register a new list of additional costs for the task according to additional costs's identifier, the `AdditionalCostId` attribute. If there is no additional cost in the task's list of additional costs with the provided identifier,the additional cost is added to the list, if it exists, it's updated.
+
+## Delete products from a task list of products [DELETE  /tasks/{id}/products]
++ Attributes
+    + [] (array[string]) 
+        + ProductId (string) - ProductId attribute of the Product.
+    
++ Request (application/json)
+
+## Delete services from a task list of services [DELETE  /tasks/{id}/services]
++ Attributes
+    + [] (array[string]) 
+        + ServiceId (string) - ServiceId attribute of the Service.
+   
++ Request (application/json)
+
+## Delete additional costs from a task list of additional costs [DELETE  /tasks/{id}/additional-costs]
++ Attributes
+    + [] (array[string]) 
+        + AdditionalCostId (string) - AdditionalCostId attribute of the AdditionalCost.
+   
++ Request (application/json)
+
+## Edit Task attachment [PUT /tasks/{id}/attachments]
+To update a `Task` attachment, send a JSON with updated value to the `Task` id.
+
+## Delete a Task [DELETE  /tasks/{id}]
++ Request (application/json)
+
+## Retrieves a list of Tasks [GET/tasks/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}&selectfields={selectfields}]
+The "taskStatus" task return attribute has the following return values:
+
+## Group Customers
+## Customer [/customers/{id}]
+
+## Retrieve a Customer [GET/customers/{id}]
++ Request (application/json)
+
+## Add a new Customer [POST /customers/]
+The body example describes the minimum required attributes to successfully add a customer. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+
+## Upsert - Add a new Customer or update an existing one [PUT /customers/]
+The body example describes the minimum required attributes to successfully add/update a customer. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes. Update or register a new customer
+according to one of its identifier, `id` OR `externalId`. If there is no customer with the provided identifier, create a new one, if it exists, update it. Returns HTTP status code 200 if the task was updated and 201
+if it was created.
+
+## Edit a Customer [PATCH /customers/{id}]
+To update a `Customer`, send a JSONPatchDocument with updated value for one or more of the `CustomerPatch` attributes. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+JsonPatch example: { "op": "replace", "path": "orientation", "value": "orientatio value" }
+For more information on JsonPatch, visit: `http://jsonpatch.com/`.
+
+## Edit Customer attachment [PUT /customer/{id}/attachments]
+To update a `Customer` attachment, send a JSON with updated value to the `Customer` id.
+
+## Delete a Customer [DELETE /customers/{id}]
++ Request (application/json)
+
+## Retrieves a list of Customers [GET/customers/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}&selectfields={selectfields}]
++ Parameters
+    + paramFilter (optional, string) ... paramFilter must be json encoded string.
+        + id (number) - The customer id
+        + description (string) - The customer name
+        + segmentId (number) - The segmentId id
+        + creationDate (string) - Customer creation date, filter date ("yyyy-MM-ddTHH:mm:ss").
+        + dateLastUpdate (string) - The last update date of the customer, filter date ("yyyy-MM-ddTHH:mm:ss")
+        + groupId (number) - The group id
+        + active (?boolean) - The customer status
+        + externalId (string) - Customer external ids. Allow multiples, separated by comma
+    + page (int) ... Page of the selection. Default 1.
+    + pageSize (int) ... Amount of records of the selection. Default 10.
+    + order (string) ... "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+    + selectfields (optional, string) ... For all fields, use empty string. To select fields, use the properties of the returned object separated by commas.
+ 
++ Request (application/json)
+
+## Group Customer groups
+## Customer group [/customerGroups/?paramFilter={paramFilter}]
+
+## Retrieve a list of Customers group [GET/customerGroups/?paramFilter={paramFilter}]
++ Request (application/json)
+
+## Add a new Customer group [POST /customerGroups/]
+The body example describes the minimum required attributes to successfully add a customer group. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+
+## Delete a Customer group [DELETE /customerGroups/{id}]
++ Request (application/json)
+
+## Retrieves a list of clients of the customer group [GET/customerGroups/{clientGroupId}/clients/]
++ Parameters
+
+## Group Teams
+## Team [/teams/{id}]
+
+## Retrieve a Team [GET/teams/{id}]
++ Request (application/json)
+
+## Add a new Team [POST/teams/]
+The body example describes the minimum required attributes to successfully add a Team. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+
+## Retrieve a list of Teams [GET/teams/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}]
++ Parameters
+    + paramFilter (string) ... paramFilter must be a json encoded string.
+        + id (number) - The team id.
+        + description (string) - The team description.
+    + page (int) - Page of the selection. Default 1.
+    + pageSize (int) -  Amount of records of the selection. Default 10.
+    + order (string) -  "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+
+## Retrieve a list of participants from a specific team [GET/teams/{teamId}/users/?page={page}&pageSize={pageSize}&order={order}]
++ Parameters
+    + teamId (number) ...  The team id.
+    + page (int) ... Page of the selection. Default 1.
+    + pageSize (int) ... Amount of records of the selection. Default 10.
+    + order (string) ... "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+
+## Group Task types
+## Task type [/taskTypes/{id}]
+
+## Retrieve a task type [GET/taskTypes/{id}]
++ Request (application/json)
+
+## Add a new Task type [POST /taskTypes/]
+The body example describes the minimum required attributes to successfully add a task type. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+
+## Edit a Task type [PATCH /taskTypes/{id}]
+To update a `Task type`, send a JSONPatchDocument with updated value for one or more of the `TaskTypesPatch` attributes. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+JsonPatch example: { "op": "replace", "path": "description", "value": "description value" }
+For more information on JsonPatch, visit: `http://jsonpatch.com/`.
+
+## Delete a Task type [DELETE /taskTypes/{id}]
++ Request (application/json)
+
+## Retrieves a list of Task types [GET/taskTypes/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}]
++ Parameters
+    + paramFilter (optional, string) ... paramFilter must be json encoded string.
+        + id (number) - The task type id
+        + description (string) - The task type description
+    + page (int) ... Page of the selection. Default 1.
+    + pageSize (int) ... Amount of records of the selection. Default 10.
+    + order (string) ... "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+ 
++ Request (application/json)
+
+## Group Segments
+## Segments [/segments/{id}]
+
+## Retrieve a segment [GET/segments/{id}]
++ Request (application/json)
+
+## Add a new Segment [POST /segments/]
+The body example describes the minimum required attributes to successfully add a segment. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+
+## Edit a Segment [PATCH /segments/{id}]
+To update a `Segment`, send a JSONPatchDocument with updated value for one or more of the `SegmentPatch` attributes. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+JsonPatch example: { "op": "replace", "path": "description", "value": "description value" }
+For more information on JsonPatch, visit: `http://jsonpatch.com/`.
+
+## Delete a Segment [DELETE /segments/{id}]
++ Request (application/json)
+
+## Retrieves a list of Segments [GET/segments/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}]
++ Parameters
+    + paramFilter (optional, string) ... paramFilter must be json encoded string.
+        + id (number) - The segment id
+        + description (string) - The segment description
+    + page (int) ... Page of the selection. Default 1.
+    + pageSize (int) ... Amount of records of the selection. Default 10.
+    + order (string) ... "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+ 
++ Request (application/json)
+
+## Group Questionnaires
+## Questionnaire [/questionnaires/{id}]
+
+## Retrieve a Questionnaire [GET/questionnaires/{id}]
++ Request (application/json)
+
+## Retrieves a list of Questionnaires [GET/questionnaires/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}]
++ Parameters
+    + paramFilter (optional, string) ... paramFilter must be json encoded string.
+        + id (number) - The questionnaire id
+        + taskIDs (array[number]) - collection of task ids
+    + page (int) ... Page of the selection. Default 1.
+    + pageSize (int) ... Amount of records of the selection. Default 10.
+    + order (string) ... "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+ 
++ Request (application/json)
+
+## Group keywords
+## Keywords [/keywords/{id}]
+
+## Retrieve a keyword [GET/keywords/{id}]
++ Request (application/json)
+
+## Add a new Keyword [POST /keywords/]
+The body example describes the minimum required attributes to successfully add a keyword. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+
+## Edit a Keyword [PATCH /keywords/{id}]
+To update a `Keyword`, send a JSONPatchDocument with updated value for one or more of the `KeywordPatch` attributes. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+JsonPatch example: { "op": "replace", "path": "description", "value": "description value" }
+For more information on JsonPatch, visit: `http://jsonpatch.com/`.
+
+## Delete a Keyword [DELETE /keywords/{id}]
++ Request (application/json)
+
+## Retrieves a list of Keywords [GET/keywords/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}]
++ Parameters
+    + paramFilter (optional, string) ... paramFilter must be json encoded string.
+        + id (number) - The keyword id
+        + description (string) - The keyword description
+    + page (int) ... Page of the selection. Default 1.
+    + pageSize (int) ... Amount of records of the selection. Default 10.
+    + order (string) ... "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+ 
++ Request (application/json)
+
+## Group Webhooks
+## Notifier
+
+## Webhook [/webHooks/{id}]
++ Parameters
+
+## Retrieve a Webhook [GET/webHooks/{id}]
++ Request (application/json)
+
+## Add a new Webhook [POST /webHooks/]
+The body example describes the minimum required attributes to successfully add an Webhook. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+
+## Delete a Webhooks [DELETE  /webHooks/{id}]
++ Request (application/json)
+
+## Retrieve a list of Webhooks [GET/webHooks/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}]
++ Parameters
+    + paramFilter (optional, string) ... Must be a json encoded string.
+        + id (number) - The user id
+        + entity (string) - entity of the hook
+        + action (string) - action of the hook
+        + active (boolean) - status of the hook 
+    + page (required, int) ... Page of the selection. Default 1.
+    + pageSize (required, int) ... Amount of records of the selection. Default 10.
+    + order (required, string) ... "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+    
++ Request (application/json)
+
+## Group Expenses
+## Expense [/expenses/{id}]
+
+## Retrieve a Expense [GET/expenses/{id}]
++ Request (application/json)
+
+## Add a new Expense [POST /expenses/]
+The body example describes the minimum required attributes to successfully add a expense. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+
+## Edit a Expense [PATCH /expenses/{id}]
+To update a `Expense`, send a JSONPatchDocument with updated value for one or more of the `ExpensePatch` attributes. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+JsonPatch example: { "op": "replace", "path": "description", "value": "description value" }
+For more information on JsonPatch, visit: `http://jsonpatch.com/`.
+
+## Edit Expense attachment [PUT /expenses/{id}/attachments]
+To update a `Expense` attachment, send a JSON with updated value to the `Expense` id.
+
+## Delete a Expense [DELETE  /expenses/{id}]
++ Request (application/json)
+
+## Retrieves a list of Expenses [GET/expenses/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}]
++ Parameters
+    + paramFilter (required, string) ... paramFilter must be json encoded string.
+        + id (string) - The expense id
+        + description (number) - The expense description
+        + startDate (required, string) - The expense initial filter date ("yyyy-mm-ddThh:mm:ss").
+        + endDate (required, string) - The expense end filter date ("yyyy-mm-ddThh:mm:ss").
+        + userToId (number) - The user 'to' id
+        + type (number) - The expense type id
+    + page (int) ... Page of the selection. Default 1.
+    + pageSize (int) ... Amount of records of the selection. Default 10.
+    + order (string) ... "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+
+## Group Expense types
+## Expense types [/expenseTypes/{id}]
+
+## Retrieve a Expense type [GET/expenseTypes/{id}]
++ Request (application/json)
+
+## Add a new Expense type [POST /expenseTypes/]
+The body example describes the minimum required attributes to successfully add a expense type. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+
+## Edit a Expense type [PATCH /expenseTypes/{id}]
+To update a `Expense type`, send a JSONPatchDocument with updated value for one or more of the `ExpenseTypePatch` attributes. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+JsonPatch example: { "op": "replace", "path": "description", "value": "description value" }
+For more information on JsonPatch, visit: `http://jsonpatch.com/`.
+
+## Delete a Expense type [DELETE /expenseTypes/{id}]
++ Request (application/json)
+
+## Retrieves a list of Expense types [GET/expenseTypes/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}]
++ Parameters
+    + paramFilter (optional, string) ... paramFilter must be json encoded string.
+        + id (number) - The expense type id
+        + description (string) - The expense type description
+    + page (int) ... Page of the selection. Default 1.
+    + pageSize (int) ... Amount of records of the selection. Default 10.
+    + order (string) ... "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+ 
++ Request (application/json)
+
+## Group GPS
+## GPS [/gps]
+
+## Retrieves a list of GPSs [GET/gps/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}]
++ Parameters
+    + paramFilter (string) ... paramFilter must be json encoded string.
+        + date (required, string) - date to return gps position
+        + userId (number) - The user id
+        + getLastKnowPosition (boolean) - if it should return only the last known position
+    + page (int) ... Page of the selection. Default 1.
+    + pageSize (int) ... Amount of records of the selection. Default 10.
+    + order (string) ... "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+ 
++ Request (application/json)
+
+## Group Satisfaction surveys
+## Satisfaction survey [/satisfactionSurveys]
+
+## Retrieves a list of Satisfaction surveys [GET/satisfactionSurveys/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}]
++ Parameters
+    + paramFilter (required, string) ... paramFilter must be json encoded string.
+        + taskID (required, array[number]) - collection of task ids
+        + email (string) - email to filter satisfaction surveys
+    + page (int) ... Page of the selection. Default 1.
+    + pageSize (int) ... Amount of records of the selection. Default 10.
+    + order (string) ... "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+ 
++ Request (application/json)
+
+## Group Equipment categories
+## Equipment category [/equipmentCategories/{id}]
+
+## Retrieve a Equipment category [GET/equipmentCategories/{id}]
++ Request (application/json)
+
+## Add a new Equipment category [POST /equipmentCategories/]
+The body example describes the minimum required attributes to successfully add a Equipment category. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+
+## Edit a Equipment category [PATCH /equipmentCategories/{id}]
+To update a `Equipment category`, send a JSONPatchDocument with updated value for one or more of the `EquipmentCategoryPatch` attributes. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+JsonPatch example: { "op": "replace", "path": "description", "value": "description value" }
+For more information on JsonPatch, visit: `http://jsonpatch.com/`.
+
+## Delete a Equipment category [DELETE /equipmentCategories/{id}]
++ Request (application/json)
+
+## Retrieves a list of Equipment categories [GET/equipmentCategories/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}]
++ Parameters
+    + paramFilter (optional, string) ... paramFilter must be json encoded string.
+        + id (number) - The Equipment category id
+        + description (string) - The Equipment category description
+        + externalId (string) - The Equipment category external id
+    + page (int) ... Page of the selection. Default 1.
+    + pageSize (int) ... Amount of records of the selection. Default 10.
+    + order (string) ... "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+ 
++ Request (application/json)
+
+## Group Equipments
+## Equipment [/equipments/{id}]
+
+## Retrieve a Equipment [GET/equipments/{id}]
++ Request (application/json)
+
+## Add a new Equipment [POST /equipments/]
+The body example describes the minimum required attributes to successfully add a equipment. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+
+## Edit a Equipment [PATCH /equipments/{id}]
+To update a `Equipment`, send a JSONPatchDocument with updated value for one or more of the `EquipmentPatch` attributes. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+JsonPatch example: { "op": "replace", "path": "name", "value": "name value" }
+For more information on JsonPatch, visit: `http://jsonpatch.com/`.
+
+## Edit Equipment attachment [PUT /equipments/{id}/attachments]
+To update a `Equipment` attachment, send a JSON with updated value to the `Equipment` id.
+
+## Delete a Equipment [DELETE  /equipments/{id}]
++ Request (application/json)
+
+## Retrieves a list of Equipments [GET/equipments/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}]
++ Parameters
+    + paramFilter (required, string) ... paramFilter must be json encoded string.
+        + name (string) - equipment name
+        + externalId (string) - External task id
+        + parentEquipmentId (number) - parent equipment id
+        + associatedCustomerId (number) - associated customer id
+        + associatedUserId (number) - associated user id 
+        + categoryId (number) - category id
+        + identifier (string) - equipment identifier
+        + active (boolean) - equipment status
+    + page (int) ... Page of the selection. Default 1.
+    + pageSize (int) ... Amount of records of the selection. Default 10.
+    + order (string) ... "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+    
++ Request (application/json)
+
+## Group Product categories
+## Product category [/productCategories/{id}]
+
+## Retrieve a Product category [GET/productCategories/{id}]
++ Request (application/json)
+
+## Add a new Product category [POST /productCategories/]
+The body example describes the minimum required attributes to successfully add a Product category. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+
+## Upsert - Add a new Product category or update an existing one [PUT /productCategories/]
+The body example describes the minimum required attributes to successfully add/update a product category. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes. Update or register a new prodyct category
+according to one of its identifier, `id` OR `externalId`. If there is no customer with the provided identifier, create a new one, if it exists, update it. Returns HTTP status code 200 if the product category was updated and 201
+if it was created.
+
+## Edit a Product category [PATCH /productCategories/{id}]
+To update a `Product category`, send a JSONPatchDocument with updated value for one or more of the `ProductCategoryPatch` attributes. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+JsonPatch example: { "op": "replace", "path": "description", "value": "description value" }
+For more information on JsonPatch, visit: `http://jsonpatch.com/`.
+
+## Delete a Product category [DELETE /productCategories/{id}]
++ Request (application/json)
+
+## Retrieves a list of Product categories [GET/productCategories/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}]
++ Parameters
+    + paramFilter (optional, string) ... paramFilter must be json encoded string.
+        + id (number) - The Product category id
+        + description (string) - The Product category description
+        + externalId (string) - The Product category external id
+    + page (int) ... Page of the selection. Default 1.
+    + pageSize (int) ... Amount of records of the selection. Default 10.
+    + order (string) ... "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+ 
++ Request (application/json)
+
+## Group Products
+## Product [/products/{id}]
+
+## Retrieve a Product [GET/products/{id}]
++ Request (application/json)
+
+## Add a new Product [POST /products/]
+The body example describes the minimum required attributes to successfully add a product. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+
+## Edit a Employees Stock [PUT /products/employee-product-stock]
+To update an `Employees Stock`, send a JSON with the updated values. See the Json schema attributes in the example section for all allowed attributes. Json example:
+{"UserId": 123, "ProductId": 123, "amount": 10 }
+
+## Edit a Product [PATCH /products/{id}]
+To update a `Product`, send a JSONPatchDocument with updated value for one or more of the `ProductPatch` attributes. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+JsonPatch example: { "op": "replace", "path": "name", "value": "name value" }
+For more information on JsonPatch, visit: `http://jsonpatch.com/`.
+
+## Edit Product attachment [PUT /products/{id}/attachments]
+To update a `Product` attachment, send a JSON with updated value to the `Product` code.
+
+## Delete a Product [DELETE  /products/{id}]
++ Request (application/json)
+
+## Retrieves a list of Products [GET/products/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}]
++ Parameters
+    + paramFilter (required, string) ... paramFilter must be json encoded string.
+        + name (string) - equipment name
+        + externalId (string) - External task id
+        + associatedEquipmentId (number) - associated equipment id
+        + id (number) - product code
+        + categoryId (number) - category id
+        + active (?boolean) - equipment status
+        + lowerThanMinimumStock (?boolean) - lower Than Minimum Stock
+    + page (int) ... Page of the selection. Default 1.
+    + pageSize (int) ... Amount of records of the selection. Default 10.
+    + order (string) ... "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+    
++ Request (application/json)
+
+## Group Quotations
+## Quotation [/quotations/{id}]
+
+## Retrieve a Quotation [GET/quotations/{id}]
++ Request (application/json)
+
+## Retrieves a list of Quotations [GET/quotations/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}]
++ Parameters
+    + paramFilter (optional, string) ... paramFilter must be json encoded string.
+        + publicId (number) - The quotatio id
+        + requestStartDate (string) - The request start date
+        + requestEndDate (string) - The request end date
+        + usersId (array[number]) - collection of users ids
+        + customersId (array[number]) - collection of customers ids
+        + productsId (array[number]) - collection of products ids
+        + CurrentStage (string) - The current stage name to filter
+    + page (int) ... Page of the selection. Default 1.
+    + pageSize (int) ... Amount of records of the selection. Default 10.
+    + order (string) ... "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+ 
++ Request (application/json)
+
+## Group Tickets
+## Ticket [/tickets/{id}]
+
+## Retrieve a Ticket [GET/tickets/{id}]
++ Request (application/json)
+
+## Retrieves a list of Tickets [GET/tickets/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}]
++ Parameters
+    + paramFilter (optional, string) ... paramFilter must be json encoded string.
+        + ids (string) - Tickets ids separated by comma
+        + startDate (string) - Ticket start date, filter date ("yyyy-MM-ddTHH:mm:ss")
+        + endDate (string) - Ticket end date, filter date ("yyyy-MM-ddTHH:mm:ss"
+        + Status (string) - Normal = 1, Abertura = 2, Pausa = 3, Cancelamento = 4, Encerramento = 5, AguardandoAtendente = 6, AguardandoCliente = 7
+        + ResponsableUsersIds (string) - Users ids separated by comma
+        + TeamId (string) - Team ids separated by comma
+        + CustomerGroupId (number) - customers group id
+        + Origems (array[number]) - Email = 1, Interno = 2, PaginaSolicitacao = 3
+        + OpeningResponsableUsersId (string) - users id 
+        + SearchTasks (bool) - Send "true" value if should search tasks
+        + SearchModifications (bool) - should search Modifications
+        + SearchInteractions (bool) - should search Interactions
+        + SearchCustomFields (bool) - should search CustomFields
+    + page (int) ... Page of the selection. Default 1.
+    + pageSize (int) ... Amount of records of the selection. Default 10.
+    + order (string) ... "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+ 
++ Request (application/json)
+
+## Register a ticket [POST/tickets/]
+The body example describes the minimum required attributes to successfully add a ticket. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+
+## Group Services
+## Service [/services/{id}]
+
+## Retrieve a Service [GET/services/{id}]
++ Request (application/json)
+
+## Add a new Service [POST /services/]
+The body example describes the minimum required attributes to successfully add a service. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+
+## Edit a Service [PATCH /services/{id}]
+To update a `Service`, send a JSONPatchDocument with updated value for one or more of the `ServicePatch` attributes. See the **Atributes** or **Json Schema** in the Example section for all allowed attributes.
+JsonPatch example: { "op": "replace", "path": "name", "value": "name value" }
+For more information on JsonPatch, visit: `http://jsonpatch.com/`.
+
+## Delete a Service [DELETE  /services/{id}]
++ Request (application/json)
+
+## Retrieves a list of Services [GET/services/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}]
++ Parameters
+    + paramFilter (required, string) ... paramFilter must be json encoded string.
+        + title (string) - service title name
+        + description (string) - service description
+        + price (number) - service price
+        + active (?boolean) - service status
+        + fiscalServiceId (string) - fiscal service identifier (GUID)
+    + page (int) ... Page of the selection. Default 1.
+    + pageSize (int) ... Amount of records of the selection. Default 10.
+    + order (string) ... "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+    
++ Request (application/json)
+
+## Group Projects
+## Project [/serviceorders/{id}]
+
+## Retrieve a Project [GET/serviceorders/{id}]
++ Request (application/json)
+
+## Retrieves a list of Projects [GET/serviceorders?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}]
++ Parameters
+    + paramFilter (required, string) ... paramFilter must be json encoded string.
+        + ProjectCodes (string) - The project codes separated by commas
+        + ExternalCodes (string) - The project external id's separated by commas
+        + Description (string) - The Project description
+        + StartDateDuration (string) - Project start date, filter date ("yyyy-MM-dd")
+        + EndDateDuration (string) - Project end date, filter date ("yyyy-MM-dd").
+        + KeywordCode (number) - The Keyword id separated by commas
+        + CpfCnpj (string) - The Project Client Cpf/Cnpj 
+        + StatusId (string) - The project status id
+        + EquipmentCode (string) - The Project equipment code
+        + ClientCode (string) - The Project Client code
+        + ClientGroupCode (string) - The Project Client group code
+    + page (int) ... Page of the selection. Default 1.
+    + pageSize (int) ... Amount of records of the selection. Default 10.
+    + order (string) ... "asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+    
++ Request (application/json)
+
+## Exemplos de JSON Construídos Manualmente:
+
+### Endpoint: Questionnaires/Questionnaire/Retrieve a Questionnaire
+
+GET /v2/questionnaires/{id}
+
+Exemplo de resposta:
+{
+  "result": {
+    "id": 42,
+    "description": "Checklist de Inspeção",
+    "header": "Inspeção Técnica",
+    "footer": "Obrigado pela colaboração",
+    "creationDate": "2024-06-15T12:00:00",
+    "questions": [
+      {
+        "id": 1,
+        "answerType": 2,
+        "description": "O equipamento está funcionando corretamente?",
+        "subTitle": "Verificar todos os aspectos de funcionamento.",
+        "requiredAnswer": true,
+        "creationDate": "2024-06-15T12:00:00"
+      },
+      {
+        "id": 2,
+        "answerType": 1,
+        "description": "Houve necessidade de ajuste?",
+        "subTitle": "",
+        "requiredAnswer": false,
+        "creationDate": "2024-06-15T12:00:00"
+      }
+    ]
+  }
+}
+
+
+### Endpoint: Questionnaires/Questionnaire/Retrieves a list of Questionnaires
+
+GET /v2/questionnaires/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}
+
+Exemplo de resposta:
+{
+  "result": {
+    "entityList": [
+      {
+        "id": 42,
+        "description": "Checklist de Inspeção",
+        "header": "Inspeção Técnica",
+        "footer": "Obrigado pela colaboração",
+        "creationDate": "2024-06-15T12:00:00"
+      },
+      {
+        "id": 43,
+        "description": "Checklist de Manutenção",
+        "header": "Manutenção Preventiva",
+        "footer": "Obrigado",
+        "creationDate": "2024-06-10T09:30:00"
+      }
+    ],
+    "pagedSearchReturnData": {
+      "order": 0,
+      "pageSize": 10,
+      "page": 1,
+      "totalItems": 2
+    }
+  }
+}
+
+

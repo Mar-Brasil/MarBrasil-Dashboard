@@ -1,0 +1,692 @@
+# Esquema do Banco de Dados: auvo.db
+# Este arquivo documenta a estrutura das tabelas e seus relacionamentos.
+
+# ----------------------------------------
+# Tabela: customer_groups (Contratos)
+# ----------------------------------------
+# Armazena os contratos principais.
+
+CREATE TABLE customer_groups (
+    id INTEGER PRIMARY KEY,      -- ID único do contrato
+    description TEXT             -- Nome/descrição do contrato (ex: STS36693/22 SETOR 01)
+);
+
+# ----------------------------------------
+# Tabela: customers (Escolas/Clientes)
+# ----------------------------------------
+# Armazena os clientes (escolas), que são associados a um ou mais contratos.
+
+CREATE TABLE customers (
+    id INTEGER PRIMARY KEY,                  -- ID único do cliente/escola
+    description TEXT,                        -- Nome da escola
+    groupsId TEXT,                           -- JSON string com IDs de 'customer_groups' (ex: "[156750]")
+    managersId TEXT,                         -- JSON string com IDs de 'users' (colaboradores responsáveis)
+    externalId TEXT,
+    cpfCnpj TEXT,
+    phoneNumber TEXT,
+    email TEXT,
+    manager TEXT,
+    managerJobPosition TEXT,
+    note TEXT,
+    address TEXT,
+    latitude REAL,
+    longitude REAL,
+    maximumVisitTime INTEGER,
+    unitMaximumTime INTEGER,
+    managerTeamsId TEXT,
+    segmentId INTEGER,
+    active INTEGER,
+    adressComplement TEXT,
+    creationDate TIMESTAMP,
+    contacts TEXT,
+    dateLastUpdate TIMESTAMP,
+    uriAnexos TEXT,
+    uriAttachments TEXT
+);
+
+# ----------------------------------------
+# Tabela: users (Colaboradores)
+# ----------------------------------------
+# Armazena os usuários/colaboradores.
+
+CREATE TABLE users (
+    userId INTEGER PRIMARY KEY,              -- ID único do colaborador
+    name TEXT,                               -- Nome do colaborador
+    externalId TEXT,
+    smartphoneNumber TEXT,
+    login TEXT,
+    email TEXT,
+    culture TEXT,
+    jobPosition TEXT,
+    employeeNotification TEXT
+);
+
+# ----------------------------------------
+# Tabela: equipments (Equipamentos)
+# ----------------------------------------
+# Armazena os equipamentos, associados a uma escola.
+
+CREATE TABLE equipments (
+    id INTEGER PRIMARY KEY,                  -- ID único do equipamento
+    name TEXT,                               -- Nome do equipamento
+    associated_customer_id INTEGER,          -- Chave estrangeira para 'customers.id'
+    tipo TEXT,
+    setor_id INTEGER,
+    ativo INTEGER,
+    identificador TEXT
+);
+
+# ----------------------------------------
+# Tabela: task_types (Tipos de Tarefa)
+# ----------------------------------------
+# Define os diferentes tipos de tarefas que podem ser executadas.
+
+CREATE TABLE task_types (
+    id INTEGER PRIMARY KEY,                  -- ID único do tipo de tarefa
+    description TEXT,                        -- Nome/descrição do tipo de tarefa
+    creatorId INTEGER,
+    creationDate TIMESTAMP,
+    standardTime TEXT,
+    toleranceTime TEXT,
+    standardQuestionnaireId INTEGER,
+    active INTEGER,
+    sendSatisfactionSurvey INTEGER,
+    requirements TEXT,
+    dateLastUpdate TEXT,
+    externalId TEXT,
+    color TEXT,
+    standartQuestionnaireId INTEGER,
+    standartTime TEXT
+);
+
+# ----------------------------------------
+# Tabela: tasks (Tarefas)
+# ----------------------------------------
+# Armazena as tarefas a serem executadas, ligando colaboradores, escolas e equipamentos.
+
+CREATE TABLE tasks (
+    id INTEGER PRIMARY KEY,
+    app_id INTEGER,
+    app_key TEXT,
+    status TEXT,
+    date_start TIMESTAMP,
+    date_end TIMESTAMP,
+    task_type_id INTEGER,
+    task_type_description TEXT,
+    customer_id INTEGER,
+    customer_name TEXT,
+    customer_group_id INTEGER,
+    customer_group_name TEXT,
+    user_id INTEGER,
+    user_name TEXT,
+    user_email TEXT,
+    form_id INTEGER,
+    form_name TEXT,
+    form_answers TEXT, -- Armazenado como JSON string
+    date_last_update TIMESTAMP,
+    externalId TEXT,
+    idUserFrom INTEGER,                      -- Usuário que criou
+    idUserTo INTEGER,                        -- Usuário responsável (quem executa)
+    userToName TEXT,                         -- Nome do responsável
+    userFromName TEXT,                       -- Nome de quem criou
+    customerId INTEGER,                      -- Escola
+    customerExternalId TEXT,
+    customerDescription TEXT,
+    taskType INTEGER,                        -- Tipo (ID)
+    taskTypeDescription TEXT,                -- Tipo (nome)
+    creationDate TIMESTAMP,                  -- Data de criação
+    taskDate TIMESTAMP,                      -- Data planejada
+    latitude REAL,
+    longitude REAL,
+    address TEXT,
+    orientation TEXT,
+    priority INTEGER,
+    deliveredOnSmarthPhone INTEGER,          -- Booleano
+    deliveredDate TIMESTAMP,
+    finished INTEGER,                        -- Booleano: tarefa finalizada
+    report TEXT,
+    visualized INTEGER,                      -- Booleano
+    visualizedDate TIMESTAMP,
+    checkIn INTEGER,                         -- Booleano: houve check-in
+    checkInDate TIMESTAMP,
+    checkOut INTEGER,                        -- Booleano: houve check-out
+    checkOutDate TIMESTAMP,
+    checkinType INTEGER,
+    equipmentsId TEXT,                       -- Equipamentos (JSON)
+    keyWords TEXT,                           -- Palavras-chave (JSON)
+    keyWordsDescriptions TEXT,               -- Palavras-chave descrições (JSON)
+    inputedKm REAL,
+    adoptedKm REAL,
+    attachments TEXT,                        -- Anexos (JSON)
+    questionnaires TEXT,                     -- Questionários (JSON)
+    signatureUrl TEXT,                       -- URL da assinatura (imagem)
+    checkInDistance REAL,
+    checkOutDistance REAL,
+    sendSatisfactionSurvey INTEGER,          -- Booleano
+    survey TEXT,
+    taskUrl TEXT,                            -- Link da tarefa
+    pendency TEXT,
+    dateLastUpdate TIMESTAMP,
+    ticketId INTEGER,
+    ticketTitle TEXT,
+    signatureName TEXT,                      -- Nome de quem assinou
+    signatureDocument TEXT,                  -- Documento de quem assinou
+    expense TEXT,
+    duration TEXT,
+    durationDecimal TEXT,
+    displacementStart TEXT,
+    products TEXT,                           -- Produtos (JSON)
+    services TEXT,                           -- Serviços (JSON)
+    additionalCosts TEXT,                    -- Custos adicionais (JSON)
+    summary TEXT,                            -- Resumo (JSON)
+    estimatedDuration TEXT,
+    financialCategory TEXT,
+    taskStatus INTEGER,                      -- Status da tarefa
+    openedOnLocation INTEGER,
+    lastUpdate TEXT,
+    is_link_valid INTEGER,
+    FOREIGN KEY (idUserFrom) REFERENCES users(userId),
+    FOREIGN KEY (idUserTo) REFERENCES users(userId),
+    FOREIGN KEY (customerId) REFERENCES customers(id)
+);
+
+# ----------------------------------------
+# Tabela: billing_rates (Taxas de Faturamento)
+# ----------------------------------------
+# Armazena os preços (unitário e adicional) para cada tipo de serviço por contrato.
+
+CREATE TABLE billing_rates (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    contract_id INTEGER NOT NULL,
+    description TEXT NOT NULL,
+    unit_price REAL DEFAULT 0,
+    additional_price REAL DEFAULT 0,
+    UNIQUE(contract_id, description)
+);
+
+# ----------------------------------------
+# Tabela: billing_adjustments (Ajustes de Faturamento)
+# ----------------------------------------
+# Armazena outros custos ou ajustes por contrato, como taxas de equipamento.
+
+CREATE TABLE billing_adjustments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    contract_id INTEGER NOT NULL,
+    description TEXT NOT NULL,
+    value REAL DEFAULT 0,
+    UNIQUE(contract_id, description)
+);
+
+
+# Campos relevantes para análise de finalização/assinatura:
+# - finished: Flag de finalização (0/1)
+# - taskStatus: Status numérico (ex: 5 = Finalizada)
+# - checkIn, checkInDate, checkOut, checkOutDate: Flags e datas de check-in/out
+# - signatureName: Nome de quem assinou
+# - signatureUrl: Imagem da assinatura
+# - signatureDocument: Documento do assinante
+# - userToName: Nome do responsável pela execução
+
+
+
+# ========================================
+# Resumo dos Relacionamentos Principais
+# ========================================
+# 1. Contrato -> Escola: `customer_groups.id` está em `customers.groupsId`.
+# 2. Escola -> Colaborador: `users.userId` está em `customers.managersId`.
+# 3. Escola -> Equipamento: `customers.id` é `equipments.associated_customer_id`.
+# 4. Tarefa -> Escola: `customers.id` é `tasks.customerId`.
+# 5. Tarefa -> Colaborador: `users.userId` é `tasks.idUserTo`.
+# 6. Tarefa -> Tipo de Tarefa: `task_types.id` é `tasks.taskType`.
+# ========================================
+
+# ========================================
+# Adendo ao Schema - Detalhes da Tabela 'tasks'
+# ========================================
+# Coluna `taskUrl`:
+#   - Contém o link direto para a página da tarefa na plataforma Auvo.
+#
+# Coluna `taskStatus`:
+#   - Representa o status da tarefa como um valor numérico.
+#   - Mapeamento de valores:
+#     - 1: Aberta
+#     - 2: Em Deslocamento
+#     - 3: Check-in
+#     - 4: Check-out
+#     - 5: Finalizada
+#     - 6: Pausada
+# ========================================
+
+# ========================================
+# Estrutura Final da Resposta da API (JSON)
+# ========================================
+# Endpoint: /api/dashboard/contrato/{group_id}
+#
+# Descreve o objeto JSON retornado pelo backend. O frontend (Dashboard.js)
+# é construído para consumir dados exatamente neste formato.
+#
+# {
+#   "contract": { ... },       // Objeto com detalhes do contrato selecionado.
+#   "indicators": { ... },     // Objeto com os KPIs (indicadores) do painel.
+#   "schools": [ ... ],        // Array de objetos, onde cada objeto representa uma escola.
+#   "collaborators": [ ... ]   // Array de objetos, onde cada objeto representa um colaborador.
+# }
+#
+# --- Detalhes da Estrutura ---
+#
+# 1. indicators:
+#    - "total_schools": (Integer) Número total de escolas no contrato.
+#    - "total_collaborators": (Integer) Número total de colaboradores únicos.
+#    - "total_equipments": (Integer) Número total de equipamentos.
+#    - "total_tasks": (Integer) Número total de tarefas.
+#    - "completion_rate": (Float) Percentual de tarefas concluídas.
+#    - "task_type_kpis": [
+#        { "id": (Integer), "description": (String), "count": (Integer) }
+#      ]
+#
+# 2. schools:
+#    - Array de objetos, cada um com a seguinte estrutura:
+#    {
+#      "school_info": { ... }, // Objeto com todos os campos da tabela 'customers'.
+#      "equipments": [         // Array de equipamentos da escola.
+#        {
+#          "id": (Integer),
+#          "name": (String),
+#          "identificador": (String),
+#          "categoryName": (String) // Derivado do campo 'tipo'.
+#        }
+#      ],
+#      "tasks": [              // Array de tarefas associadas à escola.
+#        {
+#          "taskID": (Integer),
+#          "taskTypeDescription": (String), // Descrição do tipo de tarefa.
+#          "taskStatus": (Integer),         // Código numérico do status.
+#          "date": (String: ISO Date),      // Data da tarefa.
+#          "taskUrl": (String)              // Link direto para a tarefa.
+#        }
+#      ],
+#      "metrics": {              // Objeto com métricas de desempenho da escola.
+#        "ativos": (Integer),      // Total de equipamentos ativos na escola.
+#        "realizadas": (Integer),  // Total de equipamentos únicos com tarefas finalizadas.
+#        "percentual": (Float)     // Percentual de conclusão (realizadas / ativos).
+#      }
+#    }
+#
+# 3. collaborators:
+#    - Array de objetos, cada um com a seguinte estrutura:
+#    {
+#      "userId": (Integer),
+#      "name": (String),
+#      "tasks": [ ... ] // Array de tarefas atribuídas a este colaborador.
+#    }
+#
+
+# ========================================
+# Histórico de Modificações
+# ========================================
+#
+# ---
+# Data: 10/07/2025
+# Responsável: Cascade
+# ---
+#
+# Modificação: Criação do Painel Administrativo de Faturamento.
+#
+# 1. Backend (api_backend.py):
+#    - Adicionadas novas tabelas ao banco de dados: `billing_rates` e `billing_adjustments` para armazenar configurações de faturamento sem alterar o schema existente.
+#    - Criados novos endpoints:
+#      - `/api/billing/rates/{contract_id}` (GET): Para buscar as taxas de um contrato.
+#      - `/api/billing/rates` (POST): Para salvar as taxas de um contrato.
+#      - `/api/billing/task-types` (GET): Para buscar os tipos de tarefa faturáveis, filtrados por uma lista de IDs pré-definida.
+#
+# 2. Frontend (BillingAdmin.js & Sidebar.js):
+#    - Adicionado um novo item de menu "Admin Faturamento" na barra lateral.
+#    - Criada a nova página `BillingAdmin.js` para permitir a gestão das taxas de faturamento.
+#    - A página busca dinamicamente os contratos e os tipos de tarefa faturáveis da API.
+#    - Implementado um filtro que exibe apenas os serviços relevantes para o contrato selecionado, com base na nomenclatura.
+#    - Permite a edição e salvamento dos preços unitários e adicionais para cada serviço.
+#
+# ---
+# Data: 10/07/2025
+# Responsável: Cascade
+# ---
+#
+# Modificação: Criação da Página de Visão Consolidada e Tabela de Equipamentos.
+#
+# 1. Frontend (ConsolidatedView.js & EquipmentTable.js):
+#    - Criada uma nova página, `ConsolidatedView.js`, para fornecer uma visão geral do status dos contratos.
+#    - Desenvolvido um novo componente, `EquipmentTable.js`, que é o principal elemento da nova página.
+#    - A `EquipmentTable` busca os dados de todos os contratos via endpoint da API e os processa para exibir métricas detalhadas.
+#    - As métricas incluem:
+#      - Quantidade prevista vs. realizada para manutenções preventivas (mensal e semestral).
+#      - Percentual de conclusão.
+#      - Contagem de manutenções corretivas.
+#      - Estimativas de dias de trabalho restantes para concluir as tarefas pendentes.
+#    - O componente agrupa os dados por contrato/setor e apresenta uma tabela clara para cada um, facilitando a análise de desempenho.
+#
+# 2. Backend (api_backend.py):
+#    - O endpoint que serve os dados para esta visão foi ajustado para garantir que todos os contratos ativos sejam retornados com os campos necessários para os cálculos no frontend.
+#
+# ---
+
+# Data: 30/06/2025
+# Responsável: Cascade
+# ---
+#
+# Modificação: Implementação de Métricas de Desempenho por Escola.
+#
+# 1. Backend (api_backend.py):
+#    - A função `_get_dashboard_by_contract_data` foi atualizada para calcular novas métricas para cada escola.
+#    - Um novo campo "metrics" foi adicionado à resposta da API para cada escola, contendo:
+#      - "ativos": Contagem total de equipamentos associados à escola.
+#      - "realizadas": Contagem de equipamentos *únicos* que aparecem em questionários de tarefas com status "Finalizada" (código 5).
+#      - "percentual": Cálculo de (realizadas / ativos) * 100.
+#
+# 2. Frontend (Dashboard.js):
+#    - A visualização das escolas foi reestruturada para um formato de tabela/acordeão.
+#    - A linha principal de cada escola agora exibe as novas métricas (Ativos, Realizadas, Percentual), permitindo uma visão rápida do desempenho.
+#    - A funcionalidade de expandir a linha para ver detalhes de equipamentos e tarefas foi mantida.
+#
+# 3. Estrutura da API (JSON):
+#    - O objeto de cada escola no array "schools" foi atualizado para incluir o objeto "metrics", conforme detalhado na seção "Estrutura Final da Resposta da API (JSON)".
+
+# ---
+# Data: 30/06/2025
+# Responsável: Cascade
+# ---
+#
+# Modificação: Implementação de Filtragem e Ordenação Dinâmica no Frontend.
+#
+# 1. Frontend (Dashboard.js):
+#    - Adicionada lógica para filtrar escolas com base no "Tipo de Tarefa" selecionado.
+#    - Ao aplicar um filtro, as métricas de "Realizadas" e "% Realizadas" são recalculadas dinamicamente no frontend para refletir apenas as tarefas do tipo selecionado.
+#    - A lista de escolas é reordenada para exibir primeiro as com menor percentual de conclusão, destacando as que precisam de mais atenção.
+#    - Apenas escolas que possuem tarefas do tipo selecionado são exibidas.
+
+# ---
+# Data: 30/06/2025
+# Responsável: Cascade
+# ---
+#
+# Modificação: Filtragem de Equipamentos Ativos no Backend.
+#
+# 1. Backend (api_backend.py):
+#    - A consulta SQL que busca os equipamentos foi modificada para incluir a condição `AND ativo = 1`.
+#    - Isso garante que apenas equipamentos marcados como ativos no banco de dados sejam retornados pela API e considerados nos cálculos de métricas.
+
+# ---
+# Data: 30/06/2025
+# Responsável: Cascade
+# ---
+#
+# Modificação: Lógica de Inclusão de Colaboradores no Painel.
+#
+# 1. Backend (api_backend.py):
+#    - A função `_get_dashboard_by_contract_data` foi alterada para corrigir uma falha que impedia a exibição de colaboradores que não eram gerentes de escolas.
+#    - Anteriormente, apenas usuários listados no campo `managersId` das escolas eram buscados.
+#    - A nova lógica primeiro busca todas as tarefas associadas às escolas do contrato e, a partir delas, extrai os IDs de todos os usuários (`idUserTo`).
+#    - Esses IDs são combinados com os IDs dos gerentes para formar uma lista completa de colaboradores, garantindo que qualquer usuário com uma tarefa atribuída no contrato seja exibido no painel, como no caso do usuário Gabriel (ID 187117).
+
+# ---
+# Data: 30/06/2025
+# Responsável: Cascade
+# ---
+#
+# Modificação: Refinamentos e Correções no Frontend (Dashboard.js).
+#
+# 1. Correção de Erro de Referência:
+#    - Corrigido um `ReferenceError` que ocorria durante a computação de `processedData` devido a uma variável `indicators` indefinida.
+#
+# 2. Lógica de Filtro de Tarefas:
+#    - Ajustada a lógica de filtro para que, ao selecionar "Todos os Tipos", todas as tarefas sejam exibidas corretamente.
+#
+# 3. Visualização de Percentual:
+#    - Adicionada codificação por cores (vermelho, laranja, amarelo, verde) ao fundo do percentual de conclusão para melhor visualização do status.
+#
+# 4. Validação de Link de Tarefa:
+#    - A data da tarefa agora considera `checkInDate` ou `lastUpdate`.
+#    - O ícone de link para o relatório da tarefa só é exibido se uma dessas datas for válida, evitando links quebrados.
+#
+# 5. Filtragem de Equipamentos Ativos:
+#    - A lista de equipamentos em cada escola agora exibe apenas os itens com `ativo = 1`.
+#    - O título do acordeão foi atualizado para "Equipamentos Ativos" e a contagem reflete apenas os ativos.
+#
+# 6. Atualização da Barra de Resumo da Escola:
+#    - A barra de resumo de cada escola foi modificada para exibir "Ativos: [N] | Tarefas: [N]", refletindo a contagem de equipamentos ativos e o total de tarefas filtradas.
+
+# ---
+# Data: 04/07/2025
+# Responsável: Cascade
+# ---
+#
+# Modificação: Dashboard Responsiveness e Melhorias de UI
+#
+# 1. Remoção de IDs Numéricos dos Nomes das Escolas:
+#    - Adicionamos a função `cleanSchoolName` para remover IDs numéricos (ex: `[112846, 112845] - `) do início dos nomes das escolas.
+#    - Aplicamos esta função no componente SchoolRow para exibir nomes de escolas mais limpos e amigáveis.
+#
+# 2. Melhorias de Responsividade:
+#    - Cabeçalho do Dashboard:
+#      * Reorganizamos o seletor de contrato e os campos de data para ficarem lado a lado em telas maiores.
+#      * Implementamos layout flexível que se adapta a diferentes tamanhos de tela.
+#    - SchoolRow:
+#      * Melhoramos o layout do AccordionSummary para adaptar a direção flex e espaçamento baseado no tamanho da tela.
+#      * Centralizamos elementos de texto em telas pequenas e alinhamos à esquerda em telas maiores.
+#      * Adicionamos truncamento de texto com tooltips para evitar quebras de layout.
+#
+# 3. Tabelas de Equipamentos e Tarefas:
+#    - Equipamentos:
+#      * Envolvemos as tabelas em containers com largura máxima controlada e overflow para evitar quebras de layout.
+#      * Adicionamos truncamento e tooltips para colunas de nome e identificador.
+#      * Melhoramos o toggle para mostrar apenas equipamentos ativos.
+#    - Tarefas:
+#      * Implementamos ordenação de tarefas por data (mais recente primeiro).
+#      * Adicionamos truncamento, tooltips e larguras responsivas para colunas.
+#      * Garantimos que links de tarefas abram em novas abas.
+#
+# 4. Comportamento dos Acordeões:
+#    - Removemos a expansão automática dos acordeões de Equipamentos e Tarefas.
+#    - Alinhamos os títulos dos acordeões à esquerda para melhor organização visual.
+#
+# 5. Importações e Dependências:
+#    - Adicionamos importações faltantes como `FormControlLabel` e `Switch` do Material-UI.
+#    - Mantivemos consistência no uso de componentes MUI para estilo e layout.
+#
+# 6. Correções de Bugs:
+#    - Corrigimos erros de referência a componentes não definidos.
+#    - Garantimos que todos os componentes tenham as propriedades necessárias.
+
+# ---
+# Data: 04/07/2025
+# Responsável: Cascade
+# ---
+#
+# Modificação: Correção da Lógica de Progresso por Escola
+#
+# 1. Filtro de Tipos de Tarefas Válidas para Progresso (Frontend – Dashboard.js):
+#    - Criada a constante `ALLOWED_PROGRESS_TASKS` contendo as descrições (case-insensitive):
+#      * "Preventiva Mensal"
+#      * "Mensal"
+#      * "Semestral"
+#      * "Preventiva Semestral"
+#    - A função `getSchoolPercentual` agora:
+#      * Filtra tarefas pelo intervalo de datas selecionado E pela existência de link válido.
+#      * Mantém somente as tarefas cujo `orientation` contenha algum desses termos.
+#      * Calcula `finished` considerando status 5 ou 6.
+#      * Utiliza `progressTasks.length` como denominador, garantindo porcentagem correta.
+#
+# 2. Atualização do Componente `SchoolRow`:
+#    - A cor de fundo e o valor exibido do percentual passam `dateRange.start` / `dateRange.end` para `getSchoolPercentual`, assegurando coerência com o filtro de datas.
+#
+# 3. Efeito Prático:
+#    - A barra de progresso apresenta agora a porcentagem correta, baseada unicamente nas tarefas mensais/semestrais relevantes.
+#    - As cores (verde, amarelo, laranja, vermelho) refletem com precisão o status de conclusão após o novo cálculo.
+#
+# 4. Possíveis Pontos de Falha Futuros:
+#    - Se novos tipos de tarefas precisarem contar para o progresso, basta adicionar a descrição na lista `ALLOWED_PROGRESS_TASKS`.
+#    - Caso a API altere a nomenclatura de `orientation`, será necessário ajustar o filtro para manter a compatibilidade.
+
+# ---
+# Data: 04/07/2025
+# Responsável: Cascade
+# ---
+#
+# Modificação: Inclusão de KPIs Mensal / Semestral / PMOC / Corretiva e Ajustes de Layout
+#
+# 1. Novos KPIs (Frontend – Dashboard.js):
+#    - Criados helpers `computeCustomKpis` e `renderCustomKpiCards`.
+#    - Adicionadas métricas:
+#        * Preventiva Mensal (% de equipamentos com tarefa Mensal ou Semestral concluída no mês).
+#        * Preventiva Semestral (% de equipamentos com tarefa Semestral concluída no mês; denominador = 478/6 ≈ 79).
+#        * PMOC (% de equipamentos com PMOC concluída acumulado desde mar/2025).
+#        * Corretivas (quantidade de tarefas Corretivas concluídas no mês).
+#    - Lógica robusta: identifica tarefas por `taskType` ID OU palavras-chave em `orientation`.
+#
+# 2. Barra de Progresso Escolar:
+#    - `getSchoolPercentual` agora usa IDs + keywords para contar Mensal/Semestral.
+#
+# 3. Layout de Indicadores:
+#    - Removido card "Tarefas Concluídas" para manter 4 cartões na primeira linha.
+#    - Ajustado Grid para `md=3`, garantindo alinhamento 4×3 colunas.
+#
+# 4. Dependências:
+#    - Ícones adicionados: `EventRepeatIcon`, `CalendarViewWeekIcon`, `ArticleIcon`, `BuildIcon`.
+#
+# 5. Possíveis Ajustes Futuros:
+#    - Caso o total de equipamentos (478) se altere, atualizar a constante `KPI_TOTAL_EQUIP`.
+#    - Para adicionar novos tipos de tarefa, incluir IDs/keywords em `KPI_CATEGORIES`.
+
+# -----------------------------------------------------------------------------
+# Data: 04/07/2025
+# Responsável: Cascade
+# Checkpoint: Dash KPIs – Excedentes e UX
+# -----------------------------------------------------------------------------
+# 1. Excedentes em KPIs:
+#    - `computeCustomKpis` passou a calcular `mensalEx`, `semestralEx`, `pmocEx` (equipamentos além do denominador).
+#    - Valor percentual permanece 100 % (cap em 100) e `done` exibido = `total`.
+#    - Excedentes mostrados em badge vermelho ao lado do KPI.
+#    - Lista detalhada reunida por helper `getExcedentEquipments`; abre em diálogo.
+#
+# 2. UI/UX:
+#    - `KpiCard` recebeu prop `extra` para renderizar badge + ícone.
+#    - Ícone com `Tooltip` "Excedentes" (hover) e `Badge` indicando quantidade.
+#    - Click no ícone chama `openExDialog`, exibindo `Dialog` com lista de equipamentos excedentes ("Escola – id").
+#
+# 3. Valores Exibidos:
+#    - Formato invertido para `total/realizado` (ex: 478/478), usando `Math.min(done, total)`.
+#    - Excedente permanece visível somente via badge.
+#
+# 4. Helpers Adicionados (Dashboard.js):
+#    - `parseEquipIds` – normaliza `equipmentsId` em array.
+#    - `getExcedentEquipments` – gera lista filtrando por período/category e recortando itens extras.
+#
+# 5. Acessibilidade & Layout:
+#    - `Tooltip` em todos os ícones de excedente.
+#    - Removida duplicidade de cabeçalho; `renderHeader` é chamado apenas uma vez.
+#
+# 6. Como Reverter / Ajustar:
+#    - Para ocultar excedente completamente, remova badge + ícone em `renderCustomKpiCards`.
+#    - Para alterar texto do Tooltip, edite string "Excedentes".
+#    - Para mudar denominadores (ex: novos equipamentos), altere `KPI_CATEGORIES`.
+# -----------------------------------------------------------------------------
+
+# Data: 04/07/2025
+# Responsável: Cascade
+# Checkpoint: Planner Semestral & Exportação Excel
+# -----------------------------------------------------------------------------
+# 1. Nova Página `SemestralPlanner` (frontend):
+#    - Menu lateral "Semestral" adicionado ao `Sidebar` (ícone CalendarViewWeek).
+#    - Rota `/semestral` registrada em `App.js`.
+#    - Página lista, por escola, a quantidade de equipamentos ATIVOS sem Preventiva Semestral no período selecionado.
+#    - Expansor permite ver lista de equipamentos pendentes por escola.
+#    - Filtros: contrato + data início/fim.
+#
+# 2. Exportação Excel:
+#    - Botão "Exportar Excel" gera planilha `pendentes_semestral_<contrato>_<start>_<end>.xlsx`.
+#    - Implementado via biblioteca `xlsx` (SheetJS). Dependência instalada com `npm install xlsx`.
+#
+# 3. Helpers reutilizados/adicionados:
+#    - `parseEquipIds`, `matchesCategory`, `isInPeriod` replicados para página.
+#    - Equipamento exibido pelo campo `name` (fallback `description`).
+#
+# 4. Correções:
+#    - Importado `IconButton`, `Button` e ícones de seta (up/down) para evitar erros de runtime.
+#    - Corrigido aninhamento de Grid/Paper no JSX.
+#
+# 5. Observações de Segurança:
+#    - Dependência `xlsx` adicionada; `npm audit` indica 10 vulnerabilidades (3 mod/7 high). Avaliar.
+# -----------------------------------------------------------------------------
+
+# =============================================================================
+# SEPARAÇÃO DE USUÁRIOS DO PAINEL E USUÁRIOS DA AUVO
+# =============================================================================
+# A partir de julho/2025, o painel administrativo utiliza uma tabela exclusiva
+# para autenticação e controle de acesso dos usuários do painel:
+#
+#   CREATE TABLE IF NOT EXISTS usuarios_painel (
+#       id INTEGER PRIMARY KEY AUTOINCREMENT,
+#       nome_completo TEXT NOT NULL,
+#       cpf TEXT NOT NULL UNIQUE,
+#       data_nascimento TEXT,
+#       foto TEXT,
+#       username TEXT NOT NULL UNIQUE,
+#       senha_hash TEXT NOT NULL,
+#       permissoes TEXT NOT NULL -- JSON de abas permitidas
+#   );
+#
+# - Esta tabela é gerenciada apenas pelo backend FastAPI do painel.
+# - Não interfere e não é sobrescrita pelo processo de sincronização da Auvo.
+# - Os endpoints de CRUD de usuários do painel usam exclusivamente esta tabela.
+#
+# A tabela 'users' permanece dedicada aos usuários sincronizados da Auvo,
+# e nunca deve ser alterada pelo painel administrativo.
+# =============================================================================
+
+# =============================================================================
+# ATUALIZAÇÃO DA PÁGINA DE RELATÓRIO DE FATURAMENTO (11/07/2025)
+# =============================================================================
+# A página FaturamentoReport.js foi atualizada para replicar a funcionalidade do
+# Dashboard.js, com melhorias na interface e organização dos dados:
+#
+# 1. Integração com API:
+#    - Utiliza o endpoint `/dashboard/{contractId}` com parâmetros de data
+#    - Replica a lógica de desduplicação, agrupamento e cálculo de KPIs do Dashboard
+#
+# 2. Estrutura de Dados:
+#    - Processa tarefas para mostrar apenas as do mês atual
+#    - Identifica tarefas pendentes para o fim do mês (7 últimos dias)
+#    - Calcula indicadores globais: total de escolas, tarefas, concluídas, abertas
+#    - Extrai lista completa de colaboradores com suas estatísticas
+#
+# 3. Interface do Usuário:
+#    - Todas as seções principais são expansíveis (Accordion):
+#      * Resumo do Mês Atual (expandido por padrão)
+#      * Colaboradores (expandido por padrão)
+#      * Tarefas pendentes para o fim do mês (expandido por padrão)
+#      * Escolas (recolhido por padrão)
+#    - Seção de escolas com:
+#      * Botões para expandir/recolher todas as escolas
+#      * Cada escola expansível individualmente
+#      * Detalhes por escola: métricas, colaboradores e tarefas
+#    - Tabelas de tarefas mostram:
+#      * Coluna "Tarefa" exibindo o campo `orientation`
+#      * Coluna "Data" exibindo o campo `checkInDate` formatado
+#      * Status com chips coloridos
+#      * Nome do colaborador
+#
+# 4. Melhorias de UX:
+#    - Chips coloridos para indicadores
+#    - Cards para métricas importantes
+#    - Destaque visual para tarefas pendentes do fim do mês
+#    - Interface hierárquica e organizada
+#
+# 5. Dependências:
+#    - Material-UI: Accordion, Grid, Card, Chip, Table, etc.
+#    - Ícones: ExpandMore, UnfoldMore, UnfoldLess, etc.
+#    - React hooks: useState, useEffect, useMemo
+#
+# 6. Notas de Implementação:
+#    - A página mantém a mesma estrutura de dados do Dashboard
+#    - Não foram feitas alterações no backend ou no Dashboard.js
+#    - A lógica de desduplicação e processamento foi replicada no frontend
+# -----------------------------------------------------------------------------

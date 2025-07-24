@@ -1,0 +1,5131 @@
+Login/Login/Retrieve a authentication - GETGEThttps://api.auvo.com.br/v2/login/?apiKey=apiKey&apiToken=apiTokenParameters
+apiKey
+apiKey of the user admin
+String
+apiToken
+apiToken of the user admin
+String
+Request
+Headers
+Content-Type:application/json
+Response
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "authenticated": true,
+    "created": "2019-05-08 16:15:59",
+    "expiration": "2019-05-08 16:45:59",
+    "accessToken": "abcdefciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6WyJkYW5pbG9AYXV2by5jb20iLCJkYW5pbG9AYXV2by5jb20iXSwianRpIjoiY2FmZDE4NGJiMzVlNGNiODg5ODMzMjI2NzdiMzgyNDMiLCJhcGlLZXkiOiJ3SkZFbm02NjFVanNXQ2hzS2htUlRhbEtBZnZodjNxTyIsImFwaVRva2VuIjoid0pGRW5tNjYxVWowcHdESmlCNERUWnp0a0I5dVkwSXciLCJuYmYiOjE1NTczNDI5NTksImV4cCI6MTU1NzM0NDc1OSwiaWF0IjoxNTU3MzQyOTU5LCJpc3MiOiJBdXZvX0FwaV9QdWJsaWNhIiwiYXVkIjoiVXN1YXJpb19BcGkifQ.kJPkhx2Jo15ZPSUU1Bbm019s2lZAJr-x6zAw3nJoVdHkyjgTkT2E9aPCYh1eVtJi6Ua_zi8cIjvczSQ2twVHaAxEAnPgX7_UySS350DB6rnusHUx5SA1KpWa0omISlygcyuP5mU-1YHQRvnr7uSAk3kiMXd6KMFNlFq23_bRI1I01Lgb24c-o5W_AW3qXlYmOnVFLYkh1tWaRjvWiBaX7dquB4X6D6LoC-AkNgtWr44CrBXGc2LaQHW10cf3XQ_E448CdGA8QyefP57cA-s0Op80JWo3UlIxHyE5UkMng6shGYgSkp5jwEJ3cIZ4shlBBYyOYCscuZjMqlA1k6wOuQ",
+    "message": "OK"
+}  
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, not passing the apiKey parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "apiKey": [
+    "The value '\"\"' is not valid."
+  ]
+}
+ResponseWhen the resource with the specified apiKey does not exist.
+404
+Headers
+Content-Type:application/json
+
+Login/Login/Retrieve a authentication - POSTPOSThttps://api.auvo.com.br/v2/login/Attributes
+apiKey
+required
+string
+The user admin apiKey
+
+apiToken
+required
+string
+The user admin apiToken
+
+Request
+Headers
+Content-Type:application/json
+Body
+Show JSON Schema
+{
+  "apiKey": "as576a5da67s5da7s6d5d56a7",
+  "apiToken": "h89g8fg9h8fg9h8fg9h8f9"
+}
+Response
+200
+Headers
+Content-Type:application/json
+Body
+    "result": {
+        "authenticated": true,
+        "created": "2019-05-08 16:15:59",
+        "expiration": "2019-05-08 16:45:59",
+        "accessToken": "abcDefGOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6WyJkYW5pbG9AYXV2by5jb20iLCJkYW5pbG9AYXV2by5jb20iXSwianRpIjoiY2FmZDE4NGJiMzVlNGNiODg5ODMzMjI2NzdiMzgyNDMiLCJhcGlLZXkiOiJ3SkZFbm02NjFVanNXQ2hzS2htUlRhbEtBZnZodjNxTyIsImFwaVRva2VuIjoid0pGRW5tNjYxVWowcHdESmlCNERUWnp0a0I5dVkwSXciLCJuYmYiOjE1NTczNDI5NTksImV4cCI6MTU1NzM0NDc1OSwiaWF0IjoxNTU3MzQyOTU5LCJpc3MiOiJBdXZvX0FwaV9QdWJsaWNhIiwiYXVkIjoiVXN1YXJpb19BcGkifQ.kJPkhx2Jo15ZPSUU1Bbm019s2lZAJr-x6zAw3nJoVdHkyjgTkT2E9aPCYh1eVtJi6Ua_zi8cIjvczSQ2twVHaAxEAnPgX7_UySS350DB6rnusHUx5SA1KpWa0omISlygcyuP5mU-1YHQRvnr7uSAk3kiMXd6KMFNlFq23_bRI1I01Lgb24c-o5W_AW3qXlYmOnVFLYkh1tWaRjvWiBaX7dquB4X6D6LoC-AkNgtWr44CrBXGc2LaQHW10cf3XQ_E448CdGA8QyefP57cA-s0Op80JWo3UlIxHyE5UkMng6shGYgSkp5jwEJ3cIZ4shlBBYyOYCscuZjMqlA1k6wOuQ",
+        "message": "OK"
+    }
+
+Users/User/Retrieve a UserGEThttps://api.auvo.com.br/v2/users/idParameters
+id
+id attribute of the User.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/users/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "userId": 123,
+    "externalId": "123",
+    "name": "Jason",
+    "smartphoneNumber": "555555555555",
+    "login": "login.auvo",
+    "email": "login.auvo@email.com",
+    "culture": "pt-BR",
+    "jobPosition": "Administrador",
+    "userType": { "userTypeId": 1, "description": "user" },
+    "workDaysOfWeek": [ 
+        1, 
+        2, 
+        3, 
+        4, 
+        5, 
+        6, 
+        7  
+    ],
+    "startWorkHour": "08:00:00",
+    "endWorkHour": "18:00:00",
+    "startLunchHour": "12:00:00",
+    "endLunchHour": "14:00:00",
+    "hourValue": 0,
+    "pictureUrl": "",
+    "BasePoint": {
+      "address": "Rua C-137",
+      "latitude": -16.711903488917,
+      "longitude": -49.2775752032046
+    },
+    "openTaskInPlace": true,
+    "grabGalleryPhotos": true,
+    "gpsFrequency": 300,
+    "checkInManual": true,
+    "unavailableForTasks": true,
+    "editTaskAfterCheckout": true,
+    "informStartTravel": true,
+    "changeBasePoint": true,
+    "monitoringNotification": {
+      "gpsActivation": 1, 
+      "gpsDisabling": 2,
+      "appLogin": 3,
+      "appLogin": 1 
+    },
+    "employeeNotification": {
+      "basePointChange": 1 
+    },
+    "clientNotification": {
+      "adressChange": 1 
+    },
+    "taskNotification": {
+      "checkIn": 1, 
+      "checkOut": 2,
+      "rescheduling": 3,
+      "travelStart": 1,
+      "researchAnswer": 3,
+      "delay": 3,
+      "taskDelete": 3
+    }
+}  
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, not passing the id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value '\"\"' is not valid."
+  ]
+}
+ResponseWhen the resource with the specified id does not exist.
+404
+Headers
+Content-Type:application/json
+
+Users/User/Add a new UserPOSThttps://api.auvo.com.br/v2/users/Attributes
+externalId
+string
+The user external id
+
+name
+required
+string
+name of the user
+
+smartPhoneNumber
+required
+string
+user phone number. Only numbers
+
+culture
+required
+string
+culture name. For example pt-BR
+
+jobPosition
+required
+string
+job position of the user
+
+userType
+required
+number
+1 - user | 2 - team manager | 3 - administrator
+
+password
+required
+string
+password of the user
+
+workDaysOfWeek
+array
+1 - Sunday | 2 -Monday | 3 - Tuesday | 4 - Wednesday | 5 - Thuersday | 6 - Friday | 7 - Sunday
+
+0
+number
+endLunchHour
+string
+"HH:mm:ss" 24 hours format
+
+endWorkHour
+string
+"HH:mm:ss" 24 hours format
+
+startLunchHour
+string
+"HH:mm:ss" 24 hours format
+
+startWorkHour
+string
+"HH:mm:ss" 24 hours format
+
+checkInManual
+boolean
+If checkin is manual.
+
+address
+string
+base point address
+
+latitude
+number
+base point latitude
+
+longitude
+number
+base point longitude
+
+openTaskInPlace
+boolean
+open in-place task by application
+
+grabGalleryPhotos
+boolean
+allows you to take gallery photo in the app
+
+gpsFrequency
+number
+60 - 1 minute| 120 - 2 minutes |180 - 3 minutes | 240 - 4 minutes | 300 - 5 minutes
+
+login
+required
+string
+Login in the aplication
+
+email
+required
+string
+User email
+
+unavailableForTasks
+boolean
+If user is available for tasks
+
+editTaskAfterCheckout
+boolean
+If can edit task after checkout
+
+informStartTravel
+boolean
+If user utilize start travel.
+
+ChangeBasePoint
+boolean
+If user can change change base point.
+
+hourValue
+number
+Monetary value of the worked hour
+
+monitoringNotification
+object
+1:Email, 2:Push, 3:Both
+
+gpsActivation(number)
+
+gpsDisabling(number)
+
+appLogin(number)
+
+appLogout(number)
+
+employeeNotification
+object
+1:Email, 2:Push, 3:Both
+
+basePointChange(number)
+clientNotification
+object
+1:Email, 2:Push, 3:Both
+
+adressChange(number)
+taskNotification
+object
+1:Email, 2:Push, 3:Both
+
+checkIn(number)
+
+checkout(number)
+
+rescheduling(number)
+
+travelStart(number)
+
+researchAnswer(number)
+
+delay(number)
+
+taskDelete(number)
+
+Request
+from urllib2 import Request, urlopen
+
+values = """
+{
+  "externalId": "123",
+  "name": "john",
+  "smartPhoneNumber": "578123456789",
+  "culture": "pt-BR",
+  "jobPosition": "manager",
+  "userType": ',
+  "password": "123mudar",
+  "workDaysOfWeek": [1,2,3],
+  "startWorkHour": "08:00:00",
+  "endWorkHour": "18:00:00",
+  "startLunchHour": "13:00:00",
+  "endLunchHour": "14:00:00",
+  "hourValue": 10.0,
+  "checkInManual": false,
+  "address": "secret adress",
+  "latitude": 900.0,
+  "longitude": 900.0,
+  "openTaskInPlace": false,
+  "galleryPhotos": false,
+  "gpsFrequency": 300,
+  "login": "john.wick",
+  "email": "johnwick@email.com",
+  "unavailableForTasks": false,
+  "editTaskAfterCheckout": false,
+  "informStartTravel": false,
+  "changeBasePoint": false,
+  "paramMonitoringNotification":{
+      "gpsActivation": 1,
+      "gpsDisabling": 2,
+      "appLogin": 3,
+      "appLogout": 0
+    },
+  "ParamEmployeeNotification":{
+      "basePointChange": 0
+    },
+  "ParamClientNotification":{
+      "adressChange": 0
+    },
+  "ParamTaskNotification":{
+      "checkIn": 1,
+      "checkout": 2,
+      "rescheduling": 3,
+      "travelStart": 0,
+      "researchAnswer": 1,
+      "delay": 2,
+      "taskDelete": 3
+    }
+}"""
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/users/', data=values, headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+201
+Headers
+Content-Type:application/json
+Body
+    "result": {
+    "userId": 123,
+    "externalId": "1233",
+    "name": "auvuro SA",
+    "smartPhoneNumber": "123456789",
+    "login": "email@email.com",
+    "email": "email@email.com.br",
+    "culture": "pt-BR",
+    "jobPosition": "Dev",
+    "userType": {
+        "userTypeId": 4,
+        "description": ""
+    },
+    "workDaysOfWeek": [
+        2,
+        3,
+        4,
+        5,
+        6
+    ],
+    "startWorkHour": "09:00:00",
+    "endWorkHour": "17:00:00",
+    "startLunchHour": "12:00:00",
+    "endLunchHour": "13:00:00",
+    "hourValue": 0,
+    "pictureUrl": "",
+    "basePoint": {
+        "address": "Rua Goias, Cidade, Goiânia - GO, 74413-000, Brasil",
+        "latitude": -16.68726699428,
+        "longitude": -49.2998164147
+    },
+    "openTaskInPlace": true,
+    "grabGalleryPhotos": true,
+    "gpsFrequency": 60,
+    "checkInManual": false,
+    "unavailableForTasks": false,
+    "editTaskAfterCheckout": true,
+    "informStartTravel": true,
+    "changeBasePoint": true,
+    "monitoringNotification": {
+        "gpsActivation": 0,
+        "gpsDisabling": 0,
+        "appLogin": 0,
+        "appLogout": 0
+    },
+    "employeeNotification": {
+        "basePointChange": 0
+    },
+    "clientNotification": {
+        "adressChange": 0
+    },
+    "taskNotification": {
+        "checkIn": 0,
+        "checkout": 0,
+        "rescheduling": 0,
+        "travelStart": 0,
+        "researchAnswer": 0,
+        "delay": 3,
+        "taskDelete": 0
+    }
+}
+GEThttps://api.auvo.com.br/v2/users/?paramFilter=paramFilter&page=page&pageSize=pageSize&order=order&selectfields=selectfieldsParameters
+paramFilter
+Must be a json encoded string.userId (number) - The user idname (string) - name of the usersmartPhoneNumber (string) - user phone number. Only numbersuserType (string) - Usuario:1, Manager:2, Administrator:3externalId (string) - User external ids. Allow multiples, separated by comma
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+selectfields
+For all fields, use empty string. To select fields, use the properties of the returned object separated by commas.
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/users/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}&selectfields={selectfields}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+{
+  "result": {
+    "entityList": [
+      {
+        "userId": 123,
+        "externalId": "123",
+        "name": "Jason",
+        "smartphoneNumber": "555555555555",
+        "login": "login.auvo",
+        "email": "login.auvo@email.com",
+        "culture": "pt-BR",
+        "jobPosition": "Administrador",
+        "userType": {
+          "userTypeId": 1,
+          "description": "user"
+        },
+        "workDaysOfWeek": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "startWorkHour": "08:00:00",
+        "endWorkHour": "18:00:00",
+        "startLunchHour": "12:00:00",
+        "endLunchHour": "14:00:00",
+        "hourValue": 0,
+        "pictureUrl": "",
+        "BasePoint": {
+          "address": "Rua C-137",
+          "latitude": -16.711903488917,
+          "longitude": -49.2775752032046
+        },
+        "openTaskInPlace": true,
+        "grabGalleryPhotos": true,
+        "gpsFrequency": 300,
+        "checkInManual": true,
+        "unavailableForTasks": true,
+        "editTaskAfterCheckout": true,
+        "informStartTravel": true,
+        "changeBasePoint": true,
+        "monitoringNotification": {
+          "gpsActivation": 1,
+          "gpsDisabling": 2,
+          "appLogin": 1
+        },
+        "employeeNotification": {
+          "basePointChange": 1
+        },
+        "clientNotification": {
+          "adressChange": 1
+        },
+        "taskNotification": {
+          "checkIn": 1,
+          "checkOut": 2,
+          "rescheduling": 3,
+          "travelStart": 1,
+          "researchAnswer": 3,
+          "delay": 3,
+          "taskDelete": 3
+        }
+      }
+    ],
+    "pagedSearchReturnData": {
+      "order": 0,
+      "pageSize": 1,
+      "page": 1,
+      "totalItems": 2
+    },
+    "links": [
+      {
+        "href": "https://api.auvo.com.br/v2/Users?ParamFilter=%7B%0D%0A%22name%22%3A%22a%22%0D%0A%7D&Page=1&PageSize=1&Order=Asc",
+        "rel": "self",
+        "method": "GET"
+      },
+      {
+        "href": "https://api.auvo.com.br/v2/Users?ParamFilter=%7B%0D%0A%22name%22%3A%22a%22%0D%0A%7D&Page=2&PageSize=1&Order=Asc",
+        "rel": "nextPage",
+        "method": "GET"
+      }
+    ]
+  }
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, not passing the paramFilter parameter ( https://api.auvo.com.br/v2/users/?page=1&pageSize=1&order=1&selectfields= ).
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "message": "The paramFilter is required as ParamUserFilter string json.",
+  "target": null,
+  "errorCode": 0,
+  "errors": null
+}
+Tasks/Task/Retrieve a TaskGEThttps://api.auvo.com.br/v2/tasks/idParameters
+id
+taskID attribute of the Task.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/tasks/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "taskID": 23,
+    "externalId": "123",
+    "idUserFrom": 123,
+    "idUserTo": 123,
+    "userToName": "Colaborador sem ponto base",
+    "userFromName": "Paulo",
+    "customerId": 456,
+    "customerExternalId": 10,
+    "customerDescription": "Customer x",
+    "taskType": 23,
+    "taskTypeDescription": "Edição automatizada 897263119",
+    "creationDate": "2016-03-23T14:10:35",
+    "taskDate": "2016-03-23T18:00:00",
+    "latitude": -16.6872086111083,
+    "longitude": -49.2995542287827,
+    "address": "avenue X",
+    "orientation": "Go get a beer!",
+    "priority": "1",
+    "deliveredOnSmarthPhone": true,
+    "deliveredDate": "2016-03-23T14:11:31",
+    "finished": true,
+    "report": "ok",
+    "visualized": true,
+    "visualizedDate": "2016-03-23T14:12:00",
+    "checkIn": true,
+    "checkInDate": "2016-03-23T18:05:00",
+    "checkOut": true,
+    "checkOutDate": "2016-03-23T18:10:00",
+    "checkinType": "1",
+    "equipmentsId": [109638, 109753],
+    "keyWords": [
+        "keyword id"
+    ],
+    "keyWordsDescriptions": [
+        "Descriptions of keywords"
+    ],
+    "inputedKm": 10,
+    "adoptedKm": 11,
+    "attachments":[
+        {
+            "id": "1",
+            "url": "",
+            "attachmentType": 1,
+            "subtitle": "",
+            "description": "",
+            "extension": ""
+        }
+    ],
+    "questionnaires":[
+        {
+            "itemId": "1",
+            "questionnaireId": "",
+            "questionnaireDescription": 1,
+            "answers": [
+                {
+                    "questionId": "1",
+                    "questionDescription": "",
+                    "replyId": 1,
+                    "reply": 1,
+                    "replyDate": "2016-03-23T18:10:00"
+                }
+            ]
+        }
+    ],
+    "signatureUrl": "signature url",
+    "checkInDistance": 0,
+    "checkOutDistance": 0,
+    "sendSatisfactionSurvey": true,
+    "survey": "",
+    "taskUrl": "",
+    "pendency": "",
+    "dateLastUpdate":"2016-03-23T18:10:00",
+    "ticketId": 558,
+    "ticketTitle": "Título do ticket",
+    "signatureName": "Oliveira Silva",
+    "signatureDocument": "00008500100",
+    "expense": "2.500.000,00",
+    "duration": "",
+    "durationDecimal": "",
+    "displacementStart": "",
+    "products": [{
+        "productId": "63867f52-b262-410a-a409-cc25ba92ded1",
+        "code": "456", 
+        "name": null,
+        "description": null,
+        "quantity": 0.0,
+        "unitaryValue": 0.0,
+        "totalValue": 0.0,
+        "userResponsible": null,
+        "userResponsibleCode": 0,
+        "dateRegister": null,
+        "dateEdit": null
+        "discount": {
+            "value": 0.00,
+            "type": "Valor"
+        }
+        }
+    ],
+    "services": [{
+        "id": "00000000-0000-0000-0000-000000000000",
+        "name": null,
+        "quantity": 0.0,
+        "unitaryValue": 0.0,
+        "totalValue": 0.0,
+        "userResponsible": null,
+        "userResponsibleCode": 0,
+        "dateRegister": null,
+        "dateEdit": null
+        "discount": {
+            "value": 0.00,
+            "type": "Valor"
+        }
+    }],
+    "additionalCosts": [{
+        "additionalCostId": "63867f52-b262-410a-a409-cc25ba92ded1",
+        "code": "456", 
+        "name": null,
+        "unitaryValue": 0.0,
+        "userResponsible": null,
+        "userResponsibleCode": 0,
+        "dateRegister": null,
+        "dateEdit": null
+    }],
+    "summary": {
+        "totalProducts": 0.0,
+        "totalServices": 0.0,
+        "totalAdditionalCosts": 0.0,
+        "totalValue": 0.0,
+        "discount": {
+            "value": 0.00,
+            "type": "Valor"
+        }
+    },
+    "estimatedDuration": "00:00:00",
+    "financialCategory": "",
+    "taskStatus": "1"
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+Tasks/Task/Add a new TaskPOSThttps://api.auvo.com.br/v2/tasks/Attributes
+externalId
+string
+External task id
+
+taskType
+number
+taskTypeId of the task type
+
+idUserFrom
+required
+number
+userId of the User that is opening the task
+
+idUserTo
+number
+userId of the User responsable for executing the task
+
+TeamId
+number
+Existing team id at Auvo
+
+taskDate
+string
+Date and time for the execution of the task
+
+latitude
+required
+number
+Latitude of the task
+
+longitude
+required
+number
+Longitude of the task
+
+address
+required
+string
+Address of the task
+
+orientation
+required
+string
+Orientation of the task
+
+priority
+required
+number
+Priority of the task. 1 - Low | 2 - Medium | 3 - High
+
+questionnaireId
+number
+QuestionnaireId of the CheckList(Questionnaire) included in the task
+
+customerId
+number
+CustomerId of the Customer chosen for the task
+
+checkinType
+number
+Checkin type of the task type. 1 - Manual | 2 - Automatic | 3 - User
+
+attachments
+array
+keyWords
+array
+sendSatisfactionSurvey
+boolean
+Send satisfaction survey for the task
+
+equipmentsId
+array
+taskProducts
+array
+taskServices
+array
+taskAdditionalCosts
+array
+taskDiscount
+object
+financialCategory
+string
+Name of the Financial Category.
+
+Request
+from urllib2 import Request, urlopen
+
+values = """
+  {
+    "externalId": "123",
+    "taskType": 1,
+    "idUserFrom": 99,
+    "idUserTo": 69,
+    "teamId": 6,
+    "taskDate": "2016-04-23T18:00:00",
+    "latitude": -16.6872086111083,
+    "longitude": -49.2995542287827,
+    "address": "avenue Y",
+    "orientation": "Gotta Catch 'Em All",
+    "priority": 1,
+    "questionnaireId": 3,
+    "customerId": 1,
+    "checkinType": 1,
+    "sendSatisfactionSurvey": false,
+    "attachments": [
+      {
+        "name": "my_file.pdf",
+        "file": "base64 encoded file"
+      }
+    ],
+    "keyWords": [
+      1
+    ],
+    "financialCategory": "Category Name"
+  }
+"""
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/tasks/', data=values, headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+201
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "taskID": 123,
+    "externalId": "3",
+    "idUserFrom": 120,
+    "idUserTo": 120,
+    "customerId": 0,
+    "customerExternalId": 10,
+    "customerDescription": "Customer x",
+    "taskType": 0,
+    "creationDate": "2019-04-03T13:06:09",
+    "taskDate": "2019-03-26T14:00:00",
+    "latitude": 96,
+    "longitude": 96,
+    "address": "rua rua 123",
+    "orientation": "orientation",
+    "priority": 1,
+    "deliveredOnSmarthPhone": false,
+    "deliveredDate": "0001-01-01T00:00:00",
+    "finished": false,
+    "report": "",
+    "visualized": false,
+    "visualizedDate": "",
+    "checkIn": false,
+    "checkInDate": "",
+    "checkOut": false,
+    "checkOutDate": "",
+    "checkinType": 1,
+    "keyWords": [],
+    "inputedKm": 0,
+    "adoptedKm": 0,
+    "attachments": [],
+    "questionnaires": [],
+    "signatureUrl": "",
+    "checkInDistance": 0,
+    "checkOutDistance": 0,
+    "survey": "https://app.auvo.com.br/pesquisasatisfacao/formulario/054599ce-247b-4b34-8dbd-19d47d97de123",
+    "taskUrl": "https://app.auvo.com.br/informacoes/tarefa/054599ce-247b-4b34-8dbd-19d47d97d123",
+    "pendency": "",
+    "dateLastUpdate": "2019-04-03T13:06:09",
+    "ticketId": 558,
+    "ticketTitle": "Título do ticket",
+    "signatureName": "Oliveira Silva",
+    "signatureDocument": "00008500100",
+    "expense": "2.500.000,00",
+    "products": [{
+        "productId": "63867f52-b262-410a-a409-cc25ba92ded1",
+        "code": "456", 
+        "name": null,
+        "description": null,
+        "quantity": 0.0,
+        "unitaryValue": 0.0,
+        "totalValue": 0.0,
+        "userResponsible": null,
+        "userResponsibleCode": 0,
+        "dateRegister": null,
+        "dateEdit": null
+        "discount": {
+            "value": 0.00,
+            "type": "Valor"
+        }
+        }
+    ],
+    "services": [{
+        "id": "00000000-0000-0000-0000-000000000000",
+        "name": null,
+        "quantity": 0.0,
+        "unitaryValue": 0.0,
+        "totalValue": 0.0,
+        "userResponsible": null,
+        "userResponsibleCode": 0,
+        "dateRegister": null,
+        "dateEdit": null
+        "discount": {
+            "value": 0.00,
+            "type": "Valor"
+        }
+    }],
+    "additionalCosts": [{
+        "additionalCostId": "63867f52-b262-410a-a409-cc25ba92ded1",
+        "code": "456", 
+        "name": null,
+        "unitaryValue": 0.0,
+        "userResponsible": null,
+        "userResponsibleCode": 0,
+        "dateRegister": null,
+        "dateEdit": null
+    }],
+    "summary": {
+        "totalProducts": 0.0,
+        "totalServices": 0.0,
+        "totalAdditionalCosts": 0.0,
+        "totalValue": 0.0,
+        "discount": {
+            "value": 0.00,
+            "type": "Valor"
+        }
+    },
+    "taskStatus": 1,
+    "financialCategory": "Category Name"
+}
+Tasks/Task/Upsert - Add a new Task or update an existing onePUThttps://api.auvo.com.br/v2/tasks/Attributes
+id
+number
+identifier of a registered task
+
+externalId
+string
+External task identifier
+
+taskType
+number
+taskTypeId of the task type
+
+idUserFrom
+required
+number
+userId of the User that is opening the task
+
+idUserTo
+number
+userId of the User responsable for executing the task
+
+TeamId
+number
+Existing team id at Auvo
+
+taskDate
+string
+Date and time for the execution of the task
+
+latitude
+required
+number
+Latitude of the task
+
+longitude
+required
+number
+Longitude of the task
+
+address
+required
+string
+Address of the task
+
+orientation
+required
+string
+Orientation of the task
+
+priority
+required
+number
+Priority of the task. 1 - Low | 2 - Medium | 3 - High
+
+questionnaireId
+number
+QuestionnaireId of the CheckList(Questionnaire) included in the task
+
+customerId
+number
+CustomerId of the Customer chosen for the task
+
+checkinType
+number
+Checkin type of the task type. 1 - Manual | 2 - Automatic | 3 - User
+
+attachments
+array
+keyWords
+array
+sendSatisfactionSurvey
+boolean
+Send satisfaction survey for the task
+
+taskProducts
+array
+taskServices
+array
+taskAdditionalCosts
+array
+taskDiscount
+object
+financialCategory
+string
+Name of the Financial Category.
+
+Request
+from urllib2 import Request, urlopen
+
+values = """
+  {
+    "externalId": "123",
+    "taskType": 1,
+    "idUserFrom": 99,
+    "idUserTo": 69,
+    "teamId": 6,
+    "taskDate": "2016-04-23T18:00:00",
+    "latitude": -16.6872086111083,
+    "longitude": -49.2995542287827,
+    "address": "avenue Y",
+    "orientation": "Gotta Catch 'Em All",
+    "priority": 1,
+    "questionnaireId": 3,
+    "customerId": 1,
+    "checkinType": 1,
+    "sendSatisfactionSurvey": false,
+    "attachments": [
+      {
+        "name": "my_file.pdf",
+        "file": "base64 encoded file"
+      }
+    ],
+    "keyWords": [
+      1
+    ],
+    "financialCategory": "Category Name"
+  }
+"""
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/tasks/', data=values, headers=headers)
+request.get_method = lambda: 'PUT'
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+201
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "taskID": 123,
+    "externalId": "3",
+    "idUserFrom": 120,
+    "idUserTo": 120,
+    "customerId": 0,
+    "customerExternalId": 10,
+    "customerDescription": "Customer x",
+    "taskType": 0,
+    "creationDate": "2019-04-03T13:06:09",
+    "taskDate": "2019-03-26T14:00:00",
+    "latitude": 96,
+    "longitude": 96,
+    "address": "rua rua 123",
+    "orientation": "orientation",
+    "priority": 1,
+    "deliveredOnSmarthPhone": false,
+    "deliveredDate": "0001-01-01T00:00:00",
+    "finished": false,
+    "report": "",
+    "visualized": false,
+    "visualizedDate": "",
+    "checkIn": false,
+    "checkInDate": "",
+    "checkOut": false,
+    "checkOutDate": "",
+    "checkinType": 1,
+    "keyWords": [],
+    "inputedKm": 0,
+    "adoptedKm": 0,
+    "attachments": [],
+    "questionnaires": [],
+    "signatureUrl": "",
+    "checkInDistance": 0,
+    "checkOutDistance": 0,
+    "survey": "https://app.auvo.com.br/pesquisasatisfacao/formulario/054599ce-247b-4b34-8dbd-19d47d97de123",
+    "taskUrl": "https://app.auvo.com.br/informacoes/tarefa/054599ce-247b-4b34-8dbd-19d47d97d123",
+    "pendency": "",
+    "dateLastUpdate": "2019-04-03T13:06:09",
+    "ticketId": 558,
+    "ticketTitle": "Título do ticket",
+    "signatureName": "Oliveira Silva",
+    "signatureDocument": "00008500100",
+    "expense": "2.500.000,00",
+    "products": [{
+        "productId": "63867f52-b262-410a-a409-cc25ba92ded1",
+        "externalId": "123",
+        "code": "456",
+        "name": null,
+        "description": null,
+        "quantity": 0.0,
+        "unitaryValue": 0.0,
+        "totalValue": 0.0,
+        "userResponsible": null,
+        "userResponsibleCode": 0,
+        "dateRegister": null,
+        "dateEdit": null
+        "discount": {
+            "value": 0.00,
+            "type": "Valor"
+        }
+        }
+    ],
+    "services": [{
+        "id": "00000000-0000-0000-0000-000000000000",
+        "name": null,
+        "quantity": 0.0,
+        "unitaryValue": 0.0,
+        "totalValue": 0.0,
+        "userResponsible": null,
+        "userResponsibleCode": 0,
+        "dateRegister": null,
+        "dateEdit": null
+        "discount": {
+            "value": 0.00,
+            "type": "Valor"
+        }
+    }],
+    "additionalCosts": [{
+        "additionalCostId": "63867f52-b262-410a-a409-cc25ba92ded1",
+        "code": "456", 
+        "name": null,
+        "unitaryValue": 0.0,
+        "userResponsible": null,
+        "userResponsibleCode": 0,
+        "dateRegister": null,
+        "dateEdit": null
+    }],
+    "summary": {
+        "totalProducts": 0.0,
+        "totalServices": 0.0,
+        "totalAdditionalCosts": 0.0,
+        "totalValue": 0.0,
+        "discount": {
+            "value": 0.00,
+            "type": "Valor"
+        }
+    },
+    "taskStatus": 1,
+    "financialCategory": "Category Name"
+}
+Tasks/Task/Edit a TaskPATCHhttps://api.auvo.com.br/v2/tasks/idParameters
+id
+taskID attribute of the Task.
+Number
+Attributes
+externalId
+string
+External task id
+
+taskType
+number
+taskTypeId of the task type
+
+idUserFrom
+required
+number
+userId of the User that is opening the task
+
+idUserTo
+number
+userId of the User responsable for executing the task
+
+TeamId
+number
+Existing team id at Auvo
+
+taskDate
+string
+Date and time for the execution of the task
+
+latitude
+required
+number
+Latitude of the task
+
+longitude
+required
+number
+Longitude of the task
+
+address
+required
+string
+Address of the task
+
+orientation
+required
+string
+Orientation of the task
+
+priority
+required
+number
+Priority of the task. 1 - Low | 2 - Medium | 3 - High
+
+questionnaireId
+number
+QuestionnaireId of the CheckList(Questionnaire) included in the task
+
+customerId
+number
+CustomerId of the Customer chosen for the task
+
+checkinType
+number
+Checkin type of the task type. 1 - Manual | 2 - Automatic | 3 - User
+
+keyWords
+array
+sendSatisfactionSurvey
+boolean
+Send satisfaction survey for the task.
+
+financialCategory
+string
+Name of the Financial Category
+
+Request
+from urllib2 import Request, urlopen
+
+values = """
+  [
+    {
+      "op": "replace",
+      "path": "orientation",
+      "value": "orientation value"
+    }
+  ]
+"""
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/tasks/id', data=values, headers=headers)
+request.get_method = lambda: 'PATCH'
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "taskID": 123,
+    "externalId": "3",
+    "idUserFrom": 120,
+    "idUserTo": 120,
+    "customerId": 0,
+    "customerExternalId": 10,
+    "customerDescription": "Customer x",
+    "taskType": 0,
+    "creationDate": "2019-04-03T13:06:09",
+    "taskDate": "2019-03-26T14:00:00",
+    "latitude": 96,
+    "longitude": 96,
+    "address": "rua rua 123",
+    "orientation": "orientation",
+    "priority": 1,
+    "deliveredOnSmarthPhone": false,
+    "deliveredDate": "0001-01-01T00:00:00",
+    "finished": false,
+    "report": "",
+    "visualized": false,
+    "visualizedDate": "",
+    "checkIn": false,
+    "checkInDate": "",
+    "checkOut": false,
+    "checkOutDate": "",
+    "checkinType": 1,
+    "keyWords": [],
+    "inputedKm": 0,
+    "adoptedKm": 0,
+    "attachments": [],
+    "questionnaires": [],
+    "signatureUrl": "",
+    "checkInDistance": 0,
+    "checkOutDistance": 0,
+    "survey": "https://app.auvo.com.br/pesquisasatisfacao/formulario/054599ce-247b-4b34-8dbd-19d47d97de123",
+    "taskUrl": "https://app.auvo.com.br/informacoes/tarefa/054599ce-247b-4b34-8dbd-19d47d97d123",
+    "pendency": "",
+    "dateLastUpdate": "2020-04-03T13:06:09",
+    "ticketId": 558,
+    "ticketTitle": "Título do ticket",
+    "signatureName": "Oliveira Silva",
+    "signatureDocument": "00008500100",
+    "expense": "2.500.000,00",
+    "taskStatus": 1,
+    "financialCategory": "Category Name"
+}
+Tasks/Task/Task's Products Upsert - Add new products or update existing ones.PUThttps://api.auvo.com.br/v2/tasks/id/productsParameters
+id
+taskID attribute of the Task.
+Number
+Attributes
+taskProducts
+array
+Request
+from urllib2 import Request, urlopen
+
+values = """
+  {
+    "taskProducts": [
+      {
+        "ProductId": "419384ad-705c-11eb-bf97-0aa2a285b66a",
+        "Quantity": "1",
+        "Value": "44"
+      }
+    ]
+  }
+"""
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/tasks/id/products', data=values, headers=headers)
+request.get_method = lambda: 'PUT'
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "taskID": 123,
+    "externalId": "",
+    "idUserFrom": 123,
+    "userFromName": "User",
+    "idUserTo": 123,
+    "userToName": "User",
+    "customerId": 123,
+    "customerExternalId": "",
+    "customerDescription": "Client",
+    "taskType": 0,
+    "taskTypeDescription": "",
+    "creationDate": "2023-01-20T08:01:12",
+    "taskDate": "2023-01-20T08:00:00",
+    "latitude": -23.6732872,
+    "longitude": -46.4412057,
+    "address": "address",
+    "orientation": "Orientation",
+    "priority": 1,
+    "deliveredOnSmarthPhone": false,
+    "deliveredDate": "0001-01-01T00:00:00",
+    "finished": false,
+    "report": "",
+    "visualized": false,
+    "visualizedDate": "",
+    "checkIn": false,
+    "checkInDate": "",
+    "checkOut": false,
+    "checkOutDate": "",
+    "checkinType": 1,
+    "keyWords": [],
+    "keyWordsDescriptions": [],
+    "inputedKm": 0.0,
+    "adoptedKm": 0.0,
+    "attachments": [],
+    "questionnaires": [],
+    "signatureUrl": "",
+    "checkInDistance": 0,
+    "checkOutDistance": 0,
+    "sendSatisfactionSurvey": false,
+    "survey": "https://inova.auvo.com.br/pesquisasatisfacao/formulario/c05e12c2-c738-4fb1-8b92-4a1b6cf7bb3a",
+    "taskUrl": "https://inova.auvo.com.br/informacoes/tarefa/c05e12c2-c738-4fb1-8b92-4a1b6cf7bb3a?chave=Pre2sGfxpS63X24-PE1Ebg",
+    "pendency": "",
+    "equipmentsId": [],
+    "dateLastUpdate": "2023-01-20T08:01:12",
+    "ticketId": 0,
+    "ticketTitle": "",
+    "signatureName": "",
+    "signatureDocument": "",
+    "expense": "0,00",
+    "duration": "",
+    "durationDecimal": "",
+    "displacementStart": "",
+    "products": [
+        {
+            "productId": "63867f52-b262-410a-a409-cc25ba92ded1",
+            "code": "456", 
+            "name": "product name",
+            "description": "product description",
+            "quantity": 1.00,
+            "unitaryValue": 44.00,
+            "totalValue": 44.0000,
+            "userResponsible": "0ca67abc-6d7a-11eb-8b9d-0a23e97fa4da",
+            "userResponsibleCode": 123,
+            "dateRegister": "2023-01-20T08:10:37",
+            "dateEdit": "2023-01-20T08:10:37",
+            "discount": {
+                "value": 0.00,
+                "type": "Valor"
+            }
+        }
+    ],
+    "services": [ ],
+    "additionalCosts": [ ],
+    "summary": {
+        "totalProducts": 44.0000,
+        "totalServices": 0,
+        "totalAdditionalCosts": 0,
+        "totalValue": 44.0000,
+        "discount": {
+            "value": 0,
+            "type": "0"
+        }
+    },
+    "taskStatus": 1
+}
+Tasks/Task/Task's Services Upsert - Add new services or update existing ones.PUThttps://api.auvo.com.br/v2/tasks/id/servicesParameters
+id
+taskID attribute of the Task.
+Number
+Attributes
+taskServices
+array
+Request
+from urllib2 import Request, urlopen
+
+values = """
+  {
+    "taskServices": [
+      {
+        "ServiceId": "419384ad-705c-11eb-bf97-0aa2a285b66a",
+        "Quantity": "1",
+        "Value": "44"
+      }
+    ]
+  }
+"""
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/tasks/id/services', data=values, headers=headers)
+request.get_method = lambda: 'PUT'
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "taskID": 123,
+    "externalId": "",
+    "idUserFrom": 123,
+    "userFromName": "User",
+    "idUserTo": 123,
+    "userToName": "User",
+    "customerId": 123,
+    "customerExternalId": "",
+    "customerDescription": "Client",
+    "taskType": 0,
+    "taskTypeDescription": "",
+    "creationDate": "2023-01-20T08:01:12",
+    "taskDate": "2023-01-20T08:00:00",
+    "latitude": -23.6732872,
+    "longitude": -46.4412057,
+    "address": "address",
+    "orientation": "Orientation",
+    "priority": 1,
+    "deliveredOnSmarthPhone": false,
+    "deliveredDate": "0001-01-01T00:00:00",
+    "finished": false,
+    "report": "",
+    "visualized": false,
+    "visualizedDate": "",
+    "checkIn": false,
+    "checkInDate": "",
+    "checkOut": false,
+    "checkOutDate": "",
+    "checkinType": 1,
+    "keyWords": [],
+    "keyWordsDescriptions": [],
+    "inputedKm": 0.0,
+    "adoptedKm": 0.0,
+    "attachments": [],
+    "questionnaires": [],
+    "signatureUrl": "",
+    "checkInDistance": 0,
+    "checkOutDistance": 0,
+    "sendSatisfactionSurvey": false,
+    "survey": "https://inova.auvo.com.br/pesquisasatisfacao/formulario/c05e12c2-c738-4fb1-8b92-4a1b6cf7bb3a",
+    "taskUrl": "https://inova.auvo.com.br/informacoes/tarefa/c05e12c2-c738-4fb1-8b92-4a1b6cf7bb3a?chave=Pre2sGfxpS63X24-PE1Ebg",
+    "pendency": "",
+    "equipmentsId": [],
+    "dateLastUpdate": "2023-01-20T08:01:12",
+    "ticketId": 0,
+    "ticketTitle": "",
+    "signatureName": "",
+    "signatureDocument": "",
+    "expense": "0,00",
+    "duration": "",
+    "durationDecimal": "",
+    "displacementStart": "",
+    "products": [ ],
+    "services": [
+        {
+            "id": "45c57e85-d5b8-4224-b430-0e80163eb7e6",
+            "name": "service name",
+            "quantity": 1.0,
+            "unitaryValue": 44.00,
+            "totalValue": 41.8000,
+            "userResponsible": "0ca67abc-6d7a-11eb-8b9d-0a23e97fa4da",
+            "userResponsibleCode": 123,
+            "dateRegister": "2023-01-20T08:01:14",
+            "dateEdit": "2023-01-20T08:01:13",
+            "discount": {
+                "value": 0,
+                "type": "0"
+            }
+        }
+    ],
+    "additionalCosts": [ ],
+    "summary": {
+        "totalProducts": 0,
+        "totalServices": 44.0000,
+        "totalAdditionalCosts": 0,
+        "totalValue": 44.0000,
+        "discount": {
+            "value": 0,
+            "type": "0"
+        }
+    },
+    "taskStatus": 1
+}
+Tasks/Task/Task's Additional Costs Upsert - Add new additional costs or update existing ones.PUThttps://api.auvo.com.br/v2/tasks/id/additional-costsParameters
+id
+taskID attribute of the Task.
+Number
+Attributes
+taskAdditionalCosts
+array
+0
+object
+1
+AdditionalCostId
+string
+AdditionalCostId attribute of the Additional cost.
+
+2
+DiscountType
+string
+A discount type can be 0 - monetary value or 1 - percentage.
+
+3
+DiscountValue
+string
+A value in decimal format according to the discount type specified.
+
+4
+Quantity
+string
+The quantity of the additional cost in decimal format.
+
+5
+Value
+string
+The unit value of the additional cost in decimal format.
+
+Request
+from urllib2 import Request, urlopen
+
+values = """
+  {
+    "taskAdditionalCosts": [
+      {
+        "AdditionalCostId": "aa3ca4d0-8154-4c37-978d-49531d17d41c",
+        "Value": "361"
+      }
+    ]
+  }
+"""
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/tasks/id/additional-costs', data=values, headers=headers)
+request.get_method = lambda: 'PUT'
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "taskID": 123,
+    "externalId": "",
+    "idUserFrom": 123,
+    "userFromName": "User",
+    "idUserTo": 123,
+    "userToName": "User",
+    "customerId": 123,
+    "customerExternalId": "",
+    "customerDescription": "Client",
+    "taskType": 0,
+    "taskTypeDescription": "",
+    "creationDate": "2023-01-20T08:01:12",
+    "taskDate": "2023-01-20T08:00:00",
+    "latitude": -23.6732872,
+    "longitude": -46.4412057,
+    "address": "address",
+    "orientation": "Orientation",
+    "priority": 1,
+    "deliveredOnSmarthPhone": false,
+    "deliveredDate": "0001-01-01T00:00:00",
+    "finished": false,
+    "report": "",
+    "visualized": false,
+    "visualizedDate": "",
+    "checkIn": false,
+    "checkInDate": "",
+    "checkOut": false,
+    "checkOutDate": "",
+    "checkinType": 1,
+    "keyWords": [],
+    "keyWordsDescriptions": [],
+    "inputedKm": 0.0,
+    "adoptedKm": 0.0,
+    "attachments": [],
+    "questionnaires": [],
+    "signatureUrl": "",
+    "checkInDistance": 0,
+    "checkOutDistance": 0,
+    "sendSatisfactionSurvey": false,
+    "survey": "https://inova.auvo.com.br/pesquisasatisfacao/formulario/c05e12c2-c738-4fb1-8b92-4a1b6cf7bb3a",
+    "taskUrl": "https://inova.auvo.com.br/informacoes/tarefa/c05e12c2-c738-4fb1-8b92-4a1b6cf7bb3a?chave=Pre2sGfxpS63X24-PE1Ebg",
+    "pendency": "",
+    "equipmentsId": [],
+    "dateLastUpdate": "2023-01-20T08:01:12",
+    "ticketId": 0,
+    "ticketTitle": "",
+    "signatureName": "",
+    "signatureDocument": "",
+    "expense": "0,00",
+    "duration": "",
+    "durationDecimal": "",
+    "displacementStart": "",
+    "products": [ ],
+    "services": [ ],
+    "additionalCosts": [ 
+        {
+            "additionalCostId":"419384ad-705c-11eb-bf97-0aa2a285b66a",
+            "code": 0,
+            "name": "additionalCost name",
+            "unitaryValue": 44.00,
+            "userResponsible": "0ca67abc-6d7a-11eb-8b9d-0a23e97fa4da",
+            "userResponsibleCode": 123,
+            "dateRegister": "2023-01-20T08:01:15",
+            "dateEdit": "2023-01-20T08:01:14"
+        }
+    ],
+    "summary": {
+        "totalProducts": 0,
+        "totalServices": 0,
+        "totalAdditionalCosts": 44.0000,
+        "totalValue": 44.0000,
+        "discount": {
+            "value": 0,
+            "type": "0"
+        }
+    },
+    "taskStatus": 1
+}
+Tasks/Task/Edit Task attachmentPUThttps://api.auvo.com.br/v2/tasks/id/attachmentsParameters
+id
+taskID attribute of the Task.
+Number
+Attributes
+removeAllAttachmentsInsertedByMe
+boolean
+this option will remove all the previous attachments inserted by the requester in the task
+
+attachments
+array
+Request
+from urllib2 import Request, urlopen
+
+values = """
+  {
+    "removeAllAttachmentsInsertedByMe": false,
+    "attachments": [
+      {
+        "name": "my_file.pdf",
+        "file": "base64 encoded file"
+      }
+    ]
+  }
+"""
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/tasks/id/attachments', data=values, headers=headers)
+request.get_method = lambda: 'PUT'
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "taskID": 23,
+    "externalId": "123",
+    "idUserFrom": 123,
+    "idUserTo": 123,
+    "customerId": 456,
+    "customerExternalId": 10,
+    "customerDescription": "Customer x",
+    "taskType": 23,
+    "creationDate": "2016-03-23T14:10:35",
+    "taskDate": "2016-03-23T18:00:00",
+    "latitude": -16.6872086111083,
+    "longitude": -49.2995542287827,
+    "address": "avenue X",
+    "orientation": "Go get a beer!",
+    "priority": 1,
+    "deliveredOnSmarthPhone": true,
+    "deliveredDate": "2016-03-23T14:11:31",
+    "finished": true,
+    "report": "ok",
+    "visualized": true,
+    "visualizedDate": "2016-03-23T14:12:00",
+    "checkIn": true,
+    "checkInDate": "2016-03-23T18:05:00",
+    "checkOut": true,
+    "checkOutDate": "2016-03-23T18:10:00",
+    "checkinType": 1,
+    "keyWords": [
+        "keyword id"
+    ],
+    "inputedKm": 10,
+    "adoptedKm": 11,
+    "attachments":[
+        {
+            "id": "1",
+            "url": "",
+            "attachmentType": 1,
+            "subtitle": "",
+            "description": "",
+            "extension": ""
+        }
+    ],
+    "questionnaires":[
+        {
+            "itemId": "1",
+            "questionnaireId": "",
+            "questionnaireDescription": 1,
+            "answers": [
+                {
+                    "questionId": "1",
+                    "questionDescription": "",
+                    "replyId": 1,
+                    "reply": 1,
+                    "replyDate": "2016-03-23T18:10:00"
+                }
+            ]
+        }
+    ],
+    "signatureUrl": "signature url",
+    "checkInDistance": 0,
+    "checkOutDistance": 0,
+    "survey": "",
+    "taskUrl": "",
+    "pendency": "",
+    "dateLastUpdate": "2016-03-23T18:10:00",
+    "ticketId": 558,
+    "ticketTitle": "Título do ticket",
+    "signatureName": "Oliveira Silva",
+    "signatureDocument": "00008500100",
+    "expense": "2.500.000,00",
+    "taskStatus": 1
+}
+Tasks/Task/Retrieves a list of TasksGEThttps://api.auvo.com.br/v2/tasks/?paramFilter=paramFilter&page=page&pageSize=pageSize&order=order&selectfields=selectfieldsParameters
+paramFilter
+paramFilter must be json encoded string.taskID (string) - The task ididUserTo (number) - The user tp idstartDate (required, string) - Task start date, filter date ("yyyy-MM-ddTHH:mm:ss").endDate (required, string) - Task end date, filter date ("yyyy-MM-ddTHH:mm:ss").dateLastUpdate (string) - The last update date of the task, filter date ("yyyy-MM-ddTHH:mm:ss").customerId (number) - The customer idteamId (number) - The team idtype (number) - The task type idcustomerGroupId (number) - The customer group idstatus (number) - 0 - unfinished: 0 | 1 - finalizedAutomatically | 2 - finalizedManually | 3 - finalizedAutomaticallyOrManually | 4 - all | 5 - withPendency | 6 - startedOrEndedorientation (string) - Orientation of the tasktags (string) - Tags id separated by commaspriority (string) - Priority of the task. 1 - Low | 2 - Medium | 3 - HighexternalId (string) - Task external ids. Allow multiples, separated by comma
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+selectfields
+For all fields, use empty string. To select fields, use the properties of the returned object separated by commas.
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/tasks/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}&selectfields={selectfields}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList":[
+            {
+            "taskID": 23,
+            "externalId": "123",
+            "idUserFrom": 123,
+            "userFromName": "Paulo",
+            "idUserTo": 123,
+            "userToName": "Colaborador sem ponto base",
+            "customerId": 456,
+            "customerExternalId": 10,
+            "customerDescription": "Customer x",
+            "taskType": 23,
+            "taskTypeDescription": "Edição automatizada 897263119",
+            "creationDate": "2016-03-23T14:10:35",
+            "taskDate": "2016-03-23T18:00:00",
+            "latitude": -16.6872086111083,
+            "longitude": -49.2995542287827,
+            "address": "avenue X",
+            "orientation": "Go get a beer!",
+            "priority": 1,
+            "deliveredOnSmarthPhone": true,
+            "deliveredDate": "2016-03-23T14:11:31",
+            "finished": true,
+            "report": "ok",
+            "visualized": true,
+            "visualizedDate": "2016-03-23T14:12:00",
+            "checkIn": true,
+            "checkInDate": "2016-03-23T18:05:00",
+            "checkOut": true,
+            "checkOutDate": "2016-03-23T18:10:00",
+            "checkinType": 1,
+            "keyWords": [
+                "keyword id"
+            ],
+            "keyWordsDescriptions": [
+                "Description of keywords"
+            ],
+            "inputedKm": 10,
+            "adoptedKm": 11,
+            "attachments":[
+                {
+                    "id": "1",
+                    "url": "",
+                    "attachmentType": 1,
+                    "subtitle": "",
+                    "description": "",
+                    "extension": ""
+                }
+            ],
+            "questionnaires":[
+                {
+                    "itemId": "1",
+                    "questionnaireId": "",
+                    "questionnaireDescription": 1,
+                    "answers": [
+                        {
+                            "questionId": "1",
+                            "questionDescription": "",
+                            "replyId": 1,
+                            "reply": 1,
+                            "replyDate": "2016-03-23T18:10:00"
+                        }
+                    ]
+                }
+            ],
+            "equipmentsId": [109638, 109753],
+            "signatureUrl": "signature url",
+            "checkInDistance": 0,
+            "checkOutDistance": 0,
+            "sendSatisfactionSurvey": true,
+            "survey": "",
+            "taskUrl": "",
+            "pendency": "",
+            "dateLastUpdate": "2016-03-23T18:10:00",
+            "ticketId": 558,
+            "ticketTitle": "Título do ticket",
+            "signatureName": "Oliveira Silva",
+            "signatureDocument": "00008500100",
+            "expense": "2.500.000,00",
+            "duration": "",
+            "durationDecimal": "",
+            "displacementStart": "",
+            "products": [{
+                "productId": "63867f52-b262-410a-a409-cc25ba92ded1",
+                "code": "456",
+                "name": null,
+                "description": null,
+                "quantity": 0.0,
+                "unitaryValue": 0.0,
+                "totalValue": 0.0,
+                "userResponsible": null,
+                "userResponsibleCode": 0,
+                "dateRegister": null,
+                "dateEdit": null
+                "discount": {
+                    "value": 0.00,
+                    "type": "Valor"
+                    }
+                }
+            ],
+            "services": [{
+                "id": "00000000-0000-0000-0000-000000000000",
+                "name": null,
+                "quantity": 0.0,
+                "unitaryValue": 0.0,
+                "totalValue": 0.0,
+                "userResponsible": null,
+                "userResponsibleCode": 0,
+                "dateRegister": null,
+                "dateEdit": null
+                "discount": {
+                    "value": 0.00,
+                    "type": "Valor"
+                }
+                }
+            ],
+            "additionalCosts": [{
+                "additionalCostId": "419384ad-705c-11eb-bf97-0aa2a285b66a",
+                "code": 0,
+                "name": null,
+                "unitaryValue": 0.0,
+                "userResponsible": null,
+                "userResponsibleCode": 0,
+                "dateRegister": null,
+                "dateEdit": null
+            }],
+            "summary": {
+                "totalProducts": 0.0,
+                "totalServices": 0.0,
+                "totalAdditionalCosts": 0.0,
+                "totalValue": 0.0,
+                "discount": {
+                    "value": 0.00,
+                    "type": "Valor"
+                }
+            },
+            "estimatedDuration": "00:00:00",
+            "taskStatus": 1,
+            "financialCategory": ""
+        }
+    ],
+    "pagedSearchReturnData": {
+        "order": 0,
+        "pageSize": 1,
+        "page": 1,
+        "totalItems": 2
+    },
+    "links": [
+        {
+            "href": "https://api.auvo.com.br/v2/Tasks?ParamFilter=%7B%0D%0A%20%20%20%22StartDate%22%3A%222010-02-23T15%3A50%3A49%22,%0D%0A%20%20%20%22EndDate%22%3A%222019-04-24T15%3A50%3A49%22&Page=1&PageSize=1&Order=Asc",
+            "rel": "self",
+            "method": "GET"
+        },
+        {
+            "href": "https://api.auvo.com.br/v2/Tasks?ParamFilter=%7B%0D%0A%20%20%20%22StartDate%22%3A%222010-02-23T15%3A50%3A49%22,%0D%0A%20%20%20%22EndDate%22%3A%222019-04-24T15%3A50%3A49%22&Page=2&PageSize=1&Order=Asc",
+            "rel": "nextPage",
+            "method": "GET"
+        }
+    ]    
+}
+Tasks/Task/Retrieves a list of Deleted TasksGEThttps://api.auvo.com.br/v2/tasks/getdeletedtasks?paramFilter=paramFilter&page=page&pageSize=pageSize&order=order&selectfields=selectfieldsParameters
+paramFilter
+paramFilter must be json encoded string.taskID (string) - The task ididUserTo (number) - The user tp idstartDate (required, string) - Task start date, filter date ("yyyy-MM-ddTHH:mm:ss").endDate (required, string) - Task end date, filter date ("yyyy-MM-ddTHH:mm:ss").dateLastUpdate (string) - The last update date of the task, filter date ("yyyy-MM-ddTHH:mm:ss").customerId (number) - The customer idteamId (number) - The team idtype (number) - The task type idcustomerGroupId (number) - The customer group idstatus (number) - 0 - unfinished: 0 | 1 - finalizedAutomatically | 2 - finalizedManually | 3 - finalizedAutomaticallyOrManually | 4 - all | 5 - withPendency | 6 - startedOrEndedorientation (string) - Orientation of the tasktags (string) - Tags id separated by commaspriority (string) - Priority of the task. 1 - Low | 2 - Medium | 3 - HighexternalId (string) - Task external ids. Allow multiples, separated by comma
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+selectfields
+For all fields, use empty string. To select fields, use the properties of the returned object separated by commas.
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/tasks/getdeletedtasks?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}&selectfields={selectfields}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList":[
+            {
+            "taskID": 23,
+            "externalId": "123",
+            "idUserFrom": 123,
+            "userFromName": "Paulo",
+            "idUserTo": 123,
+            "userToName": "Colaborador sem ponto base",
+            "customerId": 456,
+            "customerExternalId": 10,
+            "customerDescription": "Customer x",
+            "taskType": 23,
+            "taskTypeDescription": "Edição automatizada 897263119",
+            "creationDate": "2016-03-23T14:10:35",
+            "taskDate": "2016-03-23T18:00:00",
+            "latitude": -16.6872086111083,
+            "longitude": -49.2995542287827,
+            "address": "avenue X",
+            "orientation": "Go get a beer!",
+            "priority": 1,
+            "deliveredOnSmarthPhone": true,
+            "deliveredDate": "2016-03-23T14:11:31",
+            "finished": true,
+            "report": "ok",
+            "visualized": true,
+            "visualizedDate": "2016-03-23T14:12:00",
+            "checkIn": true,
+            "checkInDate": "2016-03-23T18:05:00",
+            "checkOut": true,
+            "checkOutDate": "2016-03-23T18:10:00",
+            "checkinType": 1,
+            "keyWords": [
+                "keyword id"
+            ],
+            "keyWordsDescriptions": [
+                "Description of keywords"
+            ],
+            "inputedKm": 10,
+            "adoptedKm": 11,
+            "attachments":[
+                {
+                    "id": "1",
+                    "url": "",
+                    "attachmentType": 1,
+                    "subtitle": "",
+                    "description": "",
+                    "extension": ""
+                }
+            ],
+            "questionnaires":[
+                {
+                    "itemId": "1",
+                    "questionnaireId": "",
+                    "questionnaireDescription": 1,
+                    "answers": [
+                        {
+                            "questionId": "1",
+                            "questionDescription": "",
+                            "replyId": 1,
+                            "reply": 1,
+                            "replyDate": "2016-03-23T18:10:00"
+                        }
+                    ]
+                }
+            ],
+            "equipmentsId": [109638, 109753],
+            "signatureUrl": "signature url",
+            "checkInDistance": 0,
+            "checkOutDistance": 0,
+            "sendSatisfactionSurvey": true,
+            "survey": "",
+            "taskUrl": "",
+            "pendency": "",
+            "dateLastUpdate": "2016-03-23T18:10:00",
+            "ticketId": 558,
+            "ticketTitle": "Título do ticket",
+            "signatureName": "Oliveira Silva",
+            "signatureDocument": "00008500100",
+            "expense": "2.500.000,00",
+            "duration": "",
+            "durationDecimal": "",
+            "displacementStart": "",
+            "products": [{
+                "productId": "63867f52-b262-410a-a409-cc25ba92ded1",
+                "code": "456",
+                "name": null,
+                "description": null,
+                "quantity": 0.0,
+                "unitaryValue": 0.0,
+                "totalValue": 0.0,
+                "userResponsible": null,
+                "userResponsibleCode": 0,
+                "dateRegister": null,
+                "dateEdit": null
+                "discount": {
+                    "value": 0.00,
+                    "type": "Valor"
+                    }
+                }
+            ],
+            "services": [{
+                "id": "00000000-0000-0000-0000-000000000000",
+                "name": null,
+                "quantity": 0.0,
+                "unitaryValue": 0.0,
+                "totalValue": 0.0,
+                "userResponsible": null,
+                "userResponsibleCode": 0,
+                "dateRegister": null,
+                "dateEdit": null
+                "discount": {
+                    "value": 0.00,
+                    "type": "Valor"
+                }
+                }
+            ],
+            "additionalCosts": [{
+                "additionalCostId": "419384ad-705c-11eb-bf97-0aa2a285b66a",
+                "code": 0,
+                "name": null,
+                "unitaryValue": 0.0,
+                "userResponsible": null,
+                "userResponsibleCode": 0,
+                "dateRegister": null,
+                "dateEdit": null
+            }],
+            "summary": {
+                "totalProducts": 0.0,
+                "totalServices": 0.0,
+                "totalAdditionalCosts": 0.0,
+                "totalValue": 0.0,
+                "discount": {
+                    "value": 0.00,
+                    "type": "Valor"
+                }
+            },
+            "estimatedDuration": "00:00:00",
+            "taskStatus": 1,
+            "financialCategory": ""
+        }
+    ],
+    "pagedSearchReturnData": {
+        "order": 0,
+        "pageSize": 1,
+        "page": 1,
+        "totalItems": 2
+    },
+    "links": [
+        {
+            "href": "https://api.auvo.com.br/v2/Tasks?ParamFilter=%7B%0D%0A%20%20%20%22StartDate%22%3A%222010-02-23T15%3A50%3A49%22,%0D%0A%20%20%20%22EndDate%22%3A%222019-04-24T15%3A50%3A49%22&Page=1&PageSize=1&Order=Asc",
+            "rel": "self",
+            "method": "GET"
+        },
+        {
+            "href": "https://api.auvo.com.br/v2/Tasks?ParamFilter=%7B%0D%0A%20%20%20%22StartDate%22%3A%222010-02-23T15%3A50%3A49%22,%0D%0A%20%20%20%22EndDate%22%3A%222019-04-24T15%3A50%3A49%22&Page=2&PageSize=1&Order=Asc",
+            "rel": "nextPage",
+            "method": "GET"
+        }
+    ]    
+}
+Customers/Customer/Retrieve a CustomerGEThttps://api.auvo.com.br/v2/customers/idParameters
+id
+customerId attribute of the Customer.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/customers/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "externalId": "906",
+    "description": "Terêscio",
+    "cpfCnpj": "90614997000162",
+    "phoneNumber": ["5566123123"],
+    "email": ["terenscio@customer.com"],
+    "manager": "Oristides",
+    "managerJobPosition": "Manager",
+    "note": "nothing to say",
+    "address": "lake yululu",
+    "latitude": -16.6872086111083,
+    "longitude": -49.2995542287827,
+    "maximumVisitTime": 1,
+    "unitMaximumTime": 1,
+    "groupsId": [0],
+    "managerTeamsId": [0],
+    "managersId": [0],
+    "segmentId": 1,
+    "active": false,
+    "adressComplement": "adress complemente",
+    "creationDate": "2019-04-15T15:00:00",
+    "contacts": [
+        {
+            "id": 23328,
+            "name": "contact.name",
+            "jobPosition": "",
+            "email": "contact.email@gmail.com",
+            "phone": ""
+        }
+    ],
+    "dateLastUpdate": "2020-04-23T15:57:08",
+    "uriAnexos": ["https://auvo-producao.s3.amazonaws.com/anexos_clientes/12d53e24-9e5a-4319-a070-458e18260321.jpeg"],
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+
+Customers/Customer/Add a new CustomerPOSThttps://api.auvo.com.br/v2/customers/Attributes
+externalId
+string
+External customer id outside auvos application
+
+name
+required
+string
+Customer name
+
+phoneNumber
+array
+email
+array
+manager
+string
+customer manager
+
+managerJobPosition
+string
+job position of the customer manager
+
+note
+string
+note about the customer
+
+address
+string
+customer address
+
+latitude
+string
+latitude of the customer address
+
+longitude
+string
+longitude of the customer address
+
+maximumVisitTime
+number
+Customer maximum visit time duration
+
+UnitMaximumTime
+number
+Unit maximum time
+
+cpfCnpj
+string
+customer CPF/CNPJ
+
+groupsId
+array
+managerTeamsId
+array
+managersId
+array
+active
+boolean
+Customer is active
+
+segmentId
+number
+id of a registered segment (must exist in auvo)
+
+contacts
+array
+adressComplement
+string
+Adress complement
+
+attachments
+array
+Request
+from urllib2 import Request, urlopen
+
+values = """
+  {
+    "externalId": "906",
+    "name": "Terêscio",
+    "cpfCnpj": "90614997000162",
+    "phoneNumber": [
+      "5566123123"
+    ],
+    "email": [
+      "terenscio@customer.com"
+    ],
+    "manager": "Oristides",
+    "managerJobPosition": "Manager",
+    "note": "nothing to say",
+    "address": "lake yululu",
+    "latitude": -16.6872086111083,
+    "longitude": -49.2995542287827,
+    "maximumVisitTime": 1,
+    "unitMaximumTime": 1,
+    "groupsId": [
+      0
+    ],
+    "managerTeamsId": [
+      0
+    ],
+    "managersId": [
+      0
+    ],
+    "segmentId": 1,
+    "active": false,
+    "adressComplement": "adress complemente",
+    "creationDate": "2019-04-15T15:00:00",
+    "contacts": [
+      {
+        "name": "contact.name",
+        "email": "contact.email@gmail.com",
+        "jobPosition": "",
+        "phone": ""
+      },
+      {
+        "name": "contact.name.2",
+        "email": "contact.email.2@hotmail.com",
+        "jobPosition": "",
+        "phone": ""
+      }
+    ],
+    "dateLastUpdate": "2019-04-15T15:00:00",
+    "attachments": [
+      {
+        "name": "image.jpeg",
+        "file": "iVBORw0KGgoAAAANSUhEUgAAAH4AAABWCAYAAAAJ3CLTAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAB8BJ"
+      }
+    ]
+  }
+"""
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/customers/', data=values, headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+201
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "externalId": "906",
+    "name": "Terêscio",
+    "cpfCnpj": "90614997000162",
+    "phoneNumber": ["5566123123"],
+    "email": ["terenscio@customer.com"],
+    "manager": "Oristides",
+    "managerJobPosition": "Manager",
+    "note": "nothing to say",
+    "address": "lake yululu",
+    "latitude": -16.6872086111083,
+    "longitude": -49.2995542287827,
+    "maximumVisitTime": 1,
+    "unitMaximumTime": 1,
+    "groupsId": [0],
+    "managerTeamsId": [0],
+    "managersId": [0],
+    "segmentId": 1,
+    "active": false,
+    "adressComplement": "adress complemente",
+    "creationDate": "2019-04-15T15:00:00",
+    "contacts": [
+        {
+            "id": 23377,
+            "name": "contact.name",
+            "email": "contact.email@gmail.com",
+            "jobPosition": "",
+            "phone": ""
+        },
+        {
+            "id": 23378,
+            "name": "contact.name.2",
+            "email": "contact.email.2@hotmail.com",
+            "jobPosition": "",
+            "phone": ""
+        }
+    ],
+    "dateLastUpdate": "2019-04-15T15:00:00",
+    "uriAnexos": ["https://auvo-producao.s3.amazonaws.com/anexos_clientes/12d53e24-9e5a-4319-a070-458e18260321.jpeg"],
+}
+Customers/Customer/Upsert - Add a new Customer or update an existing onePUThttps://api.auvo.com.br/v2/customers/Attributes
+id
+number
+identifier of a registered customer
+
+externalId
+string
+External customer id outside auvos application
+
+description
+required
+string
+Customer name
+
+phoneNumber
+array
+email
+array
+manager
+string
+customer manager
+
+managerJobPosition
+string
+job position of the customer manager
+
+note
+string
+note about the customer
+
+address
+string
+customer address
+
+latitude
+string
+latitude of the customer address
+
+longitude
+string
+longitude of the customer address
+
+maximumVisitTime
+number
+Customer maximum visit time duration
+
+UnitMaximumTime
+number
+Unit maximum time
+
+cpfCnpj
+string
+customer CPF/CNPJ
+
+groupsId
+array
+managerTeamsId
+array
+managersId
+array
+active
+boolean
+Customer is active
+
+segmentId
+number
+id of a registered segment (must exist in auvo)
+
+contacts
+array
+adressComplement
+string
+Adress complement
+
+attachments
+array
+Request
+from urllib2 import Request, urlopen
+
+values = """
+  {
+    "externalId": "906",
+    "description": "Terêscio",
+    "cpfCnpj": "90614997000162",
+    "phoneNumber": [
+      "5566123123"
+    ],
+    "email": [
+      "terenscio@customer.com"
+    ],
+    "manager": "Oristides",
+    "managerJobPosition": "Manager",
+    "note": "nothing to say",
+    "address": "lake yululu",
+    "latitude": -16.6872086111083,
+    "longitude": -49.2995542287827,
+    "maximumVisitTime": 1,
+    "unitMaximumTime": 1,
+    "groupsId": [
+      0
+    ],
+    "managerTeamsId": [
+      0
+    ],
+    "managersId": [
+      0
+    ],
+    "segmentId": 1,
+    "active": false,
+    "adressComplement": "adress complement",
+    "creationDate": "2019-04-15T15:00:00",
+    "dateLastUpdate": "2019-04-15T15:00:00",
+    "contacts": [
+      {
+        "id": 23377,
+        "name": "contact.name",
+        "email": "contact.email@gmail.com",
+        "jobPosition": "",
+        "phone": ""
+      },
+      {
+        "id": 23378,
+        "name": "contact.name.2",
+        "email": "contact.email.2@hotmail.com",
+        "jobPosition": "manager",
+        "phone": ""
+      },
+      {
+        "name": "contact.name.3",
+        "email": "contact.email.3@hotmail.com",
+        "jobPosition": "",
+        "phone": ""
+      }
+    ],
+    "attachments": [
+      {
+        "name": "image.jpeg",
+        "file": "iVBORw0KGgoAAAANSUhEUgAAAH4AAABWCAYAAAAJ3CLTAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAB8BJREFUeNrsnV1sFFUUx....."
+      }
+    ]
+  }
+"""
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/customers/', data=values, headers=headers)
+request.get_method = lambda: 'PUT'
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+201
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "externalId": "906",
+    "description": "Terêscio",
+    "cpfCnpj": "90614997000162",
+    "phoneNumber": ["5566123123"],
+    "email": ["terenscio@customer.com"],
+    "manager": "Oristides",
+    "managerJobPosition": "Manager",
+    "note": "nothing to say",
+    "address": "lake yululu",
+    "latitude": -16.6872086111083,
+    "longitude": -49.2995542287827,
+    "maximumVisitTime": 1,
+    "unitMaximumTime": 1,
+    "groupsId": [0],
+    "managerTeamsId": [0],
+    "managersId": [0],
+    "segmentId": 1,
+    "active": false,
+    "AdressComplement": "adress complemente",
+    "creationDate": "2019-04-15T15:00:00",
+    "dateLastUpdate": "2019-04-15T15:00:00",
+    "contacts": [
+        {
+            "id": 23377,
+            "name": "contact.name",
+            "email": "contact.email@gmail.com",
+            "jobPosition": "",
+            "phone": ""
+        },
+        {
+            "id": 23378,
+            "name": "contact.name.2",
+            "email": "contact.email.2@hotmail.com",
+            "jobPosition": "manager",
+            "phone": ""
+        },
+        {
+            "id": 23379,
+            "name": "contact.name.3",
+            "email": "contact.email.3@hotmail.com",
+            "jobPosition": "",
+            "phone": ""
+        }
+    ],
+    "uriAnexos": ["https://auvo-producao.s3.amazonaws.com/anexos_clientes/12d53e24-9e5a-4319-a070-458e18260321.jpeg"]
+}
+Customers/Customer/Edit a CustomerPATCHhttps://api.auvo.com.br/v2/customers/idParameters
+id
+customerId attribute of the Customer.
+Number
+Attributes
+externalId
+string
+External customer id outside auvos application
+
+name
+required
+string
+Customer name
+
+phoneNumber
+array
+email
+array
+manager
+string
+customer manager
+
+managerJobPosition
+string
+job position of the customer manager
+
+note
+string
+note about the customer
+
+address
+required
+string
+customer address
+
+latitude
+string
+latitude of the customer address
+
+longitude
+string
+longitude of the customer address
+
+maximumVisitTime
+number
+Customer maximum visit time duration
+
+UnitMaximumTime
+number
+Unit maximum time
+
+cpfCnpj
+string
+customer CPF/CNPJ
+
+groupsId
+array
+managerTeamsId
+array
+managersId
+array
+active
+boolean
+Customer is active
+
+segmentId
+number
+id of a registered segment (must exist in auvo)
+
+adressComplement
+string
+Adress complement
+
+Request
+from urllib2 import Request, urlopen
+
+values = """
+  [
+    {
+      "op": "replace",
+      "path": "description",
+      "value": "description value"
+    }
+  ]
+"""
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/customers/id', data=values, headers=headers)
+request.get_method = lambda: 'PATCH'
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "externalId": "906",
+    "name": "Terêscio",
+    "cpfCnpj": "90614997000162",
+    "phoneNumber": ["5566123123"],
+    "email": ["terenscio@customer.com"],
+    "manager": "Oristides",
+    "managerJobPosition": "Manager",
+    "note": "nothing to say",
+    "address": "lake yululu",
+    "latitude": -16.6872086111083,
+    "longitude": -49.2995542287827,
+    "maximumVisitTime": 1,
+    "unitMaximumTime": 1,
+    "groupsId": [0],
+    "managerTeamsId": [0],
+    "managersId": [0],
+    "segmentId": 1,
+    "active": false,
+    "AdressComplement": "adress complement",
+    "creationDate": "2019-04-15T15:00:00",
+    "dateLastUpdate": "2019-04-15T15:00:00"
+}
+Customers/Customer/Edit Customer attachmentPUThttps://api.auvo.com.br/v2/customer/id/attachmentsParameters
+id
+customerId attribute of the Customer.
+Number
+Attributes
+removeAllAttachmentsInsertedByMe
+boolean
+this option will remove all the previous attachments inserted for the Customer
+
+attachments
+array
+Request
+from urllib2 import Request, urlopen
+
+values = """
+  {
+    "removeAllAttachmentsInsertedByMe": false,
+    "attachments": [
+      {
+        "name": "my_file.pdf",
+        "file": "base64 encoded file"
+      }
+    ]
+  }
+"""
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/customer/id/attachments', data=values, headers=headers)
+request.get_method = lambda: 'PUT'
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "externalId": "906",
+    "name": "Terêscio",
+    "cpfCnpj": "90614997000162",
+    "phoneNumber": ["5566123123"],
+    "email": ["terenscio@customer.com"],
+    "manager": "Oristides",
+    "managerJobPosition": "Manager",
+    "note": "nothing to say",
+    "address": "lake yululu",
+    "latitude": -16.6872086111083,
+    "longitude": -49.2995542287827,
+    "maximumVisitTime": 1,
+    "unitMaximumTime": 1,
+    "groupsId": [0],
+    "managerTeamsId": [0],
+    "managersId": [0],
+    "segmentId": 1,
+    "active": false,
+    "AdressComplement": "adress complemente",
+    "creationDate": "2019-04-15T15:00:00",
+    "dateLastUpdate": "2019-04-15T15:00:00",
+    "uriAnexos": ["https://auvo-producao.s3.amazonaws.com/anexos_clientes/12d53e24-9e5a-4319-a070-458e18260321.jpeg"]
+}
+Customers/Customer/Retrieves a list of CustomersGEThttps://api.auvo.com.br/v2/customers/?paramFilter=paramFilter&page=page&pageSize=pageSize&order=order&selectfields=selectfieldsParameters
+paramFilter
+paramFilter must be json encoded string.id (number) - The customer iddescription (string) - The customer namesegmentId (number) - The segmentId idcreationDate (string) - Customer creation date, filter date ("yyyy-MM-ddTHH:mm:ss").dateLastUpdate (string) - The last update date of the customer, filter date ("yyyy-MM-ddTHH:mm:ss")groupId (number) - The group idactive (?boolean) - The customer statusexternalId (string) - Customer external ids. Allow multiples, separated by comma
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+selectfields
+For all fields, use empty string. To select fields, use the properties of the returned object separated by commas.
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/customers/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}&selectfields={selectfields}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList":[
+            {
+            "id": 42,
+            "externalId": "906",
+            "description": "Terêscio",
+            "cpfCnpj": "90614997000162",
+            "phoneNumber": ["5566123123"],
+            "email": ["terenscio@customer.com"],
+            "manager": "Oristides",
+            "managerJobPosition": "Manager",
+            "note": "nothing to say",
+            "address": "lake yululu",
+            "latitude": -16.6872086111083,
+            "longitude": -49.2995542287827,
+            "maximumVisitTime": 1,
+            "unitMaximumTime": 1,
+            "groupsId": [0],
+            "managerTeamsId": [0],
+            "managersId": [0],
+            "segmentId": 1,
+            "active": false,
+            "adressComplement": "adress complemente",
+            "creationDate": "2019-04-15T15:00:00",
+            "dateLastUpdate": "2019-04-15T15:00:00",
+            "contacts": [
+                {
+                    "id": 23377,
+                    "name": "contact.name",
+                    "email": "contact.email@gmail.com",
+                    "jobPosition": "",
+                    "phone": ""
+                },
+                {
+                    "id": 23378,
+                    "name": "contact.name.2",
+                    "email": "contact.email.2@hotmail.com",
+                    "jobPosition": "manager",
+                    "phone": ""
+                },
+                {
+                    "id": 23379,
+                    "name": "contact.name.3",
+                    "email": "contact.email.3@hotmail.com",
+                    "jobPosition": "",
+                    "phone": ""
+                }
+            ],
+            "uriAnexos": ["https://auvo-producao.s3.amazonaws.com/anexos_clientes/12d53e24-9e5a-4319-a070-458e18260321.jpeg"]
+        }
+    ],
+    "pagedSearchReturnData": {
+        "order": 0,
+        "pageSize": 10,
+        "page": 1,
+        "totalItems": 2
+    },
+    "links": [
+        {
+            "href": "https://api.auvo.com.br/v2/Customers/?Page=1&PageSize=10&Order=Asc",
+            "rel": "self",
+            "method": "GET"
+        },
+        {
+            "href": "https://api.auvo.com.br/v2/Customers/?Page=2&PageSize=10&Order=Asc",
+            "rel": "nextPage",
+            "method": "GET"
+        }
+    ]    
+}
+Customer groups/Customer group/Retrieve a list of Customers groupGEThttps://api.auvo.com.br/v2/customerGroups/?paramFilter=paramFilterParameters
+paramFilter
+paramFilter must be json encoded string.id (number) - The customer iddescription (string) - The user description
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/customerGroups/?paramFilter=paramFilter', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList":[
+        {
+            "id": 42,
+            "description": "Terêscio"
+        }
+    ]    
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+Teams/Team/Retrieve a TeamGEThttps://api.auvo.com.br/v2/teams/idParameters
+id
+id attribute of the Team.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/teams/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+        "teamUsers": [
+            "User1",
+            "User2"
+        ],
+        "teamManagers": [
+            "Manager1",
+            "Manager2"
+        ],
+        "id": 4168,
+        "description": "Example of a description from a team"
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+Teams/Team/Retrieve a list of TeamsGEThttps://api.auvo.com.br/v2/teams/?paramFilter=paramFilter&page=page&pageSize=pageSize&order=orderParameters
+paramFilter
+paramFilter must be a json encoded string.id (number) - The team id.description (string) - The team description.
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/teams/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+
+    "entityList": [
+        {
+            "creationDate": "2018-02-19T10:11:57",
+            "teamUsers": [
+                "User1",
+                "User2"
+            ],
+            "teamManagers": [
+                "Manager1",
+                "Manager2"
+            ],
+            "id": 4562,
+            "description": "Example"
+        },
+        {
+            "creationDate": "2019-02-19T10:11:57",
+            "teamUsers": [
+                "User1",
+                "User2"
+            ],
+            "teamManagers": [
+                "Manager1",
+                "Manager2"
+            ],
+            "id": 4562,
+            "description": "Example of a simple description about teams"
+        }
+    ],
+    "pagedSearchReturnData": {
+    "order": 0,
+    "pageSize": 10,
+    "page": 1,
+    "totalItems": 2
+
+    },
+    "links": [
+        {
+        "href": "https://api.auvo.com.br/v2/Teams/?Page=1&PageSize=10&Order=Asc",
+        "rel": "self",
+        "method": "GET"
+        }
+    ]
+}
+Teams/Team/Retrieve a list of participants from a specific teamGEThttps://api.auvo.com.br/v2/teams/teamId/users/?page=page&pageSize=pageSize&order=orderParameters
+teamId
+The team id.
+Number
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/teams/{teamId}/users/?page={page}&pageSize={pageSize}&order={order}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList": [
+    {
+        "userId": 52205,
+        "externalId": "",
+        "name": "User1",
+        "jobPosition": "description"
+    },
+    {
+        "userId": 52204,
+        "externalId": "",
+        "name": "User1",
+        "jobPosition": "description"
+    },
+    {
+        "userId": 52203,
+        "externalId": "",
+        "name": "User1",
+        "jobPosition": "description"
+    }
+    ],
+    "pagedSearchReturnData": {
+        "order": 0,
+        "pageSize": 10,
+        "page": 1,
+        "totalItems": 3
+    },
+    "links": [
+        {
+            "href": "https://api.auvo.com.br/v2/Teams?ParamFilter=4168&Page=1&PageSize=10&Order=Asc",
+            "rel": "self",
+            "method": "GET"
+        }
+    ]
+}
+Task types/Task type/Retrieve a task typeGEThttps://api.auvo.com.br/v2/taskTypes/idParameters
+id
+id attribute of the Task type.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/taskTypes/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "description": "Terêscio",
+    "creatorId": 906,
+    "creationDate": "2016-03-23T18:10:00",
+    "standardTime": "18:10:00",
+    "toleranceTime": "18:10:00",
+    "standardQuestionnaireId": 1,
+    "active": true,
+    "sendSatisfactionSurvey": false,
+    "requirements": {
+        "fillReport": true,
+        "getSignature": false,
+        "fillRolledKilometer": true,
+        "emailTheTask": false,
+        "minimumNumberOfPhotos": 2,
+        "requiredQuestionnaires":[
+            1,2,3
+        ]
+    }
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+Task types/Task type/Edit a Task typePATCHhttps://api.auvo.com.br/v2/taskTypes/idParameters
+id
+id attribute of the Task type.
+Number
+Attributes
+description
+required
+string
+task type description
+
+standartQuestionnaireId
+number
+standard questionnaire id. Nullable
+
+standartTime
+string
+standard time "hh:mm:ss"
+
+sendSatisfactionSurvey
+boolean
+send satisfaction survey. Nullable
+
+Request
+from urllib2 import Request, urlopen
+
+values = """
+  [
+    {
+      "op": "replace",
+      "path": "description",
+      "value": "description value"
+    }
+  ]
+"""
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/taskTypes/id', data=values, headers=headers)
+request.get_method = lambda: 'PATCH'
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+  "description": ""some description here,
+  "id": 12,
+  "creatorId": 123,
+  "creationDate": "2016-03-23T18:10:00",
+  "standartQuestionnaireId": 123,
+  "standartTime": "12:00:00",
+  "toleranceTime": "18:10:00",
+  "active": true,
+  "sendSatisfactionSurvey": false,
+  "requirements": {
+      "fillReport": true,
+      "getSignature": false,
+      "fillRolledKilometer": true,
+      "emailTheTask": false,
+      "minimumNumberOfPhotos": 1,
+      "requiredQuestionnaires": [1,2,3]
+    }
+}
+Task types/Task type/Retrieves a list of Task typesGEThttps://api.auvo.com.br/v2/taskTypes/?paramFilter=paramFilter&page=page&pageSize=pageSize&order=orderParameters
+paramFilter
+paramFilter must be json encoded string.id (number) - The task type iddescription (string) - The task type description
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/taskTypes/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList":[
+        {
+          "description": ""some description here,
+          "id": 12,
+          "creatorId": 123,
+          "creationDate": "2016-03-23T18:10:00",
+          "standartQuestionnaireId": 123,
+          "standartTime": "12:00:00",
+          "toleranceTime": "18:10:00",
+          "active": true,
+          "sendSatisfactionSurvey": false,
+          "requirements": {
+              "fillReport": true,
+              "getSignature": false,
+              "fillRolledKilometer": true,
+              "emailTheTask": false,
+              "minimumNumberOfPhotos": 1,
+              "requiredQuestionnaires": [1,2,3]
+            }
+        }
+    ],
+    "pagedSearchReturnData": {
+        "order": 0,
+        "pageSize": 1,
+        "page": 1,
+        "totalItems": 2
+    },
+    "links": [
+        {
+            "href": "https://api.auvo.com.br/v2/TaskTypes/?Page=1&PageSize=1&Order=Asc",
+            "rel": "self",
+            "method": "GET"
+        },
+        {
+            "href": "https://api.auvo.com.br/v2/TaskTypes/?Page=2&PageSize=1&Order=Asc",
+            "rel": "nextPage",
+            "method": "GET"
+        }
+    ]    
+}
+Segments/Segments/Retrieve a segmentGEThttps://api.auvo.com.br/v2/segments/idParameters
+id
+id attribute of the segments.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/segments/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "description": "Terêscio",
+    "registrationDate": "2016-03-23T18:10:00"
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+Segments/Segments/Retrieves a list of SegmentsGEThttps://api.auvo.com.br/v2/segments/?paramFilter=paramFilter&page=page&pageSize=pageSize&order=orderParameters
+paramFilter
+paramFilter must be json encoded string.id (number) - The segment iddescription (string) - The segment description
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/segments/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList":[
+        {
+          "description": ""some description here,
+          "id": 12,
+          "creationDate": "2016-03-23T18:10:00"
+        }
+    ],
+    "pagedSearchReturnData": {
+        "order": 0,
+        "pageSize": 1,
+        "page": 1,
+        "totalItems": 2
+    },
+    "links": [
+        {
+            "href": "https://api.auvo.com.br/v2/Segments/?Page=1&PageSize=1&Order=Asc",
+            "rel": "self",
+            "method": "GET"
+        },
+        {
+            "href": "https://api.auvo.com.br/v2/Segments/?Page=2&PageSize=1&Order=Asc",
+            "rel": "nextPage",
+            "method": "GET"
+        }
+    ]    
+}
+Questionnaires/Questionnaire/Retrieve a QuestionnaireGEThttps://api.auvo.com.br/v2/questionnaires/idParameters
+id
+id attribute of the questionnaire.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/questionnaires/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "description": "Terêscio",
+    "header": "cabeçalho",
+    "footer": "rodape",
+    "creationDate": "2016-03-23T18:10:00",
+    "questions": [
+        {
+            "id": 1,
+            "answerType": 2,
+            "description": "¿la pregunta?",
+            "subTitle": "¿la pregunta abajo?",
+            "requiredAnswer": false,
+            "creationDate": "2016-03-23T18:10:00"
+        }
+    ]
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+Questionnaires/Questionnaire/Retrieves a list of QuestionnairesGEThttps://api.auvo.com.br/v2/questionnaires/?paramFilter=paramFilter&page=page&pageSize=pageSize&order=orderParameters
+paramFilter
+paramFilter must be json encoded string.id (number) - The questionnaire idtaskIDs (array[number]) - collection of task ids
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/questionnaires/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList":[
+        {
+          "id": 12,
+          "description": ""some description here,
+          "header": "cabeçalho",
+          "footer": "rodape", 
+          "creationDate": "2016-03-23T18:10:00",
+          "questions": [
+                {
+                    "id": 1,
+                    "answerType": 2,
+                    "description": "¿la pregunta?",
+                    "subTitle": "¿la pregunta abajo?",
+                    "requiredAnswer": false,
+                    "creationDate": "2016-03-23T18:10:00"
+                }
+            ]
+        }
+    ],
+    "pagedSearchReturnData": {
+        "order": 0,
+        "pageSize": 1,
+        "page": 1,
+        "totalItems": 2
+    },
+    "links": [
+        {
+            "href": "https://api.auvo.com.br/v2/Questionnaires/?Page=1&PageSize=1&Order=Asc",
+            "rel": "self",
+            "method": "GET"
+        },
+        {
+            "href": "https://api.auvo.com.br/v2/Questionnaires/?Page=2&PageSize=1&Order=Asc",
+            "rel": "nextPage",
+            "method": "GET"
+        }
+    ]    
+}
+keywords/Keywords/Retrieve a keywordGEThttps://api.auvo.com.br/v2/keywords/idParameters
+id
+id attribute of the keywords.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/keywords/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "description": "Terêscio",
+    "registrationDate": "2016-03-23T18:10:00"
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+keywords/Keywords/Retrieves a list of KeywordsGEThttps://api.auvo.com.br/v2/keywords/?paramFilter=paramFilter&page=page&pageSize=pageSize&order=orderParameters
+paramFilter
+paramFilter must be json encoded string.id (number) - The keyword iddescription (string) - The keyword description
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/keywords/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList":[
+        {
+          "description": ""some description here,
+          "id": 12,
+          "creationDate": "2016-03-23T18:10:00"
+        }
+    ],
+    "pagedSearchReturnData": {
+        "order": 0,
+        "pageSize": 1,
+        "page": 1,
+        "totalItems": 2
+    },
+    "links": [
+        {
+            "href": "https://api.auvo.com.br/v2/Keywords/?Page=1&PageSize=1&Order=Asc",
+            "rel": "self",
+            "method": "GET"
+        },
+        {
+            "href": "https://api.auvo.com.br/v2/Keywords/?Page=2&PageSize=1&Order=Asc",
+            "rel": "nextPage",
+            "method": "GET"
+        }
+    ]    
+}
+Webhooks/Webhook/Retrieve a WebhookGEThttps://api.auvo.com.br/v2/webHooks/idParameters
+id
+id attribute of the WebHook.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/webHooks/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": "123",                
+    "userId": 12345,
+    "entity": "Task",
+    "action": "Inclusao",
+    "urlResponse": "https://api.someapitoresponse.com/somethingelse",
+    "creationDate": "2019-01-01T08:00:00",
+    "deleteDate": "2019-01-01T08:00:00",
+    "active": "false"
+}  
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, not passing the id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value '\"\"' is not valid."
+  ]
+}
+ResponseWhen the resource with the specified id does not exist.
+404
+Headers
+Content-Type:application/json
+Webhooks/Webhook/Retrieve a list of WebhooksGEThttps://api.auvo.com.br/v2/webHooks/?paramFilter=paramFilter&page=page&pageSize=pageSize&order=orderParameters
+paramFilter
+Must be a json encoded string.id (number) - The user identity (string) - entity of the hookaction (string) - action of the hookactive (boolean) - status of the hook
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/webHooks/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+{
+  "result": {
+    "entityList": [
+      {
+        "id": "123",
+        "userId": 12345,
+        "entity": "Task",
+        "action": "Inclusao",
+        "urlResponse": "https://api.someapitoresponse.com/somethingelse",
+        "creationDate": "2019-01-01T08:00:00",
+        "deleteDate": "2019-01-01T08:00:00",
+        "active": "false"
+      }
+    ],
+    "pagedSearchReturnData": {
+      "order": 0,
+      "pageSize": 1,
+      "page": 1,
+      "totalItems": 2
+    },
+    "links": [
+      {
+        "href": "https://api.auvo.com.br/v2/webHooks?ParamFilter=%7B%22active%22%3Atrue%7D&Page=1&PageSize=1&Order=Asc",
+        "rel": "self",
+        "method": "GET"
+      },
+      {
+        "href": "https://api.auvo.com.br/v2/webHooks?ParamFilter=%7B%22active%22%3Atrue%7D&Page=2&PageSize=1&Order=Asc",
+        "rel": "nextPage",
+        "method": "GET"
+      }
+    ]
+  }
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, not passing the paramFilter parameter ( https://api.auvo.com.br/v2/webhooks/?page=1&pageSize=1&order=1 ).
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "message": "The paramFilter is required as ParamUserFilter string json.",
+  "target": null,
+  "errorCode": 0,
+  "errors": null
+}
+Expenses/Expense/Retrieve a ExpenseGEThttps://api.auvo.com.br/v2/expenses/idParameters
+id
+id attribute of the Expense.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/expenses/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 23,
+    "description": "expense",
+    "userToId": 123,
+    "userToName": "user 123",
+    "typeId": 456,
+    "typeName": "expense type name",
+    "date": "2016-03-23T14:10:35",
+    "attachmentUrl": "aws.amazonattachemtnes.com",
+    "creationDate": "2016-03-23T14:11:31",
+    "amount": 497827
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+Expenses/Expense/Retrieves a list of ExpensesGEThttps://api.auvo.com.br/v2/expenses/?paramFilter=paramFilter&page=page&pageSize=pageSize&order=orderParameters
+paramFilter
+paramFilter must be json encoded string.id (string) - The expense iddescription (number) - The expense descriptionstartDate (required, string) - The expense initial filter date ("yyyy-mm-ddThh:mm:ss").endDate (required, string) - The expense end filter date ("yyyy-mm-ddThh:mm:ss").userToId (number) - The user 'to' idtype (number) - The expense type id
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/expenses/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList":[
+        {
+            "id": 23,
+            "description": "expense",
+            "userToId": 123,
+            "userToName": "user 123",
+            "typeId": 456,
+            "typeName": "expense type name",
+            "date": "2016-03-23T14:10:35",
+            "attachmentUrl": "aws.amazonattachemtnes.com",
+            "creationDate": "2016-03-23T14:11:31",
+            "amount": 497827
+        }
+    ]    
+}
+Expense types/Expense types/Retrieve a Expense typeGEThttps://api.auvo.com.br/v2/expenseTypes/idParameters
+id
+id attribute of the Expense type.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/expenseTypes/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "description": "Terêscio",
+    "creatorId": 123,
+    "creationDate": "2016-03-23T18:10:00"
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+Expense types/Expense types/Retrieves a list of Expense typesGEThttps://api.auvo.com.br/v2/expenseTypes/?paramFilter=paramFilter&page=page&pageSize=pageSize&order=orderParameters
+paramFilter
+paramFilter must be json encoded string.id (number) - The expense type iddescription (string) - The expense type description
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/expenseTypes/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList":[
+        {
+            "id": 42,
+            "description": "Terêscio",
+            "creatorId": 123,
+            "creationDate": "2016-03-23T18:10:00"
+        }
+    ],
+    "pagedSearchReturnData": {
+        "order": 0,
+        "pageSize": 1,
+        "page": 1,
+        "totalItems": 2
+    },
+    "links": [
+        {
+            "href": "https://api.auvo.com.br/v2/expenseTypes/?Page=1&PageSize=1&Order=Asc",
+            "rel": "self",
+            "method": "GET"
+        },
+        {
+            "href": "https://api.auvo.com.br/v2/expenseTypes/?Page=2&PageSize=1&Order=Asc",
+            "rel": "nextPage",
+            "method": "GET"
+        }
+    ]    
+}
+Equipment categories/Equipment category/Retrieve a Equipment categoryGEThttps://api.auvo.com.br/v2/equipmentCategories/idParameters
+id
+id attribute of the Equipment category.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/equipmentCategories/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "description": "Terêscio",
+    "externalId": "2016"
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+Equipment categories/Equipment category/Retrieves a list of Equipment categoriesGEThttps://api.auvo.com.br/v2/equipmentCategories/?paramFilter=paramFilter&page=page&pageSize=pageSize&order=orderParameters
+paramFilter
+paramFilter must be json encoded string.id (number) - The Equipment category iddescription (string) - The Equipment category descriptionexternalId (string) - The Equipment category external id
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/equipmentCategories/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList":[
+        {
+          "description": ""some description here,
+          "id": 12,
+          "externalId": "2016"
+        }
+    ],
+    "pagedSearchReturnData": {
+        "order": 0,
+        "pageSize": 1,
+        "page": 1,
+        "totalItems": 2
+    },
+    "links": [
+        {
+            "href": "https://api.auvo.com.br/v2/equipmentCategories/?Page=1&PageSize=1&Order=Asc",
+            "rel": "self",
+            "method": "GET"
+        },
+        {
+            "href": "https://api.auvo.com.br/v2/equipmentCategories/?Page=2&PageSize=1&Order=Asc",
+            "rel": "nextPage",
+            "method": "GET"
+        }
+    ]    
+}
+Equipments/Equipment/Retrieve a EquipmentGEThttps://api.auvo.com.br/v2/equipments/idParameters
+id
+id attribute of the Equipment.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/equipments/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "externalId": "123",
+    "parentEquipmentId": 0,
+    "associatedCustomerId": 0,
+    "associatedUserId": 0,
+    "categoryId": 0,
+    "name": "umdoistresquatroumdoistresquatr",
+    "identifier": "a1b2c3",
+    "urlImage": "https://auvo-producao.s3.amazonaws.com/anexos_equipamentos/12d53e24-9e5a-4319-a070-458e18260321.jpeg",
+    "uriAnexos": ["https://auvo-producao.s3.amazonaws.com/anexos_equipamentos/12d53e24-9e5a-4319-a070-458e18260321.jpeg"],
+    "active": true,
+    "creationDate": "2019-05-13T12:27:17",
+    "expirationDate": "2019-01-01T01:01:01",
+    "equipmentSpecifications": [
+        {
+            "name": "cor",
+            "specification": "azul"
+        }
+    ],
+    "id": 127765,
+    "description": "descricao",
+    "warrantyStartDate": "2024-01-01T00:00:00",
+    "warrantyEndDate": "2025-01-01T00:00:00"
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+Equipments/Equipment/Edit Equipment attachmentPUThttps://api.auvo.com.br/v2/equipments/id/attachmentsParameters
+id
+id attribute of the Equipment.
+Number
+Attributes
+removeAllAttachmentsInsertedByMe
+boolean
+this option will remove all the previous attachments inserted for the equipment
+
+attachments
+array
+Request
+from urllib2 import Request, urlopen
+
+values = """
+  {
+    "removeAllAttachmentsInsertedByMe": false,
+    "attachments": [
+      {
+        "name": "my_file.pdf",
+        "file": "base64 encoded file"
+      }
+    ]
+  }
+"""
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/equipments/id/attachments', data=values, headers=headers)
+request.get_method = lambda: 'PUT'
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "externalId": "123",
+    "parentEquipmentId": 0,
+    "associatedCustomerId": 0,
+    "associatedUserId": 0,
+    "categoryId": 0,
+    "name": "umdoistresquatroumdoistresquatr",
+    "identifier": "a1b2c3",
+    "urlImage": "https://auvo-producao.s3.amazonaws.com/anexos_equipamentos/12d53e24-9e5a-4319-a070-458e18260321.jpeg",
+    "uriAnexos": ["https://auvo-producao.s3.amazonaws.com/anexos_equipamentos/12d53e24-9e5a-4319-a070-458e18260321.jpeg"],
+    "active": true,
+    "creationDate": "2019-05-13T12:27:17",
+    "expirationDate": "2019-01-01T01:01:01",
+    "equipmentSpecifications": [
+        {
+            "name": "cor",
+            "specification": "azul"
+        }
+    ],
+    "id": 127765,
+    "description": "descricao"
+}
+Equipments/Equipment/Retrieves a list of EquipmentsGEThttps://api.auvo.com.br/v2/equipments/?paramFilter=paramFilter&page=page&pageSize=pageSize&order=orderParameters
+paramFilter
+paramFilter must be json encoded string.name (string) - equipment nameexternalId (string) - External task idparentEquipmentId (number) - parent equipment idassociatedCustomerId (number) - associated customer idassociatedUserId (number) - associated user idcategoryId (number) - category ididentifier (string) - equipment identifieractive (boolean) - equipment status
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/equipments/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList":[
+            {
+                "externalId": "123",
+                "parentEquipmentId": 0,
+                "associatedCustomerId": 0,
+                "associatedUserId": 0,
+                "categoryId": 0,
+                "name": "umdoistresquatroumdoistresquatr",
+                "identifier": "a1b2c3",
+                "urlImage": "https://auvo-producao.s3.amazonaws.com/anexos_equipamentos/12d53e24-9e5a-4319-a070-458e18260321.jpeg",
+                "uriAnexos": ["https://auvo-producao.s3.amazonaws.com/anexos_equipamentos/12d53e24-9e5a-4319-a070-458e18260321.jpeg"],
+                "active": true,
+                "creationDate": "2019-05-13T12:27:17",
+                "expirationDate": "2019-01-01T01:01:01",
+                "equipmentSpecifications": [
+                    {
+                        "name": "cor",
+                        "specification": "azul"
+                    }
+                ],
+                "id": 127765,
+                "description": "descricao"
+            }
+    ],
+    "pagedSearchReturnData": {
+        "order": 0,
+        "pageSize": 1,
+        "page": 1,
+        "totalItems": 2
+    },
+    "links": [
+        {
+            "href": "https://api.auvo.com.br/v2/Equipments?ParamFilter=%7B%0D%0A++%22name%22%3A+%22Caixa+De+Cabo%22%2C%0D%0A++%22active%22%3A+true%0D%0A%7D&Page=1&PageSize=1&Order=Asc",
+            "rel": "self",
+            "method": "GET"
+        },
+        {
+            "href": "https://api.auvo.com.br/v2/Equipments?ParamFilter=%7B%0D%0A++%22name%22%3A+%22Caixa+De+Cabo%22%2C%0D%0A++%22active%22%3A+true%0D%0A%7D&Page=2&PageSize=1&Order=Asc",
+            "rel": "nextPage",
+            "method": "GET"
+        }
+    ]    
+}
+Product categories/Product category/Retrieve a Product categoryGEThttps://api.auvo.com.br/v2/productCategories/idParameters
+id
+id attribute of the Product category.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/productCategories/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "description": "Terêscio",
+    "externalId": "2016"
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+Product categories/Product category/Retrieves a list of Product categoriesGEThttps://api.auvo.com.br/v2/productCategories/?paramFilter=paramFilter&page=page&pageSize=pageSize&order=orderParameters
+paramFilter
+paramFilter must be json encoded string.id (number) - The Product category iddescription (string) - The Product category descriptionexternalId (string) - The Product category external id
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/productCategories/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList":[
+        {
+          "description": ""some description here,
+          "id": 12,
+          "externalId": "2016"
+        }
+    ],
+    "pagedSearchReturnData": {
+        "order": 0,
+        "pageSize": 1,
+        "page": 1,
+        "totalItems": 2
+    },
+    "links": [
+        {
+            "href": "https://api.auvo.com.br/v2/productCategories/?Page=1&PageSize=1&Order=Asc",
+            "rel": "self",
+            "method": "GET"
+        },
+        {
+            "href": "https://api.auvo.com.br/v2/productCategories/?Page=2&PageSize=1&Order=Asc",
+            "rel": "nextPage",
+            "method": "GET"
+        }
+    ]    
+}
+Products/Product/Retrieve a ProductGEThttps://api.auvo.com.br/v2/products/idParameters
+id
+code attribute of the Product.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/products/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "productId": "419384ad-705c-11eb-bf97-0aa2a285b66a",
+    "externalId": "123",
+    "code":"456"
+    "name": "p1",
+    "associatedEquipmentId": 0,
+    "categoryId": 0,
+    "unitaryValue": "12,00",
+    "unitaryCost": "6,00",
+    "totalStock": 120,
+    "active": true,
+    "minimumStock": "30",
+    "Base64Image": "",
+    "uriAnexos": ["https://auvo-producao.s3.amazonaws.com/anexos_produtos/12d53e24-9e5a-4319-a070-458e18260321.jpeg"],
+    "productSpecifications": [
+        {
+            "name": "cor",
+            "Specification": "azul"
+        }
+    ],
+    "employeesStock": [
+        {
+            "id": 123,
+            "userId": 123,
+            "amount": 123,
+            "lastStockMovement":
+                {
+                    "id": 123,
+                    "operationUserId": 123,
+                    "stockUserId": 123,
+                    "productId": 123,
+                    "amount": 123,
+                    "Unitaryvalue": 12.0,
+                    "entry": true,
+                    "date": "2019-01-01T01:01:01"
+                }
+        }
+    ]
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+Products/Product/Retrieves a list of ProductsGEThttps://api.auvo.com.br/v2/products/?paramFilter=paramFilter&page=page&pageSize=pageSize&order=orderParameters
+paramFilter
+paramFilter must be json encoded string.name (string) - equipment nameexternalId (string) - External task idassociatedEquipmentId (number) - associated equipment idid (number) - product codecategoryId (number) - category idactive (?boolean) - equipment statuslowerThanMinimumStock (?boolean) - lower Than Minimum Stock
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/products/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList":[
+            {
+                "productId": "63867f52-b262-410a-a409-cc25ba92ded1",
+                "externalId": "123",
+                "code": "456", 
+                "name": "p1",
+                "associatedEquipmentId": 0,
+                "categoryId": 0,
+                "unitaryValue": "12,00",
+                "unitaryCost": "6,00",
+                "totalStock": 120,
+                "active": true,
+                "minimumStock": "30",
+                "Base64Image": "",
+                "uriAnexos": ["https://auvo-producao.s3.amazonaws.com/anexos_produtos/12d53e24-9e5a-4319-a070-458e18260321.jpeg"],
+                "productSpecifications": [
+                    {
+                        "name": "cor",
+                        "Specification": "azul"
+                    }
+                ],
+                "employeesStock": [
+                    {
+                        "id": 123,
+                        "userId": 123,
+                        "amount": 123,
+                        "lastStockMovement":
+                            {
+                                "id": 123,
+                                "operationUserId": 123,
+                                "stockUserId": 123,
+                                "productId": 123,
+                                "amount": 123,
+                                "Unitaryvalue": 12.0,
+                                "UnitaryCost": 6.0,
+                                "entry": true,
+                                "date": "2019-01-01T01:01:01"
+                            }
+                    }
+                ]
+            }
+    ],
+    "pagedSearchReturnData": {
+        "order": 0,
+        "pageSize": 1,
+        "page": 1,
+        "totalItems": 2
+    },
+    "links": [
+        {
+            "href": "https://api.auvo.com.br/v2/Products?ParamFilter=%7B%0D%0A++%22name%22%3A+%22Caixa+De+Cabo%22%2C%0D%0A++%22active%22%3A+true%0D%0A%7D&Page=1&PageSize=1&Order=Asc",
+            "rel": "self",
+            "method": "GET"
+        },
+        {
+            "href": "https://api.auvo.com.br/v2/Products?ParamFilter=%7B%0D%0A++%22name%22%3A+%22Caixa+De+Cabo%22%2C%0D%0A++%22active%22%3A+true%0D%0A%7D&Page=2&PageSize=1&Order=Asc",
+            "rel": "nextPage",
+            "method": "GET"
+        }
+    ]    
+}
+Quotations/Quotation/Retrieve a QuotationGEThttps://api.auvo.com.br/v2/quotations/idParameters
+id
+id attribute of the Quotation.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/quotations/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "publicId": 42,
+    "customerId": 2,
+    "customerName": "Terêscio",
+    "taskID": 2,
+    "descount": "12.00",        
+    "requesterUserId": 2,
+    "observations": "something",
+    "registerDate": "2016-03-23T18:10:00",
+    "requestDate": "2016-03-23T18:10:00",
+    "aditionalCosts": [
+        {
+            "id": 1,
+            "costId": 2,
+            "description": "la pregunta",
+            "value": "10.00"
+        }
+    ],
+    "alterations": [
+        {
+            "id": 1,
+            "key": 2,
+            "column": "1",
+            "type": "1",
+            "userId": 1,
+            "date": "2016-03-23T18:10:00",
+            "observations": "la pregunta",
+            "value": "10.00"
+        }
+    ],
+    "products": [
+        {
+            "productId": 1,
+            "amout": 2,
+            "UnitaryValue": "1.00"
+        }
+    ],
+    "contacts": [
+        {
+            "id": 1,
+            "name": "name",
+            "job": "job",
+            "email": "email",
+            "phoneNumber": 12323232
+        }
+    ],
+    "summary": {
+        "totalProducts": 2.00,
+        "totalServices": 0.00,
+        "totalAdditionalCosts": 10.00,
+        "netTotalValue": 0.00,
+        "grossTotalValue": 12.00,
+        "discount": {
+            "type": "Monetario",
+            "value": 12.00
+        }
+    },
+    "CurrentStage": 
+    {
+        "id": 1,
+        "description": "name",
+        "position": 1,
+        "changeStock": true,
+        "isCancelled": false,
+        "editAllowed": true
+    }
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+Quotations/Quotation/Retrieves a list of QuotationsGEThttps://api.auvo.com.br/v2/quotations/?paramFilter=paramFilter&page=page&pageSize=pageSize&order=orderParameters
+paramFilter
+paramFilter must be json encoded string.publicId (number) - The quotatio idrequestStartDate (string) - The request start daterequestEndDate (string) - The request end dateusersId (array[number]) - collection of users idscustomersId (array[number]) - collection of customers idsproductsId (array[number]) - collection of products idsCurrentStage (string) - The current stage name to filter
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/quotations/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList":[
+        {
+            "publicId": 42,
+            "customerId": 2,
+            "customerName": "Terêscio",
+            "taskID": 2,
+            "descount": "12.00",        
+            "requesterUserId": 2,
+            "observations": "something",
+            "registerDate": "2016-03-23T18:10:00",
+            "requestDate": "2016-03-23T18:10:00",
+            "aditionalCosts": [
+                {
+                    "id": 1,
+                    "costId": 2,
+                    "description": "la pregunta",
+                    "value": "10.00"
+                }
+            ],
+            "alterations": [
+                {
+                    "id": 1,
+                    "key": 2,
+                    "column": "1",
+                    "type": "1",
+                    "userId": 1,
+                    "date": "2016-03-23T18:10:00",
+                    "observations": "la pregunta",
+                    "value": "10.00"
+                }
+            ],
+            "products": [
+                {
+                    "productId": 1,
+                    "amout": 2,
+                    "UnitaryValue": "1.00"
+                }
+            ],
+            "contacts": [
+                {
+                    "id": 1,
+                    "name": "name",
+                    "job": "job",
+                    "email": "email",
+                    "phoneNumber": 12323232
+                }
+            ],
+            "summary": {
+                "totalProducts": 2.00,
+                "totalServices": 0.00,
+                "totalAdditionalCosts": 10.00,
+                "netTotalValue": 0.00,
+                "grossTotalValue": 12.00,
+                "discount": {
+                    "type": "Monetario",
+                    "value": 12.00
+                }
+            },
+            "CurrentStage":
+            {
+                "id": 1,
+                "description": "name",
+                "position": 1,
+                "changeStock": true,
+                "isCancelled": false,
+                "editAllowed": true
+            }
+        }
+    ],
+    "pagedSearchReturnData": {
+        "order": 0,
+        "pageSize": 1,
+        "page": 1,
+        "totalItems": 2
+    },
+    "links": [
+        {
+            "href": "https://api.auvo.com.br/v2/quotations/?Page=1&PageSize=1&Order=Asc",
+            "rel": "self",
+            "method": "GET"
+        },
+        {
+            "href": "https://api.auvo.com.br/v2/quotations/?Page=2&PageSize=1&Order=Asc",
+            "rel": "nextPage",
+            "method": "GET"
+        }
+    ]    
+}
+Tickets/Ticket/Retrieve a TicketGEThttps://api.auvo.com.br/v2/tickets/idParameters
+id
+id attribute of the Ticket.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/tickets/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "creationDate": "2016-03-23T18:10:00",
+    "teamId": 2,
+    "teamName": "Terêscio",
+    "userCreatorId": 2,
+    "userCreatorName": "something",
+    "userResponsableId": 2,
+    "userResponsableName": "something",
+    "title": "something",
+    "customerId": "something",
+    "customerName": "something",
+    "customerEmail": "something",
+    "customerPhoneNumber": "123456789",
+    "equipmentId": 12,        
+    "requestTypeDescription": "something",
+    "priority": "something",
+    "description": "something",
+    "statusDescription": "something",
+    "statusType": "something",
+    "endDate": "2016-03-23T18:10:00",
+    "emailMenssageId": "something",
+    "requesterEmail": "something",
+    "requesterName": "something",
+    "taskIDs": [
+        1,2,3
+    ],
+    "urlAttachments": [
+        "https://repositoriodeimagens.com.br/nomedaimagem.jpg"
+    ],
+    "customFields": [
+        {
+            "value": "something",
+            "valueDescription": "something",
+            "customFieldTicket": {
+                "id": 1,
+                "order": 2,
+                "title": "something",
+                "fieldType": "something",
+                "fieldVisibility": "something",
+                "description": "something",
+                "primary": false,
+                "required": false,
+                "removed": true,
+                "creationDate": "2016-03-23T18:10:00",
+                "multipleChoiceItems": [
+                    {
+                        "id": 1,
+                        "field": 2,
+                        "description": "something",
+                        "order": 3,
+                        "creationDate": "2016-03-23T18:10:00",
+                        "removed": false
+                    }
+                ]
+            }
+        }
+    ],
+    "alterations": [
+        {
+            "alterationType": 1,
+            "alterationDate": "2016-03-23T18:10:00",
+            "userId": 1,
+            "userName": "job",
+            "from": "something",
+            "to": "something",
+            "helper": "something",
+            "toDescription": "something",
+            "helperDescription": "something",
+            "fromDescription": "something"
+        }
+    ],
+    "interactions": [
+        {
+            "id": 1,
+            "ticketId": 1,
+            "creationDate": "2016-03-23T18:10:00",
+            "userId": 1,
+            "userName": "job",
+            "title": "something",
+            "message": "something",
+            "interactionType": "something",
+            "emailMenssageId": "something",
+            "emailContact": "something",
+            "emailContactName": "something",
+            "emailReference": "something",
+            "urlAttachments": [
+                "https://repositoriodeimagens.com.br/nomedaimagem.jpg"
+            ]
+        }
+    ],
+    "statusAlterations": [
+        {
+            "id": 58542,
+            "descripton": "Aguardando Atendimento",
+            "checkIn": "2024-11-13T09:11:54",
+            "checkOut": "2024-11-13T10:23:19"
+        },
+        {
+            "id": 72240,
+            "descripton": "Aguardando Atendente",
+            "checkIn": "2024-11-13T10:23:18",
+            "checkOut": "2024-11-13T15:07:25"
+        }
+    ]
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+Tickets/Ticket/Retrieves a list of TicketsGEThttps://api.auvo.com.br/v2/tickets/?paramFilter=paramFilter&page=page&pageSize=pageSize&order=orderParameters
+paramFilter
+paramFilter must be json encoded string.ids (string) - Tickets ids separated by commastartDate (string) - Ticket start date, filter date ("yyyy-MM-ddTHH:mm:ss")endDate (string) - Ticket end date, filter date ("yyyy-MM-ddTHH:mm:ss"Status (string) - Normal = 1, Abertura = 2, Pausa = 3, Cancelamento = 4, Encerramento = 5, AguardandoAtendente = 6, AguardandoCliente = 7ResponsableUsersIds (string) - Users ids separated by commaTeamId (string) - Team ids separated by commaCustomerGroupId (number) - customers group idOrigems (array[number]) - Email = 1, Interno = 2, PaginaSolicitacao = 3OpeningResponsableUsersId (string) - users idSearchTasks (bool) - Send "true" value if should search tasksSearchModifications (bool) - should search ModificationsSearchInteractions (bool) - should search InteractionsSearchCustomFields (bool) - should search CustomFields
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/tickets/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList":[
+        {
+            "id": 42,
+            "creationDate": "2016-03-23T18:10:00",
+            "teamId": 2,
+            "teamName": "Terêscio",
+            "userCreatorId": 2,
+            "userCreatorName": "something",
+            "userResponsableId": 2,
+            "userResponsableName": "something",
+            "title": "something",
+            "customerId": "something",
+            "customerName": "something",
+            "customerEmail": "something",
+            "customerPhoneNumber": "123456789",
+            "equipmentId": 12,        
+            "requestTypeDescription": "something",
+            "priority": "something",
+            "description": "something",
+            "statusDescription": "something",
+            "statusType": "something",
+            "endDate": "2016-03-23T18:10:00",
+            "emailMenssageId": "something",
+            "requesterEmail": "something",
+            "requesterName": "something",
+            "taskIDs": [
+                1,2,3
+            ],
+            "urlAttachments": [
+                "https://repositoriodeimagens.com.br/nomedaimagem.jpg"
+            ],
+            "customFields": [
+                {
+                    "value": "something",
+                    "valueDescription": "something",
+                    "customFieldTicket": {
+                        "id": 1,
+                        "order": 2,
+                        "title": "something",
+                        "fieldType": "something",
+                        "fieldVisibility": "something",
+                        "description": "something",
+                        "primary": false,
+                        "required": false,
+                        "removed": true,
+                        "creationDate": "2016-03-23T18:10:00",
+                        "multipleChoiceItems": [
+                            {
+                                "id": 1,
+                                "field": 2,
+                                "description": "something",
+                                "order": 3,
+                                "creationDate": "2016-03-23T18:10:00",
+                                "removed": false
+                            }
+                        ]
+                    }
+                }
+            ],
+            "alterations": [
+                {
+                    "alterationType": 1,
+                    "alterationDate": "2016-03-23T18:10:00",
+                    "userId": 1,
+                    "userName": "job",
+                    "from": "something",
+                    "to": "something",
+                    "helper": "something",
+                    "toDescription": "something",
+                    "helperDescription": "something",
+                    "fromDescription": "something"
+                }
+            ],
+            "interactions": [
+                {
+                    "id": 1,
+                    "ticketId": 1,
+                    "creationDate": "2016-03-23T18:10:00",
+                    "userId": 1,
+                    "userName": "job",
+                    "title": "something",
+                    "message": "something",
+                    "interactionType": "something",
+                    "emailMenssageId": "something",
+                    "emailContact": "something",
+                    "emailContactName": "something",
+                    "emailReference": "something",
+                    "urlAttachments": [
+                        "https://repositoriodeimagens.com.br/nomedaimagem.jpg"
+                    ]
+
+                }
+            ],
+        }
+    ],
+    "pagedSearchReturnData": {
+        "order": 0,
+        "pageSize": 1,
+        "page": 1,
+        "totalItems": 2
+    },
+    "links": [
+        {
+            "href": "https://api.auvo.com.br/v2/tickets/?Page=1&PageSize=1&Order=Asc",
+            "rel": "self",
+            "method": "GET"
+        },
+        {
+            "href": "https://api.auvo.com.br/v2/tickets/?Page=2&PageSize=1&Order=Asc",
+            "rel": "nextPage",
+            "method": "GET"
+        }
+    ]    
+}
+Services/Service/Retrieve a ServiceGEThttps://api.auvo.com.br/v2/services/idParameters
+id
+code attribute of the Service.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/services/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": "419384ad-705c-11eb-bf97-0aa2a285b66a",
+    "title": "Preventive maintenance",
+    "price":"12.34"
+    "active": true,
+    "fiscalServiceId": "de6a85e3-a870-11ed-82b5-0a875964b64a",
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+Services/Service/Retrieves a list of ServicesGEThttps://api.auvo.com.br/v2/services/?paramFilter=paramFilter&page=page&pageSize=pageSize&order=orderParameters
+paramFilter
+paramFilter must be json encoded string.title (string) - service title namedescription (string) - service descriptionprice (number) - service priceactive (?boolean) - service statusfiscalServiceId (string) - fiscal service identifier (GUID)
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/services/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList":[
+            {
+                "id": "419384ad-705c-11eb-bf97-0aa2a285b66a",
+                "title": "Preventive maintenance",
+                "description": "Preventive maintenance service for the client's equipment.",
+                "price":"12.34"
+                "active": true,
+                "fiscalServiceId": "de6a85e3-a870-11ed-82b5-0a875964b64a",
+            }
+    ],
+    "pagedSearchReturnData": {
+        "order": 0,
+        "pageSize": 1,
+        "page": 1,
+        "totalItems": 2
+    },
+    "links": [
+        {
+            "href": "https://api.auvo.com.br/v2/Service?ParamFilter=%7B%0D%0A++%22name%22maintenance%22%2C%0D%0A++%22active%22%3A+true%0D%0A%7D&Page=1&PageSize=1&Order=Asc",
+            "rel": "self",
+            "method": "GET"
+        },
+        {
+            "href": "https://api.auvo.com.br/v2/Service?ParamFilter=%7B%0D%0A++%22name%22maintenance%22%2C%0D%0A++%22active%22%3A+true%0D%0A%7D&Page=2&PageSize=1&Order=Asc",
+            "rel": "nextPage",
+            "method": "GET"
+        }
+    ]    
+}
+
+
+
+

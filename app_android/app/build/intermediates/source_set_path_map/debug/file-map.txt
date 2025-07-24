@@ -1,0 +1,62 @@
+com.auvo.painel.app-pngs-0 C:\App Painel Auvo\app_android\app\build\generated\res\pngs\debug
+com.auvo.painel.app-resValues-1 C:\App Painel Auvo\app_android\app\build\generated\res\resValues\debug
+com.auvo.painel.app-packageDebugResources-2 C:\App Painel Auvo\app_android\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.auvo.painel.app-packageDebugResources-3 C:\App Painel Auvo\app_android\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.auvo.painel.app-merged_res-4 C:\App Painel Auvo\app_android\app\build\intermediates\merged_res\debug
+com.auvo.painel.app-debug-5 C:\App Painel Auvo\app_android\app\src\debug\res
+com.auvo.painel.app-main-6 C:\App Painel Auvo\app_android\app\src\main\res
+com.auvo.painel.app-jetified-lifecycle-service-2.7.0-7 C:\Users\ti03\.gradle\caches\transforms-3\0fe73bd4477ccf39f2ea36d2865d02ab\transformed\jetified-lifecycle-service-2.7.0\res
+com.auvo.painel.app-appcompat-1.6.1-8 C:\Users\ti03\.gradle\caches\transforms-3\1390ed0e93696117e0bd1340aa2458d6\transformed\appcompat-1.6.1\res
+com.auvo.painel.app-jetified-lifecycle-runtime-ktx-2.7.0-9 C:\Users\ti03\.gradle\caches\transforms-3\17e13e44f13ebd7d981e3b69e666a7a0\transformed\jetified-lifecycle-runtime-ktx-2.7.0\res
+com.auvo.painel.app-navigation-ui-ktx-2.7.5-10 C:\Users\ti03\.gradle\caches\transforms-3\1f6a799769f92e4595684d0a1bd433b4\transformed\navigation-ui-ktx-2.7.5\res
+com.auvo.painel.app-jetified-emoji2-views-helper-1.2.0-11 C:\Users\ti03\.gradle\caches\transforms-3\269d4a321b8b3b15ed1cb151ad66685f\transformed\jetified-emoji2-views-helper-1.2.0\res
+com.auvo.painel.app-jetified-customview-poolingcontainer-1.0.0-12 C:\Users\ti03\.gradle\caches\transforms-3\2bc8701df29703ca06bace73a96ffd07\transformed\jetified-customview-poolingcontainer-1.0.0\res
+com.auvo.painel.app-material-1.10.0-13 C:\Users\ti03\.gradle\caches\transforms-3\2faf1e181e59d29a92166860ac121b00\transformed\material-1.10.0\res
+com.auvo.painel.app-jetified-room-ktx-2.5.0-14 C:\Users\ti03\.gradle\caches\transforms-3\2fdf44972fe84938c6caaf839eeefc0b\transformed\jetified-room-ktx-2.5.0\res
+com.auvo.painel.app-work-runtime-ktx-2.9.0-15 C:\Users\ti03\.gradle\caches\transforms-3\35834be774dd43b832c5ed93cd946b8a\transformed\work-runtime-ktx-2.9.0\res
+com.auvo.painel.app-navigation-ui-2.7.5-16 C:\Users\ti03\.gradle\caches\transforms-3\3605d71a58abb56cd6a3684baccdf644\transformed\navigation-ui-2.7.5\res
+com.auvo.painel.app-jetified-lifecycle-process-2.7.0-17 C:\Users\ti03\.gradle\caches\transforms-3\46eea9eff17ad561ab19765e17354f70\transformed\jetified-lifecycle-process-2.7.0\res
+com.auvo.painel.app-room-runtime-2.5.0-18 C:\Users\ti03\.gradle\caches\transforms-3\4e738ffa916343e5b453bfb62aaeb96c\transformed\room-runtime-2.5.0\res
+com.auvo.painel.app-jetified-profileinstaller-1.3.0-19 C:\Users\ti03\.gradle\caches\transforms-3\4fe9f85f1db47f470d7a1d0e318b4ef2\transformed\jetified-profileinstaller-1.3.0\res
+com.auvo.painel.app-jetified-annotation-experimental-1.3.0-20 C:\Users\ti03\.gradle\caches\transforms-3\55ad8ab1556954c38d621789326c4ac1\transformed\jetified-annotation-experimental-1.3.0\res
+com.auvo.painel.app-coordinatorlayout-1.1.0-21 C:\Users\ti03\.gradle\caches\transforms-3\585a83745d6f9e1fac22fc0bb53982d6\transformed\coordinatorlayout-1.1.0\res
+com.auvo.painel.app-preference-1.2.1-22 C:\Users\ti03\.gradle\caches\transforms-3\692cc6aa2b930d4bdbdd907cae9c39ee\transformed\preference-1.2.1\res
+com.auvo.painel.app-cardview-1.0.0-23 C:\Users\ti03\.gradle\caches\transforms-3\7192bc092133145dc42fdafeebe5edee\transformed\cardview-1.0.0\res
+com.auvo.painel.app-jetified-core-ktx-1.12.0-24 C:\Users\ti03\.gradle\caches\transforms-3\780c71dd374ec3576a1888cfa199f044\transformed\jetified-core-ktx-1.12.0\res
+com.auvo.painel.app-lifecycle-runtime-2.7.0-25 C:\Users\ti03\.gradle\caches\transforms-3\7940096e3e98252c892440d3f2c3373f\transformed\lifecycle-runtime-2.7.0\res
+com.auvo.painel.app-lifecycle-livedata-2.7.0-26 C:\Users\ti03\.gradle\caches\transforms-3\79c948d5a563d256f9c321ca2d8c85c7\transformed\lifecycle-livedata-2.7.0\res
+com.auvo.painel.app-jetified-lifecycle-viewmodel-ktx-2.7.0-27 C:\Users\ti03\.gradle\caches\transforms-3\7be8d646e0af838db9dbe862de994734\transformed\jetified-lifecycle-viewmodel-ktx-2.7.0\res
+com.auvo.painel.app-swiperefreshlayout-1.1.0-28 C:\Users\ti03\.gradle\caches\transforms-3\82504041c7c2d8eefa1742e9fce3b836\transformed\swiperefreshlayout-1.1.0\res
+com.auvo.painel.app-navigation-runtime-ktx-2.7.5-29 C:\Users\ti03\.gradle\caches\transforms-3\84bb2a3ac70be2a721dc36fe71403cd0\transformed\navigation-runtime-ktx-2.7.5\res
+com.auvo.painel.app-sqlite-2.3.0-30 C:\Users\ti03\.gradle\caches\transforms-3\850b3373c938444c2d5dbc7b2a220a0c\transformed\sqlite-2.3.0\res
+com.auvo.painel.app-constraintlayout-2.1.4-31 C:\Users\ti03\.gradle\caches\transforms-3\899eb6999f1668ce0807a12ae7b79a42\transformed\constraintlayout-2.1.4\res
+com.auvo.painel.app-navigation-common-ktx-2.7.5-32 C:\Users\ti03\.gradle\caches\transforms-3\8a080cca1c4369637648d4ecc67ad303\transformed\navigation-common-ktx-2.7.5\res
+com.auvo.painel.app-slidingpanelayout-1.2.0-33 C:\Users\ti03\.gradle\caches\transforms-3\90296e8df66f3e17f65f5ffac6c21631\transformed\slidingpanelayout-1.2.0\res
+com.auvo.painel.app-lifecycle-viewmodel-2.7.0-34 C:\Users\ti03\.gradle\caches\transforms-3\914177849f88652c8b10113371a0cf60\transformed\lifecycle-viewmodel-2.7.0\res
+com.auvo.painel.app-navigation-common-2.7.5-35 C:\Users\ti03\.gradle\caches\transforms-3\927c3a9674d0c2b583471c59b74e833f\transformed\navigation-common-2.7.5\res
+com.auvo.painel.app-jetified-window-1.0.0-36 C:\Users\ti03\.gradle\caches\transforms-3\a0cfd5d38e173ce81d4a85d58b83fb43\transformed\jetified-window-1.0.0\res
+com.auvo.painel.app-recyclerview-1.3.2-37 C:\Users\ti03\.gradle\caches\transforms-3\a286005766a00c1147a772b3d59f790b\transformed\recyclerview-1.3.2\res
+com.auvo.painel.app-jetified-viewpager2-1.1.0-beta02-38 C:\Users\ti03\.gradle\caches\transforms-3\a300faa3071afc6cb5aeabe164b62515\transformed\jetified-viewpager2-1.1.0-beta02\res
+com.auvo.painel.app-navigation-fragment-ktx-2.7.5-39 C:\Users\ti03\.gradle\caches\transforms-3\a350da7e11f5b750e4d589d1bd2457b6\transformed\navigation-fragment-ktx-2.7.5\res
+com.auvo.painel.app-navigation-runtime-2.7.5-40 C:\Users\ti03\.gradle\caches\transforms-3\a61460b9aac82f817580147c78f27396\transformed\navigation-runtime-2.7.5\res
+com.auvo.painel.app-jetified-fragment-ktx-1.6.2-41 C:\Users\ti03\.gradle\caches\transforms-3\ab154015d1819c383b6b1eee92c2c634\transformed\jetified-fragment-ktx-1.6.2\res
+com.auvo.painel.app-lifecycle-livedata-core-2.7.0-42 C:\Users\ti03\.gradle\caches\transforms-3\ab49a795ee8f8e9fbe38869e9ae78d2f\transformed\lifecycle-livedata-core-2.7.0\res
+com.auvo.painel.app-jetified-lifecycle-livedata-ktx-2.7.0-43 C:\Users\ti03\.gradle\caches\transforms-3\ae13ffa6d27a0f319fe4cd3765380c0c\transformed\jetified-lifecycle-livedata-ktx-2.7.0\res
+com.auvo.painel.app-core-runtime-2.2.0-44 C:\Users\ti03\.gradle\caches\transforms-3\b142b6c20290fb766ef825d652df3fe1\transformed\core-runtime-2.2.0\res
+com.auvo.painel.app-fragment-1.6.2-45 C:\Users\ti03\.gradle\caches\transforms-3\ba479c5364b9226e41bd32845a53df1b\transformed\fragment-1.6.2\res
+com.auvo.painel.app-jetified-lifecycle-viewmodel-savedstate-2.7.0-46 C:\Users\ti03\.gradle\caches\transforms-3\bb5356ae3f907e79c0eba1a5615e57ea\transformed\jetified-lifecycle-viewmodel-savedstate-2.7.0\res
+com.auvo.painel.app-jetified-preference-ktx-1.2.1-47 C:\Users\ti03\.gradle\caches\transforms-3\bb70f4d9ae679a9e171d42dee7c53ab4\transformed\jetified-preference-ktx-1.2.1\res
+com.auvo.painel.app-jetified-savedstate-1.2.1-48 C:\Users\ti03\.gradle\caches\transforms-3\be6eef0429a268cff5a976e65c0a3ebc\transformed\jetified-savedstate-1.2.1\res
+com.auvo.painel.app-jetified-activity-1.8.0-49 C:\Users\ti03\.gradle\caches\transforms-3\c150d6625fb3963b1b053f0898b29d15\transformed\jetified-activity-1.8.0\res
+com.auvo.painel.app-jetified-emoji2-1.2.0-50 C:\Users\ti03\.gradle\caches\transforms-3\c4dab8d1a445d82bbdf5c45e5c471e0a\transformed\jetified-emoji2-1.2.0\res
+com.auvo.painel.app-jetified-startup-runtime-1.1.1-51 C:\Users\ti03\.gradle\caches\transforms-3\ce3e9ac7dc18033e0f3e95d90653e06f\transformed\jetified-startup-runtime-1.1.1\res
+com.auvo.painel.app-work-runtime-2.9.0-52 C:\Users\ti03\.gradle\caches\transforms-3\d3e330e839df31ec59c25e4ac67a6f88\transformed\work-runtime-2.9.0\res
+com.auvo.painel.app-core-1.12.0-53 C:\Users\ti03\.gradle\caches\transforms-3\db3f6b8020888a7f113f2982cc217484\transformed\core-1.12.0\res
+com.auvo.painel.app-jetified-activity-ktx-1.8.0-54 C:\Users\ti03\.gradle\caches\transforms-3\dd5d683ab381ba72a388cc62158a28f3\transformed\jetified-activity-ktx-1.8.0\res
+com.auvo.painel.app-transition-1.4.1-55 C:\Users\ti03\.gradle\caches\transforms-3\e2c7e7bc29ba70224650924f17ce0092\transformed\transition-1.4.1\res
+com.auvo.painel.app-jetified-lifecycle-livedata-core-ktx-2.7.0-56 C:\Users\ti03\.gradle\caches\transforms-3\e69b66723f7187272e522748bce51c35\transformed\jetified-lifecycle-livedata-core-ktx-2.7.0\res
+com.auvo.painel.app-sqlite-framework-2.3.0-57 C:\Users\ti03\.gradle\caches\transforms-3\e71d276cf57f845a17196f3879a24834\transformed\sqlite-framework-2.3.0\res
+com.auvo.painel.app-navigation-fragment-2.7.5-58 C:\Users\ti03\.gradle\caches\transforms-3\ecde62f14fb65a4d840aa990ff7d4e1f\transformed\navigation-fragment-2.7.5\res
+com.auvo.painel.app-jetified-savedstate-ktx-1.2.1-59 C:\Users\ti03\.gradle\caches\transforms-3\edfefebbde715805550fcdc0e46c18a4\transformed\jetified-savedstate-ktx-1.2.1\res
+com.auvo.painel.app-jetified-appcompat-resources-1.6.1-60 C:\Users\ti03\.gradle\caches\transforms-3\eff7e710aa29c6a43a1e81c06f61df29\transformed\jetified-appcompat-resources-1.6.1\res
+com.auvo.painel.app-drawerlayout-1.1.1-61 C:\Users\ti03\.gradle\caches\transforms-3\fc1fa3c9bb04819bb481e180355a8187\transformed\drawerlayout-1.1.1\res

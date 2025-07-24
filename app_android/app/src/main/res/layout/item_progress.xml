@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <!-- Header Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
+        <!-- Icon -->
+        <ImageView
+            android:id="@+id/ivProgressIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="12dp"
+            android:contentDescription="Progress Icon"
+            tools:src="@android:drawable/ic_menu_agenda" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvProgressTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAppearance="@style/TextAppearance.Auvo.Body"
+            android:textSize="16sp"
+            tools:text="Prev. Mensal" />
+
+        <!-- Percentage -->
+        <TextView
+            android:id="@+id/tvProgressPercentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Auvo.Title"
+            android:textSize="16sp"
+            tools:text="85%" />
+
+    </LinearLayout>
+
+    <!-- Progress Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="8dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="12dp"
+            android:progressTint="@color/auvo_primary"
+            android:progressBackgroundTint="@color/background_divider"
+            tools:progress="85" />
+
+        <!-- Count Text -->
+        <TextView
+            android:id="@+id/tvProgressCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Auvo.Caption"
+            android:textSize="12sp"
+            tools:text="85/100" />
+
+    </LinearLayout>
+
+</LinearLayout>

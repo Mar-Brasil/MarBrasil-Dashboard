@@ -1,0 +1,77 @@
+# Plano de Desenvolvimento - App Android v2.0
+
+## Visão Geral
+
+Evoluir o aplicativo Android para uma ferramenta de trabalho segmentada por usuário. Cada usuário, ao fazer login, terá acesso a um dashboard personalizado contendo dados apenas dos contratos aos quais ele tem permissão, com navegação intuitiva para filtrar tipos de tarefas.
+
+---
+
+### Etapa 1: Backend - Permissões por Contrato
+
+**Objetivo:** Permitir que administradores associem usuários a contratos específicos.
+
+-   [ ] **Banco de Dados:** Criar uma tabela de associação (muitos-para-muitos) para conectar `usuarios` e `contratos`.
+-   [ ] **Painel Web (React):** Modificar o formulário "Novo/Editar Usuário" para incluir um seletor de múltiplos contratos.
+-   [ ] **API:** Criar/modificar endpoints que, ao receberem a identificação de um usuário, retornem dados (tarefas, indicadores) filtrados apenas para os contratos associados a ele.
+
+---
+
+### Etapa 2: App Android - Autenticação e Dashboard Personalizado
+
+**Objetivo:** Implementar o fluxo de login e exibir o dashboard com dados específicos do usuário.
+
+-   [ ] **Tela de Login:** Criar uma tela com campos para "usuário" e "senha".
+-   [ ] **Autenticação:** Conectar a tela de login à API para validar as credenciais do usuário.
+-   [ ] **Dashboard Principal:**
+    -   Após o login, a tela principal deve buscar e exibir os dados do endpoint de dados do usuário.
+    -   Desenvolver uma interface de usuário clara e organizada para os cards de "Progresso Geral" e "Indicadores", adaptada para a tela do celular.
+
+---
+
+### Etapa 3: App Android - Navegação por Tipo de Tarefa
+
+**Objetivo:** Permitir que o usuário filtre as tarefas visualizadas no app.
+
+-   [ ] **Menu de Navegação Inferior (Bottom Navigation Bar):**
+    -   Implementar um menu fixo no rodapé da tela principal.
+    -   Adicionar os botões iniciais: `Prev Mensal`, `Prev Semestral`, `Corretiva`, `Levant PMOC`.
+-   [ ] **Funcionalidade de Filtro:**
+    -   Ao clicar em um botão do menu, o app deve fazer uma nova requisição à API (ou filtrar os dados já carregados) para exibir apenas as tarefas do tipo selecionado.
+    -   A estrutura deve ser flexível para permitir a adição de novos botões de filtro no futuro com o mínimo de esforço.
+
+
+$checkpointText = @"
+
+--- CHECKPOINT (16/07/2025) ---
+
+### Resumo do Projeto e Objetivos
+O objetivo principal é implementar um controle de acesso baseado em usuário para o aplicativo Android "Painel Auvo", permitindo que os usuários vejam apenas os dados dos contratos aos quais estão associados. Isso envolveu modificações no backend, no painel de administração web e no aplicativo Android.
+
+### Modificações no Backend (Python/FastAPI)
+1.  **Associação Usuário-Contrato:** Foi criada uma tabela de associação muitos-para-muitos (`usuario_contratos`) para vincular usuários a contratos (`customer_groups`).
+2.  **Endpoints de Usuário:** Os endpoints `criar_usuario` e `editar_usuario` foram atualizados para gerenciar essas associações.
+3.  **Endpoint de Login:** Foi criado um endpoint `/login` que autentica o usuário com nome de usuário e senha, retornando os detalhes do usuário, incluindo uma lista de IDs de contratos permitidos.
+4.  **Endpoint de Dashboard em Lote:** Foi criado um endpoint `/api/dashboard/batch` que aceita uma lista de IDs de contrato e retorna dados agregados, otimizando as chamadas do aplicativo móvel.
+
+### Modificações no Painel Web (React)
+1.  **Gerenciamento de Usuários:** A página de edição/criação de usuários foi atualizada com um seletor múltiplo, permitindo que administradores associem facilmente um ou mais contratos a um usuário.
+
+### Modificações no Aplicativo Android (Kotlin)
+1.  **Fluxo de Login:**
+    *   Foi criada uma `LoginActivity` com campos para usuário e senha, que agora é a tela de entrada do aplicativo (configurado no `AndroidManifest.xml`).
+    *   A lógica de login foi implementada para chamar o endpoint `/login` do backend.
+    *   Em caso de sucesso, o objeto `User` (que foi tornado `Serializable`) é passado para a `MainActivity`.
+2.  **Tela Principal (MainActivity):**
+    *   A `MainActivity` foi completamente refatorada para funcionar como um dashboard.
+    *   Ela recebe o objeto `User` da `LoginActivity`.
+    *   Utiliza a lista de contratos do usuário para chamar o novo endpoint `/api/dashboard/batch`.
+    *   Atualmente, exibe os dados brutos (JSON) recebidos do backend, confirmando que todo o fluxo de dados está funcional.
+3.  **Modelos e API:**
+    *   Foram criados os modelos de dados necessários (`LoginRequest`, `DashboardBatchRequest`, etc.).
+    *   A interface `ApiService` do Retrofit foi atualizada para incluir as novas chamadas de API (`login` e `getDashboardBatch`).
+
+### Próximos Passos
+*   Construir a interface de usuário (UI) do dashboard na `MainActivity` para exibir os dados de forma visualmente agradável (gráficos, indicadores, etc.) em vez do JSON bruto.
+*   Implementar a barra de navegação inferior (`BottomNavigationView`) para filtrar os tipos de tarefas.
+"@
+Add-Content -Path 'appandroid.txt' -Value $checkpointText

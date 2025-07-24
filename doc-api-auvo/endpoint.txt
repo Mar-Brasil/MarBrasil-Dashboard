@@ -1,0 +1,1480 @@
+"{\"result\":[{\"taskID\":57187388,\"idUserFrom\":70074,\"userFromName\":\"Mar Brasil Praia Grande\",\"idUserTo\":170293,\"userToName\":\"Pako Ruhan\",\"customerId\":0,\"customerDescription\":\"\",\"taskType\":0,\"creationDate\":\"2025-04-16T15:30:01\",\"taskDate\":\"0001-01-01T00:00:00\",\"latitude\":-23.9382482,\"longitude\":-46.3558554,\"address\":\"Rua 3- Beco 11 - Ligação 1536 - Vila Progresso - Santos - SP\",\"orientation\":\"Consulta por período\",\"priority\":3,\"deliveredOnSmarthPhone\":false,\"deliveredDate\":\"0001-01-01T00:00:00\",\"finished\":false,\"report\":\"\",\"visualized\":false,\"visualizedDate\":\"\",\"checkIn\":false,\"checkInDate\":\"\",\"checkOut\":false,\"checkOutDate\":\"\",\"checkinType\":1,\"keyWords\":[],\"keyWordsDescriptions\":[],\"inputedKm\":0.0,\"adoptedKm\":0.0,\"attachments\":[],\"questionnaires\":[],\"signatureUrl\":\"\",\"checkInDistance\":0,\"checkOutDistance\":0,\"sendSatisfactionSurvey\":false,\"survey\":\"https://app.auvo.com.br/pesquisasatisfacao/formulario/8a7459f9-7e6f-4383-8891-95c5c4153ffc\",\"taskUrl\":\"https://app.auvo.com.br/informacoes/tarefa/8a7459f9-7e6f-4383-8891-95c5c4153ffc?chave=QjNhwxX0kzD68qjaAvJWJQ\",\"pendency\":\"\",\"equipmentsId\":[],\"dateLastUpdate\":\"2025-04-16T15:30:01\",\"ticketId\":0,\"expense\":\"0,00\",\"duration\":\"\",\"durationDecimal\":\"\",\"displacementStart\":\"\",\"products\":[],\"services\":[],\"additionalCosts\":[],\"summary\":{\"totalProducts\":0.0,\"totalServices\":0.0,\"totalAdditionalCosts\":0.0,\"totalValue\":0.0,\"discount\":{\"value\":0.0}},\"openedOnLocation\":false,\"taskStatus\":1}]}"
+
+Users/User/Retrieve a UserGEThttps://api.auvo.com.br/v2/users/idParameters
+id
+id attribute of the User.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/users/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "userId": 123,
+    "externalId": "123",
+    "name": "Jason",
+    "smartphoneNumber": "555555555555",
+    "login": "login.auvo",
+    "email": "login.auvo@email.com",
+    "culture": "pt-BR",
+    "jobPosition": "Administrador",
+    "userType": { "userTypeId": 1, "description": "user" },
+    "workDaysOfWeek": [ 
+        1, 
+        2, 
+        3, 
+        4, 
+        5, 
+        6, 
+        7  
+    ],
+    "startWorkHour": "08:00:00",
+    "endWorkHour": "18:00:00",
+    "startLunchHour": "12:00:00",
+    "endLunchHour": "14:00:00",
+    "hourValue": 0,
+    "pictureUrl": "",
+    "BasePoint": {
+      "address": "Rua C-137",
+      "latitude": -16.711903488917,
+      "longitude": -49.2775752032046
+    },
+    "openTaskInPlace": true,
+    "grabGalleryPhotos": true,
+    "gpsFrequency": 300,
+    "checkInManual": true,
+    "unavailableForTasks": true,
+    "editTaskAfterCheckout": true,
+    "informStartTravel": true,
+    "changeBasePoint": true,
+    "monitoringNotification": {
+      "gpsActivation": 1, 
+      "gpsDisabling": 2,
+      "appLogin": 3,
+      "appLogin": 1 
+    },
+    "employeeNotification": {
+      "basePointChange": 1 
+    },
+    "clientNotification": {
+      "adressChange": 1 
+    },
+    "taskNotification": {
+      "checkIn": 1, 
+      "checkOut": 2,
+      "rescheduling": 3,
+      "travelStart": 1,
+      "researchAnswer": 3,
+      "delay": 3,
+      "taskDelete": 3
+    }
+}  
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, not passing the id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value '\"\"' is not valid."
+  ]
+}
+ResponseWhen the resource with the specified id does not exist.
+404
+Headers
+Content-Type:application/json
+
+Tasks/Task/Retrieve a TaskGEThttps://api.auvo.com.br/v2/tasks/idParameters
+id
+taskID attribute of the Task.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/tasks/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "taskID": 23,
+    "externalId": "123",
+    "idUserFrom": 123,
+    "idUserTo": 123,
+    "userToName": "Colaborador sem ponto base",
+    "userFromName": "Paulo",
+    "customerId": 456,
+    "customerExternalId": 10,
+    "customerDescription": "Customer x",
+    "taskType": 23,
+    "taskTypeDescription": "Edição automatizada 897263119",
+    "creationDate": "2016-03-23T14:10:35",
+    "taskDate": "2016-03-23T18:00:00",
+    "latitude": -16.6872086111083,
+    "longitude": -49.2995542287827,
+    "address": "avenue X",
+    "orientation": "Go get a beer!",
+    "priority": "1",
+    "deliveredOnSmarthPhone": true,
+    "deliveredDate": "2016-03-23T14:11:31",
+    "finished": true,
+    "report": "ok",
+    "visualized": true,
+    "visualizedDate": "2016-03-23T14:12:00",
+    "checkIn": true,
+    "checkInDate": "2016-03-23T18:05:00",
+    "checkOut": true,
+    "checkOutDate": "2016-03-23T18:10:00",
+    "checkinType": "1",
+    "equipmentsId": [109638, 109753],
+    "keyWords": [
+        "keyword id"
+    ],
+    "keyWordsDescriptions": [
+        "Descriptions of keywords"
+    ],
+    "inputedKm": 10,
+    "adoptedKm": 11,
+    "attachments":[
+        {
+            "id": "1",
+            "url": "",
+            "attachmentType": 1,
+            "subtitle": "",
+            "description": "",
+            "extension": ""
+        }
+    ],
+    "questionnaires":[
+        {
+            "itemId": "1",
+            "questionnaireId": "",
+            "questionnaireDescription": 1,
+            "answers": [
+                {
+                    "questionId": "1",
+                    "questionDescription": "",
+                    "replyId": 1,
+                    "reply": 1,
+                    "replyDate": "2016-03-23T18:10:00"
+                }
+            ]
+        }
+    ],
+    "signatureUrl": "signature url",
+    "checkInDistance": 0,
+    "checkOutDistance": 0,
+    "sendSatisfactionSurvey": true,
+    "survey": "",
+    "taskUrl": "",
+    "pendency": "",
+    "dateLastUpdate":"2016-03-23T18:10:00",
+    "ticketId": 558,
+    "ticketTitle": "Título do ticket",
+    "signatureName": "Oliveira Silva",
+    "signatureDocument": "00008500100",
+    "expense": "2.500.000,00",
+    "duration": "",
+    "durationDecimal": "",
+    "displacementStart": "",
+    "products": [{
+        "productId": "63867f52-b262-410a-a409-cc25ba92ded1",
+        "code": "456", 
+        "name": null,
+        "description": null,
+        "quantity": 0.0,
+        "unitaryValue": 0.0,
+        "totalValue": 0.0,
+        "userResponsible": null,
+        "userResponsibleCode": 0,
+        "dateRegister": null,
+        "dateEdit": null
+        "discount": {
+            "value": 0.00,
+            "type": "Valor"
+        }
+        }
+    ],
+    "services": [{
+        "id": "00000000-0000-0000-0000-000000000000",
+        "name": null,
+        "quantity": 0.0,
+        "unitaryValue": 0.0,
+        "totalValue": 0.0,
+        "userResponsible": null,
+        "userResponsibleCode": 0,
+        "dateRegister": null,
+        "dateEdit": null
+        "discount": {
+            "value": 0.00,
+            "type": "Valor"
+        }
+    }],
+    "additionalCosts": [{
+        "additionalCostId": "63867f52-b262-410a-a409-cc25ba92ded1",
+        "code": "456", 
+        "name": null,
+        "unitaryValue": 0.0,
+        "userResponsible": null,
+        "userResponsibleCode": 0,
+        "dateRegister": null,
+        "dateEdit": null
+    }],
+    "summary": {
+        "totalProducts": 0.0,
+        "totalServices": 0.0,
+        "totalAdditionalCosts": 0.0,
+        "totalValue": 0.0,
+        "discount": {
+            "value": 0.00,
+            "type": "Valor"
+        }
+    },
+    "estimatedDuration": "00:00:00",
+    "financialCategory": "",
+    "taskStatus": "1"
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+
+Customers/Customer/Retrieve a CustomerGEThttps://api.auvo.com.br/v2/customers/idParameters
+id
+customerId attribute of the Customer.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/customers/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "externalId": "906",
+    "description": "Terêscio",
+    "cpfCnpj": "90614997000162",
+    "phoneNumber": ["5566123123"],
+    "email": ["terenscio@customer.com"],
+    "manager": "Oristides",
+    "managerJobPosition": "Manager",
+    "note": "nothing to say",
+    "address": "lake yululu",
+    "latitude": -16.6872086111083,
+    "longitude": -49.2995542287827,
+    "maximumVisitTime": 1,
+    "unitMaximumTime": 1,
+    "groupsId": [0],
+    "managerTeamsId": [0],
+    "managersId": [0],
+    "segmentId": 1,
+    "active": false,
+    "adressComplement": "adress complemente",
+    "creationDate": "2019-04-15T15:00:00",
+    "contacts": [
+        {
+            "id": 23328,
+            "name": "contact.name",
+            "jobPosition": "",
+            "email": "contact.email@gmail.com",
+            "phone": ""
+        }
+    ],
+    "dateLastUpdate": "2020-04-23T15:57:08",
+    "uriAnexos": ["https://auvo-producao.s3.amazonaws.com/anexos_clientes/12d53e24-9e5a-4319-a070-458e18260321.jpeg"],
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+
+Customer groups/Customer group/Retrieve a list of Customers groupGEThttps://api.auvo.com.br/v2/customerGroups/?paramFilter=paramFilterParameters
+paramFilter
+paramFilter must be json encoded string.id (number) - The customer iddescription (string) - The user description
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/customerGroups/?paramFilter=paramFilter', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList":[
+        {
+            "id": 42,
+            "description": "Terêscio"
+        }
+    ]    
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+
+Teams/Team/Retrieve a TeamGEThttps://api.auvo.com.br/v2/teams/idParameters
+id
+id attribute of the Team.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/teams/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+        "teamUsers": [
+            "User1",
+            "User2"
+        ],
+        "teamManagers": [
+            "Manager1",
+            "Manager2"
+        ],
+        "id": 4168,
+        "description": "Example of a description from a team"
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+
+Task types/Task type/Retrieve a task typeGEThttps://api.auvo.com.br/v2/taskTypes/idParameters
+id
+id attribute of the Task type.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/taskTypes/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "description": "Terêscio",
+    "creatorId": 906,
+    "creationDate": "2016-03-23T18:10:00",
+    "standardTime": "18:10:00",
+    "toleranceTime": "18:10:00",
+    "standardQuestionnaireId": 1,
+    "active": true,
+    "sendSatisfactionSurvey": false,
+    "requirements": {
+        "fillReport": true,
+        "getSignature": false,
+        "fillRolledKilometer": true,
+        "emailTheTask": false,
+        "minimumNumberOfPhotos": 2,
+        "requiredQuestionnaires":[
+            1,2,3
+        ]
+    }
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+
+Segments/Segments/Retrieve a segmentGEThttps://api.auvo.com.br/v2/segments/idParameters
+id
+id attribute of the segments.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/segments/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "description": "Terêscio",
+    "registrationDate": "2016-03-23T18:10:00"
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+
+Questionnaires/Questionnaire/Retrieve a QuestionnaireGEThttps://api.auvo.com.br/v2/questionnaires/idParameters
+id
+id attribute of the questionnaire.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/questionnaires/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "description": "Terêscio",
+    "header": "cabeçalho",
+    "footer": "rodape",
+    "creationDate": "2016-03-23T18:10:00",
+    "questions": [
+        {
+            "id": 1,
+            "answerType": 2,
+            "description": "¿la pregunta?",
+            "subTitle": "¿la pregunta abajo?",
+            "requiredAnswer": false,
+            "creationDate": "2016-03-23T18:10:00"
+        }
+    ]
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+
+keywords/Keywords/Retrieve a keywordGEThttps://api.auvo.com.br/v2/keywords/idParameters
+id
+id attribute of the keywords.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/keywords/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "description": "Terêscio",
+    "registrationDate": "2016-03-23T18:10:00"
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+
+Webhooks/Webhook/Retrieve a WebhookGEThttps://api.auvo.com.br/v2/webHooks/idParameters
+id
+id attribute of the WebHook.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/webHooks/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": "123",                
+    "userId": 12345,
+    "entity": "Task",
+    "action": "Inclusao",
+    "urlResponse": "https://api.someapitoresponse.com/somethingelse",
+    "creationDate": "2019-01-01T08:00:00",
+    "deleteDate": "2019-01-01T08:00:00",
+    "active": "false"
+}  
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, not passing the id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value '\"\"' is not valid."
+  ]
+}
+ResponseWhen the resource with the specified id does not exist.
+404
+Headers
+Content-Type:application/json
+
+Expenses/Expense/Retrieve a ExpenseGEThttps://api.auvo.com.br/v2/expenses/idParameters
+id
+id attribute of the Expense.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/expenses/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 23,
+    "description": "expense",
+    "userToId": 123,
+    "userToName": "user 123",
+    "typeId": 456,
+    "typeName": "expense type name",
+    "date": "2016-03-23T14:10:35",
+    "attachmentUrl": "aws.amazonattachemtnes.com",
+    "creationDate": "2016-03-23T14:11:31",
+    "amount": 497827
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+
+Expense types/Expense types/Retrieve a Expense typeGEThttps://api.auvo.com.br/v2/expenseTypes/idParameters
+id
+id attribute of the Expense type.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/expenseTypes/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "description": "Terêscio",
+    "creatorId": 123,
+    "creationDate": "2016-03-23T18:10:00"
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+
+GPS/GPS/Retrieves a list of GPSsGEThttps://api.auvo.com.br/v2/gps/?paramFilter=paramFilter&page=page&pageSize=pageSize&order=orderParameters
+paramFilter
+paramFilter must be json encoded string.date (required, string) - date to return gps positionuserId (number) - The user idgetLastKnowPosition (boolean) - if it should return only the last known position
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/gps/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList":[
+        {
+            "userId": 42,
+            "positionDate": "2016-03-23T18:10:00",
+            "latitude": 42,
+            "longitude": 42,
+            "accuracy": 12,
+            "batteryLevel": 34,
+            "NetworkOperatorName": "Terêscio"
+        }
+    ],
+    "pagedSearchReturnData": {
+        "order": 0,
+        "pageSize": 1,
+        "page": 1,
+        "totalItems": 2
+    },
+    "links": [
+        {
+            "href": "https://api.auvo.com.br/v2/gps/?paramFilter=%7B%0D%0A+++%22date%22%3A%222019-04-24T15%3A50%3A49%22%0D%0A%7D&Page=1&PageSize=1&Order=Asc",
+            "rel": "self",
+            "method": "GET"
+        },
+        {
+            "href": "https://api.auvo.com.br/v2/gps/?paramFilter=%7B%0D%0A+++%22date%22%3A%222019-04-24T15%3A50%3A49%22%0D%0A%7D&Page=2&PageSize=1&Order=Asc",
+            "rel": "nextPage",
+            "method": "GET"
+        }
+    ]    
+}
+
+Satisfaction surveys/Satisfaction survey/Retrieves a list of Satisfaction surveysGEThttps://api.auvo.com.br/v2/satisfactionSurveys/?paramFilter=paramFilter&page=page&pageSize=pageSize&order=orderParameters
+paramFilter
+paramFilter must be json encoded string.taskID (required, array[number]) - collection of task idsemail (string) - email to filter satisfaction surveys
+String
+page
+Page of the selection. Default 1.
+Int
+pageSize
+Amount of records of the selection. Default 10.
+Int
+order
+"asc"/0 for Ascending or "desc"/1 for Descending. Default "asc".
+String
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/satisfactionSurveys/?paramFilter={paramFilter}&page={page}&pageSize={pageSize}&order={order}', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "entityList":[
+        {
+            "id": 42,
+            "taskID": 42,
+            "answerDescription": "answer here",
+            "questionDescription": "question here",
+            "answerDate": "2016-03-23T18:10:00",
+            "itemId": "1",
+            "email": "email@auvo.com.br",
+            "answersItemQuantity": 1,
+            "scoreSum": 1,
+            "totalResponse": 2,
+            "totalSubmitted": 2
+        }
+    ],
+    "pagedSearchReturnData": {
+        "order": 0,
+        "pageSize": 1,
+        "page": 1,
+        "totalItems": 2
+    },
+    "links": [
+        {
+            "href": "https://api.auvo.com.br/v2/satisfactionSurveys/?paramFilter=%7B%0D%0A+++%22taskId%22%3A%5B1%2C2%2C3%5D%0D%0A%7D&Page=1&PageSize=1&Order=Asc",
+            "rel": "self",
+            "method": "GET"
+        },
+        {
+            "href": "https://api.auvo.com.br/v2/satisfactionSurveys/?paramFilter=%7B%0D%0A+++%22taskId%22%3A%5B1%2C2%2C3%5D%0D%0A%7D&Page=2&PageSize=1&Order=Asc",
+            "rel": "nextPage",
+            "method": "GET"
+        }
+    ]    
+}
+
+Equipment categories/Equipment category/Retrieve a Equipment categoryGEThttps://api.auvo.com.br/v2/equipmentCategories/idParameters
+id
+id attribute of the Equipment category.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/equipmentCategories/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "description": "Terêscio",
+    "externalId": "2016"
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+
+Equipments/Equipment/Retrieve a EquipmentGEThttps://api.auvo.com.br/v2/equipments/idParameters
+id
+id attribute of the Equipment.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/equipments/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "externalId": "123",
+    "parentEquipmentId": 0,
+    "associatedCustomerId": 0,
+    "associatedUserId": 0,
+    "categoryId": 0,
+    "name": "umdoistresquatroumdoistresquatr",
+    "identifier": "a1b2c3",
+    "urlImage": "https://auvo-producao.s3.amazonaws.com/anexos_equipamentos/12d53e24-9e5a-4319-a070-458e18260321.jpeg",
+    "uriAnexos": ["https://auvo-producao.s3.amazonaws.com/anexos_equipamentos/12d53e24-9e5a-4319-a070-458e18260321.jpeg"],
+    "active": true,
+    "creationDate": "2019-05-13T12:27:17",
+    "expirationDate": "2019-01-01T01:01:01",
+    "equipmentSpecifications": [
+        {
+            "name": "cor",
+            "specification": "azul"
+        }
+    ],
+    "id": 127765,
+    "description": "descricao",
+    "warrantyStartDate": "2024-01-01T00:00:00",
+    "warrantyEndDate": "2025-01-01T00:00:00"
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+
+Product categories/Product category/Retrieve a Product categoryGEThttps://api.auvo.com.br/v2/productCategories/idParameters
+id
+id attribute of the Product category.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/productCategories/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "description": "Terêscio",
+    "externalId": "2016"
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+
+Products/Product/Retrieve a ProductGEThttps://api.auvo.com.br/v2/products/idParameters
+id
+code attribute of the Product.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/products/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "productId": "419384ad-705c-11eb-bf97-0aa2a285b66a",
+    "externalId": "123",
+    "code":"456"
+    "name": "p1",
+    "associatedEquipmentId": 0,
+    "categoryId": 0,
+    "unitaryValue": "12,00",
+    "unitaryCost": "6,00",
+    "totalStock": 120,
+    "active": true,
+    "minimumStock": "30",
+    "Base64Image": "",
+    "uriAnexos": ["https://auvo-producao.s3.amazonaws.com/anexos_produtos/12d53e24-9e5a-4319-a070-458e18260321.jpeg"],
+    "productSpecifications": [
+        {
+            "name": "cor",
+            "Specification": "azul"
+        }
+    ],
+    "employeesStock": [
+        {
+            "id": 123,
+            "userId": 123,
+            "amount": 123,
+            "lastStockMovement":
+                {
+                    "id": 123,
+                    "operationUserId": 123,
+                    "stockUserId": 123,
+                    "productId": 123,
+                    "amount": 123,
+                    "Unitaryvalue": 12.0,
+                    "entry": true,
+                    "date": "2019-01-01T01:01:01"
+                }
+        }
+    ]
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+
+Quotations/Quotation/Retrieve a QuotationGEThttps://api.auvo.com.br/v2/quotations/idParameters
+id
+id attribute of the Quotation.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/quotations/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "publicId": 42,
+    "customerId": 2,
+    "customerName": "Terêscio",
+    "taskID": 2,
+    "descount": "12.00",        
+    "requesterUserId": 2,
+    "observations": "something",
+    "registerDate": "2016-03-23T18:10:00",
+    "requestDate": "2016-03-23T18:10:00",
+    "aditionalCosts": [
+        {
+            "id": 1,
+            "costId": 2,
+            "description": "la pregunta",
+            "value": "10.00"
+        }
+    ],
+    "alterations": [
+        {
+            "id": 1,
+            "key": 2,
+            "column": "1",
+            "type": "1",
+            "userId": 1,
+            "date": "2016-03-23T18:10:00",
+            "observations": "la pregunta",
+            "value": "10.00"
+        }
+    ],
+    "products": [
+        {
+            "productId": 1,
+            "amout": 2,
+            "UnitaryValue": "1.00"
+        }
+    ],
+    "contacts": [
+        {
+            "id": 1,
+            "name": "name",
+            "job": "job",
+            "email": "email",
+            "phoneNumber": 12323232
+        }
+    ],
+    "summary": {
+        "totalProducts": 2.00,
+        "totalServices": 0.00,
+        "totalAdditionalCosts": 10.00,
+        "netTotalValue": 0.00,
+        "grossTotalValue": 12.00,
+        "discount": {
+            "type": "Monetario",
+            "value": 12.00
+        }
+    },
+    "CurrentStage": 
+    {
+        "id": 1,
+        "description": "name",
+        "position": 1,
+        "changeStock": true,
+        "isCancelled": false,
+        "editAllowed": true
+    }
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+
+Tickets/Ticket/Retrieve a TicketGEThttps://api.auvo.com.br/v2/tickets/idParameters
+id
+id attribute of the Ticket.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/tickets/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": 42,
+    "creationDate": "2016-03-23T18:10:00",
+    "teamId": 2,
+    "teamName": "Terêscio",
+    "userCreatorId": 2,
+    "userCreatorName": "something",
+    "userResponsableId": 2,
+    "userResponsableName": "something",
+    "title": "something",
+    "customerId": "something",
+    "customerName": "something",
+    "customerEmail": "something",
+    "customerPhoneNumber": "123456789",
+    "equipmentId": 12,        
+    "requestTypeDescription": "something",
+    "priority": "something",
+    "description": "something",
+    "statusDescription": "something",
+    "statusType": "something",
+    "endDate": "2016-03-23T18:10:00",
+    "emailMenssageId": "something",
+    "requesterEmail": "something",
+    "requesterName": "something",
+    "taskIDs": [
+        1,2,3
+    ],
+    "urlAttachments": [
+        "https://repositoriodeimagens.com.br/nomedaimagem.jpg"
+    ],
+    "customFields": [
+        {
+            "value": "something",
+            "valueDescription": "something",
+            "customFieldTicket": {
+                "id": 1,
+                "order": 2,
+                "title": "something",
+                "fieldType": "something",
+                "fieldVisibility": "something",
+                "description": "something",
+                "primary": false,
+                "required": false,
+                "removed": true,
+                "creationDate": "2016-03-23T18:10:00",
+                "multipleChoiceItems": [
+                    {
+                        "id": 1,
+                        "field": 2,
+                        "description": "something",
+                        "order": 3,
+                        "creationDate": "2016-03-23T18:10:00",
+                        "removed": false
+                    }
+                ]
+            }
+        }
+    ],
+    "alterations": [
+        {
+            "alterationType": 1,
+            "alterationDate": "2016-03-23T18:10:00",
+            "userId": 1,
+            "userName": "job",
+            "from": "something",
+            "to": "something",
+            "helper": "something",
+            "toDescription": "something",
+            "helperDescription": "something",
+            "fromDescription": "something"
+        }
+    ],
+    "interactions": [
+        {
+            "id": 1,
+            "ticketId": 1,
+            "creationDate": "2016-03-23T18:10:00",
+            "userId": 1,
+            "userName": "job",
+            "title": "something",
+            "message": "something",
+            "interactionType": "something",
+            "emailMenssageId": "something",
+            "emailContact": "something",
+            "emailContactName": "something",
+            "emailReference": "something",
+            "urlAttachments": [
+                "https://repositoriodeimagens.com.br/nomedaimagem.jpg"
+            ]
+        }
+    ],
+    "statusAlterations": [
+        {
+            "id": 58542,
+            "descripton": "Aguardando Atendimento",
+            "checkIn": "2024-11-13T09:11:54",
+            "checkOut": "2024-11-13T10:23:19"
+        },
+        {
+            "id": 72240,
+            "descripton": "Aguardando Atendente",
+            "checkIn": "2024-11-13T10:23:18",
+            "checkOut": "2024-11-13T15:07:25"
+        }
+    ]
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+
+Services/Service/Retrieve a ServiceGEThttps://api.auvo.com.br/v2/services/idParameters
+id
+code attribute of the Service.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/services/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result":{
+    "id": "419384ad-705c-11eb-bf97-0aa2a285b66a",
+    "title": "Preventive maintenance",
+    "price":"12.34"
+    "active": true,
+    "fiscalServiceId": "de6a85e3-a870-11ed-82b5-0a875964b64a",
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+
+Projects/Project/Retrieve a ProjectGEThttps://api.auvo.com.br/v2/serviceorders/idParameters
+id
+code attribute of the Service order.
+Number
+Request
+from urllib2 import Request, urlopen
+
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer token'
+}
+request = Request('https://api.auvo.com.br/v2/serviceorders/id', headers=headers)
+
+response_body = urlopen(request).read()
+print response_bodyResponse
+200
+Headers
+Content-Type:application/json
+Body
+"result": {
+    "id": "48786aad-e3f8-4245-8934-ce983520c38c",
+    "projectCode": 11,
+    "customerId": 15963453,
+    "customerName": "Antunes Tech",
+    "statusId": "06e708c5-747a-11ee-bdb3-0ab8a76e2462",
+    "description": "Teste 16112024",
+    "taskTypeId": 0,
+    "defaultQuestionnaireId": 0,
+    "defaultResponsibleId": 173521,
+    "priority": 3,
+    "keywords": [
+        {
+            "id": 138015,
+            "name": "Teste QA"
+        }
+    ],
+    "attachments": [],
+    "equipments": [],
+    "visits": [
+        {
+            "taskId": 48435823,
+            "externalCode": "",
+            "idUserFrom": 173521,
+            "idUserTo": 0,
+            "customerCode": 15963453,
+            "taskTypeCode": 0,
+            "taskDate": "16/11/2024 00:00",
+            "priority": 3,
+            "finished": false,
+            "equipmentsId": [],
+            "taskUrl": "https://app.auvo.com.br/relatorioTarefas/DetalheTarefa/48435823",
+            "products": [
+                {
+                    "id": 3887688,
+                    "name": "Teste Ticket 8800",
+                    "quantity": 1,
+                    "totalValue": 10.0000
+                }
+            ],
+            "services": [],
+            "additionalCosts": [
+                {
+                    "id": 20928,
+                    "name": "Custo teste",
+                    "unitValue": 10.00
+                }
+            ],
+            "status": "Aberta",
+            "discountType": 0.0,
+            "discountValue": 0.00,
+            "totalValue": 20.0000,
+            "summary": {
+                "totalProducts": 10.0000,
+                "totalServices": 0.0,
+                "totalAdditionalCosts": 10.00,
+                "totalValue": 20.0000,
+                "discount": {
+                    "value": 0.00,
+                    "type": "Monetary"
+                }
+            }
+        },
+    ],
+    "products": [
+        {
+            "id": 3887688,
+            "name": "Teste Ticket 8800",
+            "quantity": 1,
+            "totalValue": 10.0000
+        }
+    ],
+    "services": [],
+    "additionalCosts": [
+        {
+            "id": 20928,
+            "name": "Custo teste",
+            "unitValue": 10.00
+        }
+    ],
+    "reportLink": "https://app.auvo.com.br/RelatorioOS/ObtenhaUrlRelatorio?xxxxxx-xxxx-xxxx-xxxx-xxxxxxc&versaoDetalhada=false&codigoPrimeiraTarefa=48435823",
+    "detailedReportLink": "https://app.auvo.com.br/RelatorioOS/ObtenhaUrlRelatorio?48786aad-e3f8-4245-8934-ce983520c38c&versaoDetalhada=true&codigoPrimeiraTarefa=48435823",
+    "summary": {
+        "totalProductValue": 10.00,
+        "totalServiceValue": 0.0,
+        "totalAdditionalCostValue": 10.00,
+        "visitsDiscount": 0.00,
+        "projectDiscountValue": 0.00,
+        "projectDiscountType": "Value",
+        "totalProjectValue": 20.00
+    }
+}
+ResponseWhen making a request with invalid options, status code 400 will be returned. For example, passing an invalid id parameter.
+400
+Headers
+Content-Type:application/json
+Body
+{
+  "id": [
+    "The value 'x' is not valid."
+  ]
+}
+Response
+404
+Body
+When the resource with the specified id does not exist.
+
+

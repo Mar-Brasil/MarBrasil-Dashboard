@@ -1,0 +1,458 @@
+=== RELATÓRIO DO BANCO DE DADOS AUVO ===
+Data/Hora: 2025-06-20 15:49:07
+Arquivo do banco: C:\App Painel Auvo\auvo.db
+
+=== TABELAS NO BANCO DE DADOS ===
+
+Total de tabelas: 22
+
+Lista de tabelas:
+1. customers
+2. equipment_categories
+3. equipments
+4. expense_types
+5. expenses
+6. gps
+7. keywords
+8. product_categories
+9. products
+10. questionnaires
+11. quotations
+12. satisfaction_surveys
+13. segments
+14. service_orders
+15. services
+16. sqlite_sequence
+17. task_types
+18. tasks
+19. teams
+20. tickets
+21. users
+22. webhooks
+
+=== ESTRUTURA DAS TABELAS ===
+
+Tabela: customers
+-----------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+id                   INTEGER         0        1    None           
+externalId           TEXT            0        0    None           
+description          TEXT            0        0    None           
+cpfCnpj              TEXT            0        0    None           
+phoneNumber          TEXT            0        0    None           
+email                TEXT            0        0    None           
+manager              TEXT            0        0    None           
+managerJobPosition   TEXT            0        0    None           
+note                 TEXT            0        0    None           
+address              TEXT            0        0    None           
+latitude             REAL            0        0    None           
+longitude            REAL            0        0    None           
+maximumVisitTime     INTEGER         0        0    None           
+unitMaximumTime      INTEGER         0        0    None           
+groupsId             TEXT            0        0    None           
+managerTeamsId       TEXT            0        0    None           
+managersId           TEXT            0        0    None           
+segmentId            INTEGER         0        0    None           
+active               INTEGER         0        0    None           
+adressComplement     TEXT            0        0    None           
+creationDate         TIMESTAMP       0        0    None           
+contacts             TEXT            0        0    None           
+dateLastUpdate       TIMESTAMP       0        0    None           
+uriAnexos            TEXT            0        0    None           
+
+Tabela: equipment_categories
+----------------------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+id                   INTEGER         0        1    None           
+description          TEXT            0        0    None           
+externalId           TEXT            0        0    None           
+
+Tabela: equipments
+------------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+id                   INTEGER         0        1    None           
+externalId           TEXT            0        0    None           
+parentEquipmentId    INTEGER         0        0    None           
+associatedCustomerId INTEGER         0        0    None           
+associatedUserId     INTEGER         0        0    None           
+categoryId           INTEGER         0        0    None           
+name                 TEXT            0        0    None           
+identifier           TEXT            0        0    None           
+urlImage             TEXT            0        0    None           
+uriAnexos            TEXT            0        0    None           
+active               INTEGER         0        0    None           
+creationDate         TIMESTAMP       0        0    None           
+expirationDate       TIMESTAMP       0        0    None           
+equipmentSpecifications TEXT            0        0    None           
+description          TEXT            0        0    None           
+warrantyStartDate    TIMESTAMP       0        0    None           
+warrantyEndDate      TIMESTAMP       0        0    None           
+
+Tabela: expense_types
+---------------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+id                   INTEGER         0        1    None           
+description          TEXT            0        0    None           
+creatorId            INTEGER         0        0    None           
+creationDate         TIMESTAMP       0        0    None           
+
+Tabela: expenses
+----------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+id                   INTEGER         0        1    None           
+description          TEXT            0        0    None           
+userToId             INTEGER         0        0    None           
+userToName           TEXT            0        0    None           
+typeId               INTEGER         0        0    None           
+typeName             TEXT            0        0    None           
+date                 TIMESTAMP       0        0    None           
+attachmentUrl        TEXT            0        0    None           
+creationDate         TIMESTAMP       0        0    None           
+amount               REAL            0        0    None           
+
+Tabela: gps
+-----------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+id                   INTEGER         0        1    None           
+userId               INTEGER         0        0    None           
+positionDate         TIMESTAMP       0        0    None           
+latitude             REAL            0        0    None           
+longitude            REAL            0        0    None           
+accuracy             REAL            0        0    None           
+batteryLevel         INTEGER         0        0    None           
+networkOperatorName  TEXT            0        0    None           
+
+Tabela: keywords
+----------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+id                   INTEGER         0        1    None           
+description          TEXT            0        0    None           
+registrationDate     TIMESTAMP       0        0    None           
+
+Tabela: product_categories
+--------------------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+id                   INTEGER         0        1    None           
+description          TEXT            0        0    None           
+externalId           TEXT            0        0    None           
+
+Tabela: products
+----------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+productId            TEXT            0        1    None           
+externalId           TEXT            0        0    None           
+code                 TEXT            0        0    None           
+name                 TEXT            0        0    None           
+associatedEquipmentId INTEGER         0        0    None           
+categoryId           INTEGER         0        0    None           
+unitaryValue         TEXT            0        0    None           
+unitaryCost          TEXT            0        0    None           
+totalStock           INTEGER         0        0    None           
+active               INTEGER         0        0    None           
+minimumStock         TEXT            0        0    None           
+base64Image          TEXT            0        0    None           
+uriAnexos            TEXT            0        0    None           
+productSpecifications TEXT            0        0    None           
+employeesStock       TEXT            0        0    None           
+
+Tabela: questionnaires
+----------------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+id                   INTEGER         0        1    None           
+description          TEXT            0        0    None           
+header               TEXT            0        0    None           
+footer               TEXT            0        0    None           
+creationDate         TIMESTAMP       0        0    None           
+questions            TEXT            0        0    None           
+
+Tabela: quotations
+------------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+publicId             INTEGER         0        1    None           
+customerId           INTEGER         0        0    None           
+customerName         TEXT            0        0    None           
+taskID               INTEGER         0        0    None           
+descount             TEXT            0        0    None           
+requesterUserId      INTEGER         0        0    None           
+observations         TEXT            0        0    None           
+registerDate         TIMESTAMP       0        0    None           
+requestDate          TIMESTAMP       0        0    None           
+aditionalCosts       TEXT            0        0    None           
+alterations          TEXT            0        0    None           
+products             TEXT            0        0    None           
+contacts             TEXT            0        0    None           
+summary              TEXT            0        0    None           
+currentStage         TEXT            0        0    None           
+
+Tabela: satisfaction_surveys
+----------------------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+id                   INTEGER         0        1    None           
+taskID               INTEGER         0        0    None           
+answerDescription    TEXT            0        0    None           
+questionDescription  TEXT            0        0    None           
+answerDate           TIMESTAMP       0        0    None           
+itemId               TEXT            0        0    None           
+email                TEXT            0        0    None           
+answersItemQuantity  INTEGER         0        0    None           
+scoreSum             INTEGER         0        0    None           
+totalResponse        INTEGER         0        0    None           
+totalSubmitted       INTEGER         0        0    None           
+
+Tabela: segments
+----------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+id                   INTEGER         0        1    None           
+description          TEXT            0        0    None           
+registrationDate     TIMESTAMP       0        0    None           
+
+Tabela: service_orders
+----------------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+id                   INTEGER         0        1    None           
+customerId           INTEGER         0        0    None           
+customerName         TEXT            0        0    None           
+taskID               INTEGER         0        0    None           
+discount             REAL            0        0    None           
+requesterUserId      INTEGER         0        0    None           
+observations         TEXT            0        0    None           
+registerDate         TIMESTAMP       0        0    None           
+requestDate          TIMESTAMP       0        0    None           
+executionDate        TIMESTAMP       0        0    None           
+executionEndDate     TIMESTAMP       0        0    None           
+executionUserId      INTEGER         0        0    None           
+executionUserName    TEXT            0        0    None           
+aditionalCosts       TEXT            0        0    None           
+alterations          TEXT            0        0    None           
+services             TEXT            0        0    None           
+products             TEXT            0        0    None           
+contacts             TEXT            0        0    None           
+summary              TEXT            0        0    None           
+currentStage         TEXT            0        0    None           
+
+Tabela: services
+----------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+id                   INTEGER         0        1    None           
+description          TEXT            0        0    None           
+externalId           TEXT            0        0    None           
+unitaryValue         REAL            0        0    None           
+unitaryCost          REAL            0        0    None           
+active               INTEGER         0        0    None           
+uriAnexos            TEXT            0        0    None           
+serviceSpecifications TEXT            0        0    None           
+
+Tabela: sqlite_sequence
+-----------------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+name                                 0        0    None           
+seq                                  0        0    None           
+
+Tabela: task_types
+------------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+id                   INTEGER         0        1    None           
+description          TEXT            0        0    None           
+creatorId            INTEGER         0        0    None           
+creationDate         TIMESTAMP       0        0    None           
+standardTime         TEXT            0        0    None           
+toleranceTime        TEXT            0        0    None           
+standardQuestionnaireId INTEGER         0        0    None           
+active               INTEGER         0        0    None           
+sendSatisfactionSurvey INTEGER         0        0    None           
+requirements         TEXT            0        0    None           
+
+Tabela: tasks
+-------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+taskID               INTEGER         0        1    None           
+externalId           TEXT            0        0    None           
+idUserFrom           INTEGER         0        0    None           
+idUserTo             INTEGER         0        0    None           
+userToName           TEXT            0        0    None           
+userFromName         TEXT            0        0    None           
+customerId           INTEGER         0        0    None           
+customerExternalId   TEXT            0        0    None           
+customerDescription  TEXT            0        0    None           
+taskType             INTEGER         0        0    None           
+taskTypeDescription  TEXT            0        0    None           
+creationDate         TIMESTAMP       0        0    None           
+taskDate             TIMESTAMP       0        0    None           
+latitude             REAL            0        0    None           
+longitude            REAL            0        0    None           
+address              TEXT            0        0    None           
+orientation          TEXT            0        0    None           
+priority             INTEGER         0        0    None           
+deliveredOnSmarthPhone INTEGER         0        0    None           
+deliveredDate        TIMESTAMP       0        0    None           
+finished             INTEGER         0        0    None           
+report               TEXT            0        0    None           
+visualized           INTEGER         0        0    None           
+visualizedDate       TIMESTAMP       0        0    None           
+checkIn              INTEGER         0        0    None           
+checkInDate          TIMESTAMP       0        0    None           
+checkOut             INTEGER         0        0    None           
+checkOutDate         TIMESTAMP       0        0    None           
+checkinType          INTEGER         0        0    None           
+equipmentsId         TEXT            0        0    None           
+keyWords             TEXT            0        0    None           
+keyWordsDescriptions TEXT            0        0    None           
+inputedKm            REAL            0        0    None           
+adoptedKm            REAL            0        0    None           
+attachments          TEXT            0        0    None           
+questionnaires       TEXT            0        0    None           
+signatureUrl         TEXT            0        0    None           
+checkInDistance      REAL            0        0    None           
+checkOutDistance     REAL            0        0    None           
+sendSatisfactionSurvey INTEGER         0        0    None           
+survey               TEXT            0        0    None           
+taskUrl              TEXT            0        0    None           
+pendency             TEXT            0        0    None           
+dateLastUpdate       TIMESTAMP       0        0    None           
+ticketId             INTEGER         0        0    None           
+ticketTitle          TEXT            0        0    None           
+signatureName        TEXT            0        0    None           
+signatureDocument    TEXT            0        0    None           
+expense              TEXT            0        0    None           
+duration             TEXT            0        0    None           
+durationDecimal      TEXT            0        0    None           
+displacementStart    TEXT            0        0    None           
+products             TEXT            0        0    None           
+services             TEXT            0        0    None           
+additionalCosts      TEXT            0        0    None           
+summary              TEXT            0        0    None           
+estimatedDuration    TEXT            0        0    None           
+financialCategory    TEXT            0        0    None           
+taskStatus           INTEGER         0        0    None           
+
+Chaves Estrangeiras:
+Coluna               Tabela Ref.          Coluna Ref.         
+-----------------------------------------------------------------
+customerId           customers            id                  
+idUserTo             users                userId              
+idUserFrom           users                userId              
+
+Tabela: teams
+-------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+id                   INTEGER         0        1    None           
+description          TEXT            0        0    None           
+teamUsers            TEXT            0        0    None           
+teamManagers         TEXT            0        0    None           
+
+Tabela: tickets
+---------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+id                   INTEGER         0        1    None           
+creationDate         TIMESTAMP       0        0    None           
+teamId               INTEGER         0        0    None           
+teamName             TEXT            0        0    None           
+userCreatorId        INTEGER         0        0    None           
+userCreatorName      TEXT            0        0    None           
+userResponsableId    INTEGER         0        0    None           
+userResponsableName  TEXT            0        0    None           
+title                TEXT            0        0    None           
+customerId           TEXT            0        0    None           
+customerName         TEXT            0        0    None           
+customerEmail        TEXT            0        0    None           
+customerPhoneNumber  TEXT            0        0    None           
+equipmentId          INTEGER         0        0    None           
+requestTypeDescription TEXT            0        0    None           
+priority             TEXT            0        0    None           
+description          TEXT            0        0    None           
+statusDescription    TEXT            0        0    None           
+statusType           TEXT            0        0    None           
+endDate              TIMESTAMP       0        0    None           
+emailMenssageId      TEXT            0        0    None           
+requesterEmail       TEXT            0        0    None           
+requesterName        TEXT            0        0    None           
+taskIDs              TEXT            0        0    None           
+urlAttachments       TEXT            0        0    None           
+customFields         TEXT            0        0    None           
+alterations          TEXT            0        0    None           
+interactions         TEXT            0        0    None           
+statusAlterations    TEXT            0        0    None           
+
+Tabela: users
+-------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+userId               INTEGER         0        1    None           
+externalId           TEXT            0        0    None           
+name                 TEXT            0        0    None           
+smartphoneNumber     TEXT            0        0    None           
+login                TEXT            0        0    None           
+email                TEXT            0        0    None           
+culture              TEXT            0        0    None           
+jobPosition          TEXT            0        0    None           
+userTypeId           INTEGER         0        0    None           
+userTypeDescription  TEXT            0        0    None           
+workDaysOfWeek       TEXT            0        0    None           
+startWorkHour        TEXT            0        0    None           
+endWorkHour          TEXT            0        0    None           
+startLunchHour       TEXT            0        0    None           
+endLunchHour         TEXT            0        0    None           
+hourValue            REAL            0        0    None           
+pictureUrl           TEXT            0        0    None           
+basePointAddress     TEXT            0        0    None           
+basePointLatitude    REAL            0        0    None           
+basePointLongitude   REAL            0        0    None           
+openTaskInPlace      INTEGER         0        0    None           
+grabGalleryPhotos    INTEGER         0        0    None           
+gpsFrequency         INTEGER         0        0    None           
+checkInManual        INTEGER         0        0    None           
+unavailableForTasks  INTEGER         0        0    None           
+editTaskAfterCheckout INTEGER         0        0    None           
+informStartTravel    INTEGER         0        0    None           
+changeBasePoint      INTEGER         0        0    None           
+monitoringNotification TEXT            0        0    None           
+employeeNotification TEXT            0        0    None           
+clientNotification   TEXT            0        0    None           
+taskNotification     TEXT            0        0    None           
+lastUpdate           TIMESTAMP       0        0    None           
+
+Tabela: webhooks
+----------------
+Nome                 Tipo            NotNull  PK   Default        
+-----------------------------------------------------------------
+id                   TEXT            0        1    None           
+userId               INTEGER         0        0    None           
+entity               TEXT            0        0    None           
+action               TEXT            0        0    None           
+urlResponse          TEXT            0        0    None           
+creationDate         TIMESTAMP       0        0    None           
+deleteDate           TIMESTAMP       0        0    None           
+active               INTEGER         0        0    None           
+
+Chaves Estrangeiras:
+Coluna               Tabela Ref.          Coluna Ref.         
+-----------------------------------------------------------------
+userId               users                userId              
+
+=== DADOS NA TABELA USERS ===
+
+Total de registros: 1
+
+ID    Nome                           Email                          Cargo               
+-------------------------------------------------------------------------------------
+1     João Silva                     joao.silva@exemplo.com         Técnico de Campo    

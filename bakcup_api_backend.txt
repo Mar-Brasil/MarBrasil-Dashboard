@@ -1,0 +1,614 @@
+import sqlite3
+import json
+import traceback
+import os
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from fastapi.responses import FileResponse
+import os
+from downloads.download_all_user_tasks_v2 import baixar_tarefas_periodo
+
+# --- Configuração ---
+app = FastAPI(title="Painel Admin API Auvo")
+
+@app.on_event("startup")
+async def startup_event():
+    initialize_database()
+    # Criação automática da tabela de usuários
+    conn = sqlite3.connect(DB_PATH)
+    conn.execute('''
+        CREATE TABLE IF NOT EXISTS usuarios_painel (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome_completo TEXT NOT NULL,
+            cpf TEXT NOT NULL UNIQUE,
+            data_nascimento TEXT,
+            foto TEXT,
+            username TEXT NOT NULL UNIQUE,
+            senha_hash TEXT NOT NULL,
+            permissoes TEXT NOT NULL
+        );
+    ''')
+    conn.commit()
+    conn.close()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+DB_PATH = os.path.join(os.path.dirname(__file__), 'auvo.db')
+
+# --- Helpers ---
+import bcrypt
+from typing import List, Optional
+
+class UsuarioIn(BaseModel):
+    nome_completo: str
+    cpf: str
+    data_nascimento: Optional[str]
+    foto: Optional[str]
+    username: str
+    senha: str  # plaintext para criação, será armazenada como hash
+    permissoes: List[str]
+
+class UsuarioOut(BaseModel):
+    id: int
+    nome_completo: str
+    cpf: str
+    data_nascimento: Optional[str]
+    foto: Optional[str]
+    username: str
+    permissoes: List[str]
+
+def dict_factory(cursor, row):
+    d = {}
+    for idx, col in enumerate(cursor.description):
+        d[col[0]] = row[idx]
+    return d
+
+def get_db_connection():
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = dict_factory
+    return conn
+
+# --- Endpoints Usuários ---
+from fastapi import status
+from fastapi.encoders import jsonable_encoder
+
+@app.get("/usuarios", response_model=list[UsuarioOut])
+def listar_usuarios():
+    conn = get_db_connection()
+    users = conn.execute("SELECT * FROM usuarios_painel").fetchall()
+    for u in users:
+        u["permissoes"] = json.loads(u["permissoes"])
+        del u["senha_hash"]
+    conn.close()
+    return users
+
+@app.post("/usuarios", response_model=UsuarioOut, status_code=status.HTTP_201_CREATED)
+def criar_usuario(usuario: UsuarioIn):
+    conn = get_db_connection()
+    senha_hash = bcrypt.hashpw(usuario.senha.encode(), bcrypt.gensalt()).decode()
+    permissoes_json = json.dumps(usuario.permissoes)
+    try:
+        cur = conn.execute(
+            """
+            INSERT INTO usuarios_painel (nome_completo, cpf, data_nascimento, foto, username, senha_hash, permissoes)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                usuario.nome_completo,
+                usuario.cpf,
+                usuario.data_nascimento,
+                usuario.foto,
+                usuario.username,
+                senha_hash,
+                permissoes_json
+            )
+        )
+        conn.commit()
+        user_id = cur.lastrowid
+        user = conn.execute("SELECT * FROM usuarios_painel WHERE id = ?", (user_id,)).fetchone()
+        user["permissoes"] = json.loads(user["permissoes"])
+        del user["senha_hash"]
+        return user
+    except sqlite3.IntegrityError as e:
+        raise HTTPException(status_code=400, detail="Usuário ou CPF já cadastrado.")
+    finally:
+        conn.close()
+
+@app.put("/usuarios/{id}", response_model=UsuarioOut)
+def editar_usuario(id: int, usuario: UsuarioIn):
+    conn = get_db_connection()
+    senha_hash = bcrypt.hashpw(usuario.senha.encode(), bcrypt.gensalt()).decode()
+    permissoes_json = json.dumps(usuario.permissoes)
+    try:
+        conn.execute(
+            """
+            UPDATE usuarios_painel SET nome_completo=?, cpf=?, data_nascimento=?, foto=?, username=?, senha_hash=?, permissoes=? WHERE id=?
+            """,
+            (
+                usuario.nome_completo,
+                usuario.cpf,
+                usuario.data_nascimento,
+                usuario.foto,
+                usuario.username,
+                senha_hash,
+                permissoes_json,
+                id
+            )
+        )
+        conn.commit()
+        user = conn.execute("SELECT * FROM usuarios_painel WHERE id = ?", (id,)).fetchone()
+        user["permissoes"] = json.loads(user["permissoes"])
+        del user["senha_hash"]
+        return user
+    except sqlite3.IntegrityError as e:
+        raise HTTPException(status_code=400, detail="Usuário ou CPF já cadastrado.")
+    finally:
+        conn.close()
+
+@app.delete("/usuarios/{id}", status_code=status.HTTP_204_NO_CONTENT)
+def deletar_usuario(id: int):
+    conn = get_db_connection()
+    conn.execute("DELETE FROM usuarios_painel WHERE id = ?", (id,))
+    conn.commit()
+    conn.close()
+
+def initialize_database():
+    """Cria as tabelas personalizadas de faturamento se elas não existirem."""
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+    
+    # Tabela para armazenar os tipos de tarefa que são faturáveis
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS billable_task_types (
+            id INTEGER PRIMARY KEY,
+            task_type_description TEXT UNIQUE NOT NULL
+        )
+    """)
+    
+    # Tabela para armazenar as taxas de faturamento por contrato
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS billing_rates (
+            id INTEGER PRIMARY KEY,
+            contract_id INTEGER NOT NULL,
+            description TEXT NOT NULL,
+            unit_price REAL NOT NULL,
+            additional_price REAL NOT NULL,
+            UNIQUE(contract_id, description)
+        )
+    """)
+    
+    conn.commit()
+    conn.close()
+    print("Banco de dados inicializado com sucesso. Tabelas de faturamento verificadas/criadas.")
+
+
+# --- Endpoints ---
+
+# --- Billing Admin Endpoints ---
+
+@app.get("/api/billing/task-types")
+def get_billable_task_types():
+    """Retorna os tipos de tarefa que são configuráveis para faturamento."""
+    conn = get_db_connection()
+    cur = conn.cursor()
+    # Busca todos os tipos de tarefas únicos da tabela 'tasks'
+    cur.execute("SELECT DISTINCT taskTypeDescription FROM tasks WHERE taskTypeDescription IS NOT NULL")
+    task_types = [row['taskTypeDescription'] for row in cur.fetchall()]
+    
+    # Busca os tipos já configurados
+    cur.execute("SELECT task_type_description FROM billable_task_types")
+    configured_types = {row['task_type_description'] for row in cur.fetchall()}
+    
+    conn.close()
+    return {"all_task_types": task_types, "configured_task_types": list(configured_types)}
+
+
+class Rate(BaseModel):
+    contract_id: int
+    description: str
+    unit_price: float
+    additional_price: float
+
+@app.get("/api/billing/rates/{contract_id}")
+def get_billing_rates(contract_id: int):
+    """Busca as taxas de faturamento para um contrato específico."""
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT description, unit_price, additional_price FROM billing_rates WHERE contract_id = ?", (contract_id,))
+    rates = [dict(row) for row in cur.fetchall()]
+    conn.close()
+    return rates
+
+@app.post("/api/billing/rates")
+def save_billing_rates(rate: Rate):
+    """Cria ou atualiza uma taxa de faturamento."""
+    conn = get_db_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute("""
+            INSERT INTO billing_rates (contract_id, description, unit_price, additional_price)
+            VALUES (?, ?, ?, ?)
+            ON CONFLICT(contract_id, description) DO UPDATE SET
+            unit_price = excluded.unit_price,
+            additional_price = excluded.additional_price;
+        """, (rate.contract_id, rate.description, rate.unit_price, rate.additional_price))
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        conn.close()
+    return {"status": "success"}
+
+
+class DownloadTasksRequest(BaseModel):
+    start_date: str
+    end_date: str
+
+@app.post("/download_tasks")
+async def download_tasks(req: DownloadTasksRequest):
+    try:
+        file_path = await baixar_tarefas_periodo(req.start_date, req.end_date)
+        return {"message": "Download concluído", "file_path": file_path}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/files/{path:path}")
+async def get_downloaded_file(path: str):
+    file_path = os.path.join(os.getcwd(), path)
+    if os.path.exists(file_path):
+        return FileResponse(file_path)
+    raise HTTPException(status_code=404, detail="File not found")
+
+@app.get("/api/debug/school-equipments/{school_id}")
+def get_school_equipments_debug(school_id: int):
+    """
+    Endpoint de depuração: retorna todos os equipamentos associados a uma escola específica.
+    NÃO altera nenhuma lógica existente.
+    """
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM equipments WHERE customerId = ?", (school_id,))
+    equipments = [dict(row) for row in cur.fetchall()]
+    conn.close()
+    if not equipments:
+        raise HTTPException(status_code=404, detail="Nenhum equipamento encontrado para esta escola.")
+    return equipments
+
+@app.get("/api/billing-report/{group_id}")
+def get_billing_report(group_id: int, start_date: str, end_date: str):
+    """Gera um relatório de faturamento por colaborador para um contrato e período."""
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    try:
+        # 1. Obter todos os colaboradores (managers) do contrato (grupo)
+        cur.execute("SELECT managersId FROM customers WHERE groupsId LIKE ?", (f'%"{group_id}"%',))
+        rows = cur.fetchall()
+        if not rows:
+            raise HTTPException(status_code=404, detail="Contrato não encontrado ou sem colaboradores.")
+
+        all_manager_ids = set()
+        for row in rows:
+            manager_ids_json = row['managersId']
+            if manager_ids_json:
+                try:
+                    manager_ids = json.loads(manager_ids_json)
+                    all_manager_ids.update(manager_ids)
+                except json.JSONDecodeError:
+                    # Tratar caso o campo não seja um JSON válido (ex: "123,456")
+                    ids = [int(i.strip()) for i in manager_ids_json.split(',') if i.strip().isdigit()]
+                    all_manager_ids.update(ids)
+
+        if not all_manager_ids:
+            return {"report": [], "message": "Nenhum colaborador encontrado para este contrato."}
+
+        # 2. Buscar nomes dos colaboradores
+        placeholders = ','.join('?' for _ in all_manager_ids)
+        cur.execute(f"SELECT userId, name FROM users WHERE userId IN ({placeholders})", list(all_manager_ids))
+        collaborators = {row['userId']: row['name'] for row in cur.fetchall()}
+
+        # 3. Buscar as taxas de faturamento para o contrato
+        cur.execute("SELECT description, unit_price, additional_price FROM billing_rates WHERE contract_id = ?", (group_id,))
+        rates_rows = cur.fetchall()
+        rates_map = {rate['description']: {'unit_price': rate['unit_price'], 'additional_price': rate['additional_price']} for rate in rates_rows}
+
+        # 4. Buscar tarefas por colaborador e tipo
+        tasks_query = f"""
+            SELECT userId, taskTypeDescription, COUNT(*) as count
+            FROM tasks
+            WHERE userId IN ({placeholders}) AND customer_group_id = ? AND date(taskDate) BETWEEN ? AND ?
+            GROUP BY userId, taskTypeDescription
+        """
+        params = list(all_manager_ids) + [group_id, start_date, end_date]
+        cur.execute(tasks_query, params)
+        tasks_data = cur.fetchall()
+
+        # 5. Montar o relatório
+        report = {}
+        for task in tasks_data:
+            user_id = task['userId']
+            user_name = collaborators.get(user_id, f"ID {user_id}")
+            task_desc = task['taskTypeDescription']
+            count = task['count']
+            rate = rates_map.get(task_desc)
+
+            if user_name not in report:
+                report[user_name] = {"tasks": [], "total_billing": 0}
+
+            if rate:
+                billing = (count * rate['unit_price']) + rate.get('additional_price', 0)
+                report[user_name]['tasks'].append({
+                    "description": task_desc,
+                    "count": count,
+                    "unit_price": rate['unit_price'],
+                    "additional_price": rate.get('additional_price', 0),
+                    "billing": billing
+                })
+                report[user_name]['total_billing'] += billing
+
+        # Converter para lista de dicionários
+        final_report = [
+            {"collaborator": name, **data}
+            for name, data in report.items()
+        ]
+
+        return {"report": final_report}
+
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Erro ao gerar relatório: {e}")
+    finally:
+        conn.close()
+
+@app.get("/api/contracts")
+def get_contracts():
+    """Retorna os contratos relevantes."""
+    conn = get_db_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute("SELECT id, name, groupsId FROM customers WHERE groupsId IS NOT NULL AND groupsId != ''")
+        contracts_raw = cur.fetchall()
+        contracts = []
+        for c in contracts_raw:
+            group_ids = json.loads(c['groupsId'])
+            for group_id in group_ids:
+                contracts.append({'id': group_id, 'name': c['name']})
+        return contracts
+    finally:
+        conn.close()
+
+def _get_dashboard_by_contract_data(group_id: int, start_date: str = None, end_date: str = None):
+    def _extract_manager_ids(school):
+        managers_field = school.get('managersId', '[]')
+        try:
+            ids = json.loads(managers_field if managers_field else '[]')
+            return {int(mid) for mid in ids if str(mid).isdigit()}
+        except (json.JSONDecodeError, TypeError):
+            if isinstance(managers_field, str):
+                return {int(mid.strip()) for mid in managers_field.split(',') if mid.strip().isdigit()}
+        return set()
+
+    try:
+        with get_db_connection() as conn:
+            cur = conn.cursor()
+
+            # 1. Encontrar todas as escolas (customers) associadas ao contrato (group_id)
+            cur.execute("SELECT * FROM customers WHERE groupsId LIKE ?", (f'%"{group_id}"%',))
+            schools = cur.fetchall()
+            if not schools:
+                raise HTTPException(status_code=404, detail="Contrato não encontrado ou sem escolas associadas.")
+
+            school_ids = [school['id'] for school in schools]
+            all_manager_ids = set()
+            for school in schools:
+                all_manager_ids.update(_extract_manager_ids(school))
+
+            # 2. Buscar todos os colaboradores (users) associados a essas escolas
+            collaborators = {}
+            if all_manager_ids:
+                placeholders = ','.join('?' for _ in all_manager_ids)
+                cur.execute(f"SELECT userId, name as userName, cpf FROM users WHERE userId IN ({placeholders})", list(all_manager_ids))
+                collaborators = {c['userId']: dict(c) for c in cur.fetchall()}
+
+            # 3. Buscar todas as tarefas associadas a essas escolas, opcionalmente filtrando por data
+            tasks_query = "SELECT * FROM tasks WHERE customerId IN ({}) ".format(','.join('?' for _ in school_ids))
+            params = school_ids
+            if start_date and end_date:
+                tasks_query += " AND date(taskDate) BETWEEN ? AND ?"
+                params.extend([start_date, end_date])
+            
+            cur.execute(tasks_query, params)
+            tasks = [dict(row) for row in cur.fetchall()]
+
+            # 4. Buscar todos os equipamentos associados a essas escolas
+            equipments_query = "SELECT * FROM equipments WHERE customerId IN ({}) ".format(','.join('?' for _ in school_ids))
+            cur.execute(equipments_query, school_ids)
+            equipments_raw = cur.fetchall()
+            equipments_by_school = {}
+            for equip in equipments_raw:
+                school_id = equip['customerId']
+                if school_id not in equipments_by_school:
+                    equipments_by_school[school_id] = []
+                equipments_by_school[school_id].append(dict(equip))
+
+            # 5. Buscar todos os formulários e seus campos
+            cur.execute("SELECT * FROM forms")
+            forms_raw = cur.fetchall()
+            forms = {f['id']: dict(f) for f in forms_raw}
+
+            cur.execute("SELECT * FROM form_fields")
+            fields_raw = cur.fetchall()
+            fields_by_form = {}
+            for field in fields_raw:
+                form_id = field['formId']
+                if form_id not in fields_by_form:
+                    fields_by_form[form_id] = []
+                fields_by_form[form_id].append(dict(field))
+
+            # Anexar campos aos seus formulários
+            for form_id, form_data in forms.items():
+                form_data['fields'] = fields_by_form.get(form_id, [])
+
+            # 6. Processar e agregar os dados
+            aggregated_data = {
+                'total_escolas': len(schools),
+                'total_colaboradores': len(collaborators),
+                'total_tarefas': len(tasks),
+                'escolas': []
+            }
+
+            school_info_map = {school['id']: dict(school) for school in schools}
+
+            tasks_by_school = {}
+            for task in tasks:
+                school_id = task.get('customerId')
+                if school_id:
+                    if school_id not in tasks_by_school:
+                        tasks_by_school[school_id] = []
+                    tasks_by_school[school_id].append(task)
+
+            for school_id, school_data in school_info_map.items():
+                school_manager_ids = _extract_manager_ids(school_data)
+                school_collaborators = [collaborators[mid] for mid in school_manager_ids if mid in collaborators]
+                school_tasks = tasks_by_school.get(school_id, [])
+                
+                # Processar respostas dos formulários nas tarefas
+                for task in school_tasks:
+                    if task.get('formAnswer'):
+                        try:
+                            answers = json.loads(task['formAnswer'])
+                            task['formAnswer'] = answers
+                            # Enriquecer com detalhes do formulário e campos
+                            form_id = task.get('formId')
+                            if form_id and form_id in forms:
+                                task['form_details'] = forms[form_id]
+                        except (json.JSONDecodeError, TypeError):
+                            task['formAnswer'] = {'error': 'Could not parse formAnswer'}
+
+                aggregated_data['escolas'].append({
+                    'info': school_data,
+                    'colaboradores': school_collaborators,
+                    'tarefas': school_tasks,
+                    'equipamentos': equipments_by_school.get(school_id, [])
+                })
+
+            # Função para sanitizar o objeto para JSON, convertendo tipos não serializáveis
+            def sanitize_for_json(obj):
+                if isinstance(obj, dict):
+                    return {k: sanitize_for_json(v) for k, v in obj.items()}
+                if isinstance(obj, list):
+                    return [sanitize_for_json(i) for i in obj]
+                # Adicione outras conversões de tipo aqui se necessário
+                # Exemplo: if isinstance(obj, datetime.date): return obj.isoformat()
+                return obj
+
+            # Sanitizar o objeto final antes de retornar
+            final_response = sanitize_for_json(aggregated_data)
+
+            try:
+                # Tenta serializar para verificar se há erros
+                json.dumps(final_response)
+            except TypeError as json_err:
+                print(f"Erro de serialização JSON: {json_err}")
+                # Em caso de erro, pode ser útil logar qual parte dos dados falhou
+                # Esta é uma abordagem simplificada para retornar um erro claro
+                return {"error": "Erro ao serializar dados", "detail": str(json_err)}
+            
+            return final_response
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Ocorreu um erro inesperado: {e}")
+
+@app.get("/api/dashboard/{group_id}")
+def get_dashboard_by_contract(group_id: int):
+    return _get_dashboard_by_contract_data(group_id)
+
+@app.get("/api/faturamento-report/{group_id}")
+def get_faturamento_report(group_id: int, start_date: str, end_date: str):
+    return _get_dashboard_by_contract_data(group_id, start_date=start_date, end_date=end_date)
+
+@app.get("/api/contract-collaborators/{group_id}")
+def get_contract_collaborators(group_id: int):
+    with get_db_connection() as conn:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM customers WHERE groupsId LIKE ?", (f'%{group_id}%',))
+        schools = cur.fetchall()
+        all_manager_ids = set()
+        for school in schools:
+            managers_field = school.get('managersId', '[]')
+            try:
+                ids = json.loads(managers_field if managers_field else '[]')
+                if isinstance(ids, list):
+                    all_manager_ids.update(int(mid) for mid in ids if str(mid).isdigit())
+            except (json.JSONDecodeError, TypeError):
+                if isinstance(managers_field, str):
+                    all_manager_ids.update(int(mid.strip()) for mid in managers_field.split(',') if mid.strip().isdigit())
+        collaborators = []
+        if all_manager_ids:
+            placeholders = ','.join('?' for _ in all_manager_ids)
+            cur.execute(f"SELECT userId, name as userName, cpf FROM users WHERE userId IN ({placeholders})", list(all_manager_ids))
+            collaborators = [dict(c) for c in cur.fetchall()]
+        return {"collaborators": collaborators}
+
+@app.get("/api/billing/financial-summary/{group_id}")
+def get_financial_summary(group_id: int, start_date: str, end_date: str):
+    try:
+        conn = sqlite3.connect(db_path)
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+
+        # 1. Buscar as taxas de faturamento para o contrato
+        cur.execute("SELECT description, unit_price, additional_price FROM billing_rates WHERE contract_id = ?", (group_id,))
+        rates_rows = cur.fetchall()
+        if not rates_rows:
+            conn.close()
+            return {"summary": [], "grand_total": 0} # Retorna vazio se não houver taxas
+
+        rates_map = {rate['description']: {'unit_price': rate['unit_price'], 'additional_price': rate['additional_price']} for rate in rates_rows}
+
+        # 2. Buscar tarefas executadas (status 5) no período
+        cur.execute("""
+            SELECT taskTypeDescription, COUNT(*) as executed_count
+            FROM tasks
+            WHERE customer_group_id = ? 
+              AND taskStatus = 5
+              AND date(taskDate) BETWEEN ? AND ?
+            GROUP BY taskTypeDescription
+        """, (group_id, start_date, end_date))
+        executed_tasks = cur.fetchall()
+
+        financial_summary = []
+        grand_total = 0
+
+        # 3. Calcular o total para cada tipo de tarefa
+        for task in executed_tasks:
+            task_desc = task['taskTypeDescription']
+            executed_count = task['executed_count']
+            rate = rates_map.get(task_desc)
+
+            if rate:
+                total_line = (executed_count * rate['unit_price']) + rate['additional_price']
+                financial_summary.append({
+                    "description": task_desc,
+                    "executed": executed_count,
+                    "unit_price": rate['unit_price'],
+                    "additional_price": rate['additional_price'],
+                    "total": total_line
+                })
+                grand_total += total_line
+
+        conn.close()
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Erro ao gerar resumo financeiro: {e}")
+
+
+if __name__ == '__main__':
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000)

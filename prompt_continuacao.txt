@@ -1,0 +1,37 @@
+# PROMPT PARA CONTINUAÇÃO DO DESENVOLVIMENTO
+
+## Contexto Atual
+Estamos desenvolvendo um aplicativo Android para o Painel Auvo que exibe dados de progresso de tarefas em tempo real, com base nos contratos do usuário logado. Já implementamos:
+
+1. Sistema de login com autenticação
+2. Dashboard principal com indicadores e progresso de tarefas
+3. Filtro por tipo de tarefa via barra de navegação inferior
+4. Tela de detalhes de tarefas com informações completas
+
+## Próximas Etapas Sugeridas
+
+### Implementação Prioritária
+1. **Lista de Tarefas Detalhada**: Implementar a funcionalidade do botão "Ver Lista de Tarefas" na tela de detalhes, que deve exibir todas as tarefas individuais do tipo selecionado, com status, datas e outras informações relevantes.
+
+2. **Gráficos de Progresso**: Adicionar visualizações gráficas (como gráficos de pizza ou barras) na tela de detalhes para representar visualmente o progresso das tarefas.
+
+3. **Funcionalidade de Busca**: Implementar uma funcionalidade de busca que permita ao usuário encontrar tarefas específicas por nome, local ou outro critério.
+
+### Melhorias Secundárias
+1. **Cache de Dados**: Implementar armazenamento local dos dados para permitir uso offline do aplicativo.
+
+2. **Notificações**: Adicionar sistema de notificações para alertar sobre tarefas pendentes ou próximas do prazo.
+
+3. **Animações e Transições**: Melhorar a experiência do usuário com animações suaves entre telas e componentes.
+
+## Arquivos Principais
+- `MainActivity.kt`: Controla o dashboard principal e a navegação
+- `TaskDetailsActivity.kt`: Exibe detalhes de um tipo específico de tarefa
+- `activity_task_details.xml`: Layout da tela de detalhes
+- `colors.xml`: Definições de cores do aplicativo
+- `AndroidManifest.xml`: Configuração do aplicativo
+
+## Observações Técnicas
+- O backend já fornece todos os dados necessários via API REST
+- A autenticação e o controle de acesso por contrato já estão implementados
+- O modelo de dados já inclui todas as informações necessárias para as implementações sugeridas
