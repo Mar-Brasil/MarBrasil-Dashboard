@@ -2,20 +2,25 @@ version: '3.8'
 
 services:
   api:
-    build: 
-      context: .
-      dockerfile: Dockerfile
-    container_name: auvo-api
-    restart: unless-stopped
+    image: auvo-api:latest
     ports:
-      - "8000:8000"
+      - target: 8000
+        published: 8000
+        protocol: tcp
+        mode: host
     volumes:
-      - ./auvo.db:/app/auvo.db
-      - ./downloads:/app/downloads
+      - auvo_data:/app/auvo.db
+      - download_data:/app/downloads
     environment:
       - PYTHONUNBUFFERED=1
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+    deploy:
+      restart_policy:
+        condition: unless-stopped
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+volumes:
+  auvo_data:
+  download_data:
