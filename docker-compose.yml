@@ -2,7 +2,9 @@ version: '3.8'
 
 services:
   api:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: auvo-api
     environment:
       - PYTHONUNBUFFERED=1
@@ -26,7 +28,9 @@ services:
       retries: 3
 
   frontend:
-    build: ./painel-admin
+    build:
+      context: ./painel-admin
+      dockerfile: Dockerfile
     container_name: auvo-frontend
     environment:
       - REACT_APP_API_URL=https://api.painel.com.br/api
