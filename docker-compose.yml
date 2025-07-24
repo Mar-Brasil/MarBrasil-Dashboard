@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: auvo-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./auvo.db:/app/auvo.db
+      - ./downloads:/app/downloads
+    environment:
+      - PYTHONUNBUFFERED=1
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - auvo-network
+
+  # Frontend (opcional - se quiser rodar o frontend também)
+  # frontend:
+  #   build: ./painel-admin
+  #   container_name: auvo-frontend
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - REACT_APP_API_URL=http://localhost:8000
+  #   depends_on:
+  #     - api
+  #   networks:
+  #     - auvo-network
+
+networks:
+  auvo-network:
+    driver: bridge
