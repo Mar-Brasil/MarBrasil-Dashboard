@@ -5,7 +5,7 @@ services:
     image: auvo-api:latest
     ports:
       - target: 8000
-        published: 8000
+        published: 3333  # Alterado de 8000 para 3333
         protocol: tcp
         mode: host
     volumes:
