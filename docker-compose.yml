@@ -15,7 +15,10 @@ services:
       - PYTHONUNBUFFERED=1
     deploy:
       restart_policy:
-        condition: unless-stopped
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
       resources:
         limits:
           cpus: '0.5'
